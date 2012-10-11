@@ -14,7 +14,7 @@ public class TestDiscoveryThread extends Thread {
     private boolean QUIT = false;
     
     public TestDiscoveryThread() throws SocketException{
-        socket = new DatagramSocket(4445);
+        socket = new DatagramSocket(SOCKET_PORT);
     }
  
     public void run() {
@@ -33,9 +33,14 @@ public class TestDiscoveryThread extends Thread {
                 socket.send(packet);
 	 
 	            // sleep for a while
+                
+                socket.receive(packet);
+                
+                System.out.println("Got answer: " + packet.getData().toString());
+                
 		        try {
-		            sleep((long)(Math.random() * FIVE_SECONDS));
-		        } catch (InterruptedException e) { }
+		            sleep((long)(Math.random() * FIVE_SECONDS+2000));
+		        } catch (InterruptedException e) {}
         	}catch(IOException e){
 	        	Log.e(e.getMessage());
 	        }
