@@ -7,7 +7,6 @@ import ch.k42.auroraprime.net.MulticastListener;
 import ch.k42.auroraprime.net.TestDiscoveryThread;
 
 public class TestFacility{
-
 	/**
 	 * 
 	 * 
