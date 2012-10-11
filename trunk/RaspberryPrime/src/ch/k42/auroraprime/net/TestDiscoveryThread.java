@@ -7,6 +7,7 @@ import ch.k42.auroraprime.minions.Log;
  
 public class TestDiscoveryThread extends Thread {
 	private static final int MULTICAST_PORT=4455;
+	private static final int SOCKET_PORT=4445;
 	private static final String MULTICAST_GROUP="225.0.0.42";
     private long FIVE_SECONDS = 5000;
     private DatagramSocket socket;
