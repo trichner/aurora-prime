@@ -2,6 +2,7 @@ package ch.k42.auroraprime.net;
 
 import java.io.IOException;
 import java.net.*;
+
 import ch.k42.auroraprime.minions.Log;
 
 public class MulticastListener{
@@ -41,7 +42,24 @@ public class MulticastListener{
 			    String received = new String(packet.getData());
 			    InetAddress sender = packet.getAddress();
 			    int port = packet.getPort();
-			    System.out.println("Received Multicast: " + received.substring(0, 10<received.length() ? 10 : (received.length()-1)) + " from " + sender +":"+port);
+			    System.out.println("Received Multicast: " + received.substring(0, 10<received.length() ? 20 : (received.length()-1)) + " from " + sender +":"+port);
+			    
+			    //Answer
+			    try {
+					DatagramSocket dsock = new DatagramSocket(port);
+					String str = "Received Multicast from " + sender.toString() + " it works...";
+					buf = str.getBytes();
+					DatagramPacket pkt = new DatagramPacket(buf, buf.length);
+					dsock.connect(sender, port);
+					dsock.send(pkt);
+					dsock.close();
+				} catch (SocketException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			    
 			}
 		
