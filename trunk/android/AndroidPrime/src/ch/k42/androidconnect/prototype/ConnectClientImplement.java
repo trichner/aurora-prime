@@ -13,7 +13,7 @@ public class ConnectClientImplement implements ConnectClient {
 	
 	// Connect function, creates new socket with Object input/output streams with 
 	// given ip and port, throws exception if connection fails
-	public void connect(String ip, int port) throws UnableToConnectException {
+	public boolean connect(String ip, int port) throws UnableToConnectException {
 		try {
 			socket = new Socket();
 			SocketAddress sockaddr = new InetSocketAddress(ip, port);
@@ -22,6 +22,7 @@ public class ConnectClientImplement implements ConnectClient {
 			in = new ObjectInputStream(socket.getInputStream());
 			connected = true;
 		} catch (Exception e) {throw new UnableToConnectException();}
+		return true;
 	}
 	//Disconnect socket
 	//
