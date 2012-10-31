@@ -1,5 +1,6 @@
-package ch.k42.auroraprime;
+package ch.k42.auroraprime.main;
 
+import ch.k42.auroraprime.R;
 import android.app.Activity;
 import android.os.Bundle;
 
