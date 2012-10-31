@@ -1,4 +1,4 @@
-package ch.k42.auroraprime.modules;
+package ch.k42.auroraprime.quorgs;
 
 import java.awt.Color;
 /**
