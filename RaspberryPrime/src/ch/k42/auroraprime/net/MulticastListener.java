@@ -36,6 +36,10 @@ public class MulticastListener{
 				} catch (IOException e) {
 					Log.e(e.getMessage());
 					e.printStackTrace();
+					try {
+						this.sleep(500); //don't spam errors
+					} catch (InterruptedException e1) {	}
+					continue;
 				}
 		
 			    //TODO: SEND CLIENT A MSG BACK AND OPEN SOCKET
@@ -44,14 +48,16 @@ public class MulticastListener{
 			    int port = packet.getPort();
 			    System.out.println("Received Multicast: " + received.substring(0, 10<received.length() ? 20 : (received.length()-1)) + " from " + sender +":"+port);
 			    
-			    //Answer
+			    //Answer the call
 			    try {
+			    	
 					DatagramSocket dsock = new DatagramSocket(port);
-					String str = "Received Multicast from " + sender.toString() + " it works...";
+					String str = "Received Multicast from " + sender.toString() + " It works.";
 					buf = str.getBytes();
 					DatagramPacket pkt = new DatagramPacket(buf, buf.length);
 					dsock.connect(sender, port);
 					dsock.send(pkt);
+					
 					dsock.close();
 				} catch (SocketException e) {
 					// TODO Auto-generated catch block
@@ -73,24 +79,31 @@ public class MulticastListener{
 		}
 	}
 	
+	//----------------------------------- Class Body
+	
 	MulticastClientThread listener;
 	
-	public void startListener(){
+	public boolean startListener(){
 		try {
-			listener = new MulticastClientThread();
-			listener.start();
-		} catch (IOException e) {
+			listener = new MulticastClientThread(); //create new Listener Thread
+			listener.start();						//start the thread
+		} catch (IOException e) {					//threadstart was not successful
 			Log.e(e.getMessage());
 			e.printStackTrace();
+			return false;
 		}
+		return true;
 	}
-	public void stopListener(){
-		listener.shutdown();
+	public boolean stopListener(){
+		listener.shutdown(); // shutdown the listener
 		try {
-			listener.join(TIMEOUT_MILLIS);
+			listener.join(TIMEOUT_MILLIS); // wait for the thread
 		} catch (InterruptedException e) {
 			Log.e(e.getMessage());
 			e.printStackTrace();
+			listener.stop(); //kill the thread
+			return false;
 		}
+		return true;
 	}
 }
