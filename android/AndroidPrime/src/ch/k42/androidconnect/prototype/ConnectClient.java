@@ -9,7 +9,7 @@ public interface ConnectClient {
 	
 	public Object sendRequest(Object request);
 	
-	public void connect(String ip, int port) throws UnableToConnectException;
+	public boolean connect(String ip, int port) throws UnableToConnectException;
 	
 	public void disconnect();
 	
