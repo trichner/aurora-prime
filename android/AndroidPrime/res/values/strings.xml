@@ -3,5 +3,11 @@
 
     <string name="hello">Hello World, HomeActivity!</string>
     <string name="app_name">AndroidPrime</string>
+    
+    <string name="button1">Feld 1</string>
+    <string name="button2">Feld 2</string>
+    <string name="button3">Feld 3</string>
+    <string name="button4">Feld 4</string>
 
+    <string name="connectButtonText">connect</string>
 </resources>
