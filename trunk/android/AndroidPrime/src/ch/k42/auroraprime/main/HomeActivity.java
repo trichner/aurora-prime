@@ -11,4 +11,8 @@ public class HomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
     }
+
+//is the app connected to a device?
+private boolean connected = false;
+
 }

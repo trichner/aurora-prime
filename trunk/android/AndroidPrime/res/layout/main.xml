@@ -2,11 +2,71 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:gravity="center"
     android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="fill_parent"
+    <RelativeLayout
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:text="@string/hello" />
+        android:layout_marginBottom="40dp" >
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="50dp"
+            android:height="90dp"
+            android:text="@string/button1"
+            android:width="90dp" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="40dp"
+            android:layout_toRightOf="@+id/button1"
+            android:height="90dp"
+            android:text="@string/button2"
+            android:width="90dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="320dp"
+        android:layout_height="wrap_content" >
+        
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="50dp"
+            android:height="90dp"
+            android:text="@string/button3"
+            android:width="90dp" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="40dp"
+            android:layout_toRightOf="@+id/button3"
+            android:height="90dp"
+            android:text="@string/button4"
+            android:width="90dp" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/connectButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/connectButtonText" />
 
 </LinearLayout>
