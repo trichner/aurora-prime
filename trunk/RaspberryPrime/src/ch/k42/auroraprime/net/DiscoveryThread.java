@@ -46,8 +46,11 @@ public class DiscoveryThread extends Thread {
     			    
 	            	socket.receive(packet);
 	            	String str = new String(packet.getData());
-	            	Log.v("Got Device Discovery answer: " + str);
+	            	
+	            	Log.v("Got ACK       : " + str);
+	            	Log.v("Packet length : " + packet.getLength());
 	            	ALDevice device = new ALDevice(packet.getAddress(), str);
+	            	
 	            	list.add(device);
             	}catch(SocketTimeoutException e){
             		Log.d("Socket Timeout: waiting for next package");
