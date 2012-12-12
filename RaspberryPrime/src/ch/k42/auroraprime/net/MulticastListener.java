@@ -52,7 +52,7 @@ public class MulticastListener{
 			    String received = new String(packet.getData());
 			    InetAddress sender = packet.getAddress();
 			    int port = packet.getPort();
-			    System.out.println("Received Multicast: " + received.substring(0, 10<received.length() ? 20 : (received.length()-1)) + " from " + sender +":"+port);
+			    System.out.println("Received Multicast: " + received + " from " + sender +":"+port);
 			    
 			    
 			    

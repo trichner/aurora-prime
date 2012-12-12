@@ -45,7 +45,7 @@ public class DiscoveryThread extends Thread {
     			    packet = new DatagramPacket(rbuf, rbuf.length);
     			    
 	            	socket.receive(packet);
-	            	String str = new String(rbuf,0,packet.getLength());
+	            	String str = new String(packet.getData());
 	            	Log.v("Got Device Discovery answer: " + str);
 	            	ALDevice device = new ALDevice(packet.getAddress(), str);
 	            	list.add(device);
