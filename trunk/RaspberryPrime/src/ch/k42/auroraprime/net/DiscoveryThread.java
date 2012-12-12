@@ -28,7 +28,7 @@ public class DiscoveryThread extends Thread {
     	try{
             byte[] buf = new byte[256];
  
-            String dString = "";
+            String dString = sender;
 
             buf = dString.getBytes();
  
@@ -43,12 +43,11 @@ public class DiscoveryThread extends Thread {
             //--- wait for max 10 devices
             for(int i=10; i>0; i--){
             	try{
-            	socket.receive(packet);
-            	String str = new String(packet.getData());
-            	Log.v("Got Device Discovery answer: " + str);
-            	byte[] data = packet.getData();
-            	ALDevice device = new ALDevice(packet.getAddress(), data.toString());
-            	list.add(device);
+	            	socket.receive(packet);
+	            	String str = new String(packet.getData());
+	            	Log.v("Got Device Discovery answer: " + str);
+	            	ALDevice device = new ALDevice(packet.getAddress(), str);
+	            	list.add(device);
             	}catch(SocketTimeoutException e){
             		Log.d("Socket Timeout: waiting for next package");
             	}

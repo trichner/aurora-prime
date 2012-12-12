@@ -60,7 +60,8 @@ public class MulticastListener{
 			    try {
 			    	
 					//---- build package
-					String str = "Received Multicast from " + sender.toString() + " It works.";
+					String str = "testingDevice42";
+					
 					buf = str.getBytes();
 					
 					//---- send back package
