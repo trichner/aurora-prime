@@ -44,7 +44,8 @@ public class DiscoveryThread extends Thread {
             for(int i=10; i>0; i--){
             	try{
             	socket.receive(packet);
-            	Log.v("Got Device Discovery answer: " + packet.getData().toString());
+            	String str = new String(packet.getData());
+            	Log.v("Got Device Discovery answer: " + str);
             	byte[] data = packet.getData();
             	ALDevice device = new ALDevice(packet.getAddress(), data.toString());
             	list.add(device);

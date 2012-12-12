@@ -36,6 +36,7 @@ public class TestFacility{
 	public static void client(){
 		IDeviceDiscovery discovery = new DeviceDiscovery();
 		List<ALDevice> list = discovery.getDiscoveredDevices();
+		Log.v("List of discovered devices:");
 		for(ALDevice dev : list){
 			Log.v(dev);
 		}
