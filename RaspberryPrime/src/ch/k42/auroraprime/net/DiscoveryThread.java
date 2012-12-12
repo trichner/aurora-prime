@@ -11,9 +11,7 @@ public class DiscoveryThread extends Thread {
 	private static final int RCV_TIMEOUT=100;
 	private static final String MULTICAST_GROUP="225.0.0.42";
 	
-    private long FIVE_SECONDS = 5000;
     private DatagramSocket socket;
-    private boolean QUIT = false;
     
     private List<ALDevice> list;
     private String sender;
@@ -41,10 +39,12 @@ public class DiscoveryThread extends Thread {
             socket.setSoTimeout(RCV_TIMEOUT);
  
             //--- wait for max 10 devices
+            byte[] rbuf;
             for(int i=10; i>0; i--){
             	try{
-            		byte[] rbuf = new byte[256];
+            		rbuf = new byte[256];
     			    packet = new DatagramPacket(rbuf, rbuf.length);
+    			    
 	            	socket.receive(packet);
 	            	String str = new String(packet.getData());
 	            	Log.v("Got Device Discovery answer: " + str);
