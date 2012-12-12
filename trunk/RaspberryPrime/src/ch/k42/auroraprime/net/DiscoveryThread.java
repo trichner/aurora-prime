@@ -45,7 +45,7 @@ public class DiscoveryThread extends Thread {
     			    packet = new DatagramPacket(rbuf, rbuf.length);
     			    
 	            	socket.receive(packet);
-	            	String str = new String(packet.getData());
+	            	String str = new String(packet.getData(),0,packet.getLength());
 	            	
 	            	Log.v("Got ACK       : " + str);
 	            	Log.v("Packet length : " + packet.getLength());
