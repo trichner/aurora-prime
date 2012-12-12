@@ -10,7 +10,7 @@ public class DeviceDiscovery implements IDeviceDiscovery {
 	@Override
 	public List<ALDevice> getDiscoveredDevices() {
 		DiscoveryThread test;
-		List<ALDevice> list = new ArrayList<>();
+		List<ALDevice> list = new ArrayList<ALDevice>();
 		try {
 			test = new DiscoveryThread("myPhone", list);
 			test.start();
@@ -21,7 +21,7 @@ public class DeviceDiscovery implements IDeviceDiscovery {
 			//---- print discovered devices
 			Log.v("Found devices:");
 			for(ALDevice dev : list){
-				Log.v(dev);
+				Log.d(dev);
 			}
 		} catch (SocketException e) {
 			Log.e(e.getMessage());
