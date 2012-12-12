@@ -43,6 +43,8 @@ public class DiscoveryThread extends Thread {
             //--- wait for max 10 devices
             for(int i=10; i>0; i--){
             	try{
+            		byte[] rbuf = new byte[256];
+    			    packet = new DatagramPacket(rbuf, rbuf.length);
 	            	socket.receive(packet);
 	            	String str = new String(packet.getData());
 	            	Log.v("Got Device Discovery answer: " + str);
