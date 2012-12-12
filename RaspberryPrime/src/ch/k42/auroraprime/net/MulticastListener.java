@@ -26,11 +26,16 @@ public class MulticastListener{
 			this.QUIT = true;
 		}
 		
+		
 		public void run(){
 			DatagramPacket packet;
+			
+			//---- start listening
 			while(!QUIT){
 			    byte[] buf = new byte[256];
 			    packet = new DatagramPacket(buf, buf.length);
+			    
+			    //---- receive a package
 			    try {
 					socket.receive(packet);
 				} catch (IOException e) {
@@ -42,33 +47,40 @@ public class MulticastListener{
 					continue;
 				}
 		
+			    //---- Handle received Multicast
 			    //TODO: SEND CLIENT A MSG BACK AND OPEN SOCKET
 			    String received = new String(packet.getData());
 			    InetAddress sender = packet.getAddress();
 			    int port = packet.getPort();
 			    System.out.println("Received Multicast: " + received.substring(0, 10<received.length() ? 20 : (received.length()-1)) + " from " + sender +":"+port);
 			    
-			    //Answer the call
+			    
+			    
+			    //---- Answer the call
 			    try {
 			    	
-					DatagramSocket dsock = new DatagramSocket(port);
+					//---- build package
 					String str = "Received Multicast from " + sender.toString() + " It works.";
 					buf = str.getBytes();
+					
+					//---- send back package
+					DatagramSocket dsock = new DatagramSocket(port);
 					DatagramPacket pkt = new DatagramPacket(buf, buf.length);
 					dsock.connect(sender, port);
 					dsock.send(pkt);
 					
 					dsock.close();
 				} catch (SocketException e) {
-					// TODO Auto-generated catch block
+					Log.e("Socket Exception: " + e.getMessage());
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					Log.e("IO Exception: " + e.getMessage());
 					e.printStackTrace();
 				}
 			    
 			}
 		
+			//---- stop listener, do clean exit
 			try {
 				socket.leaveGroup(group);
 			} catch (IOException e) {
@@ -79,7 +91,7 @@ public class MulticastListener{
 		}
 	}
 	
-	//----------------------------------- Class Body
+	//==== Class Body
 	
 	MulticastClientThread listener;
 	
@@ -94,6 +106,7 @@ public class MulticastListener{
 		}
 		return true;
 	}
+	
 	public boolean stopListener(){
 		listener.shutdown(); // shutdown the listener
 		try {
@@ -101,9 +114,11 @@ public class MulticastListener{
 		} catch (InterruptedException e) {
 			Log.e(e.getMessage());
 			e.printStackTrace();
-			listener.stop(); //kill the thread
+			listener.stop(); //simple, we eh, kill the thread
 			return false;
 		}
 		return true;
 	}
+	
+	
 }
