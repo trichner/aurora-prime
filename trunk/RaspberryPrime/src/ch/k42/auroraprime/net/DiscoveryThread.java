@@ -36,17 +36,16 @@ public class DiscoveryThread extends Thread {
             DatagramPacket packet = new DatagramPacket(buf, buf.length, group, MULTICAST_PORT);
             socket.send(packet);
             
-            socket.setSoTimeout(RCV_TIMEOUT);
- 
             //--- wait for max 10 devices
             byte[] rbuf;
+            socket.setSoTimeout(RCV_TIMEOUT);
             for(int i=10; i>0; i--){
             	try{
             		rbuf = new byte[256];
     			    packet = new DatagramPacket(rbuf, rbuf.length);
     			    
 	            	socket.receive(packet);
-	            	String str = new String(packet.getData());
+	            	String str = new String(rbuf,0,packet.getLength());
 	            	Log.v("Got Device Discovery answer: " + str);
 	            	ALDevice device = new ALDevice(packet.getAddress(), str);
 	            	list.add(device);
