@@ -16,10 +16,7 @@ public class ALDevice {
 	}
 	
 	public ALDevice(InetAddress address, String deviceID){
-		this.address = address;
-		this.name = "Ambient-Light " + deviceID;
-		this.deviceID = deviceID;
-		this.version = "0000";
+		this(address,"Ambient-Light " + deviceID,deviceID,"0000");
 	}
 	
 	public String toString(){

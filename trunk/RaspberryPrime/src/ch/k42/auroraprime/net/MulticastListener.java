@@ -49,10 +49,11 @@ public class MulticastListener{
 		
 			    //---- Handle received Multicast
 			    //TODO: SEND CLIENT A MSG BACK AND OPEN SOCKET
+			    
 			    String received = new String(packet.getData());
 			    InetAddress sender = packet.getAddress();
 			    int port = packet.getPort();
-			    System.out.println("Received Multicast: " + received + " from " + sender +":"+port);
+			    Log.v("Received Multicast: " + received + " from " + sender +":"+port);
 			    
 			    
 			    
