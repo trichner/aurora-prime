@@ -16,10 +16,8 @@ import java.util.concurrent.Semaphore;
  *
  */
 public class ALSettings {
-	
-	
-	
-	static private ALSettings _instance = null; // Singleton
+
+	static private ALSettings _instance = new ALSettings();
 	
 	static private Properties properties;
 	
@@ -37,28 +35,39 @@ public class ALSettings {
 	static private Semaphore instanciate = new Semaphore(1);
 	
 	static public ALSettings getInstance(){
-		if(_instance==null){
-			try {
-				instanciate.acquire();
-				if(_instance==null){
-					_instance = new ALSettings();
-				}
-				instanciate.release();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+//		if(_instance==null){
+//			try {
+//				instanciate.acquire();
+//				if(_instance==null){
+//					_instance = new ALSettings();
+//				}
+//				instanciate.release();
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		return _instance;
 	}
 	
-	public static void store(){
+	//---- Methods
+	/**
+	 * Saves all Settings to a Propertyfile, specified
+	 * by 'Constants.PROPERTYFILE'
+	 */
+	public void store(){
 		Path file = Paths.get(Constants.PROPERTYFILE);
 		try {
-			properties.store(Files.newOutputStream(file), "ALSettings File"); //TODO
+			properties.store(Files.newOutputStream(file), "ALSettings File");
 		} catch (IOException e) {
 			Log.e("Can't store Property File. Looked at: " + Constants.PROPERTYFILE);
 		}
 		properties = new Properties();
 	}
 	
+	public void setProperty(String key,String value){
+		properties.setProperty(key, value);
+	}
+	public String getProperty(String key){
+		return properties.getProperty(key);
+	}
 }
