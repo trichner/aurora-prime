@@ -1,6 +1,5 @@
 package ch.k42.auroraprime.sim;
 
-import ch.k42.auroraprime.minions.Utils;
 import ch.k42.auroraprime.quorgs.Frame;
 
 public class FrameSimulation extends Thread {

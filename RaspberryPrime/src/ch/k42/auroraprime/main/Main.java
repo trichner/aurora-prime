@@ -3,7 +3,6 @@ package ch.k42.auroraprime.main;
 import ch.k42.auroraprime.executors.Sender;
 import ch.k42.auroraprime.minions.Log;
 import ch.k42.auroraprime.minions.Utils;
-import ch.k42.auroraprime.sim.FrameSimulation;
 import ch.k42.auroraprime.sim.SimSender;
 
 public class Main {
