@@ -17,9 +17,9 @@ public class Main {
 	public static void main(String[] args) {
 		Log.d("MAIN","Started!");
 		
-		SendJob sendJob = new SendJob(new SimSender());
+		//SendJob sendJob = new SendJob(new SimSender());
 		
-		Executor.getInstance().scheduleAtFixedRate(sendJob, 0, 1000/30, TimeUnit.MILLISECONDS);
+		//Executor.getInstance().scheduleAtFixedRate(sendJob, 0, 1000/30, TimeUnit.MILLISECONDS);
 		
 		//---- Set Up Connection to Raspberry Pi
 		
@@ -30,7 +30,9 @@ public class Main {
 		//---- Start Multicast Listener
 		
 		//
-		 Executor.getInstance().shutdownNow();
+		 //Executor.getInstance().shutdownNow();
+		 
+		 simulation();
 		
 	}
 	
