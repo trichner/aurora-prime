@@ -6,4 +6,6 @@ public interface Sender {
 	public boolean sendFrame(Frame f);
 	public boolean connect();
 	public boolean close();
+	
+	public boolean isConnected();
 }
