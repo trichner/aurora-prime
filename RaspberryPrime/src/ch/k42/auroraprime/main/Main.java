@@ -1,5 +1,7 @@
 package ch.k42.auroraprime.main;
 
+import ch.k42.auroraprime.sim.FrameSimulation;
+
 public class Main {
 
 	/**
@@ -7,6 +9,12 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		System.out.println("Started!");
+		FrameSimulation sim = new FrameSimulation();
+		sim.start();
+		System.out.println("blub");
+		try {
+			sim.join();
+		} catch (InterruptedException e) {}
 		
 		//---- Set Up Connection to Raspberry Pi
 		
