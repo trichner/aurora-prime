@@ -19,8 +19,8 @@ public class Log {
 	 * Log debug
 	 * @param msg
 	 */
-	public final static void d(Object msg){
-		System.out.println(msg);
+	public final static void d(String tag,Object msg){
+		System.out.println(tag + " : " + msg);
 	}
 	/**
 	 * Log to file?

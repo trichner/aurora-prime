@@ -17,8 +17,6 @@ public class FrameSimulation extends Thread {
 		drawer.simulate();
 		
 		while(!quit){
-			Frame f = Utils.getRandomFrame();
-			drawer.updateFrame(f);
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {}
@@ -28,7 +26,7 @@ public class FrameSimulation extends Thread {
 	}
 	
 	public void receiveFrame(Frame f){
-		
+		drawer.updateFrame(f);
 	}
 	
 	public void shutdown(){

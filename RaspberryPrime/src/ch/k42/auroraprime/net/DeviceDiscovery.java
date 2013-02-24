@@ -21,7 +21,7 @@ public class DeviceDiscovery implements IDeviceDiscovery {
 			//---- print discovered devices
 			Log.v("Found devices:");
 			for(ALDevice dev : list){
-				Log.d(dev);
+				Log.d("DEVICE DISCOVERY",dev);
 			}
 		} catch (SocketException e) {
 			Log.e(e.getMessage());
