@@ -78,4 +78,8 @@ public class Frame {
 		matrix[row][col] = color;
 		return true;
 	}
+	
+	public Color getColor(int row, int col){
+		return matrix[row][col];
+	}
 }

@@ -8,7 +8,7 @@ import ch.k42.auroraprime.net.DeviceDiscovery;
 import ch.k42.auroraprime.net.IDeviceDiscovery;
 import ch.k42.auroraprime.net.MulticastListener;
 
-public class TestFacility{
+public class MulticastTesting{
 	/**
 	 * 
 	 * 
