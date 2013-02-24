@@ -53,7 +53,7 @@ public class DiscoveryThread extends Thread {
 	            	
 	            	list.add(device);
             	}catch(SocketTimeoutException e){
-            		Log.d("Socket Timeout: waiting for next package");
+            		Log.d("DISCOVERY THREAD","Socket Timeout: waiting for next package");
             	}
             }
             

@@ -14,5 +14,16 @@ public class SimSender implements Sender {
 		simulator.receiveFrame(f);
 		return true;
 	}
+	@Override
+	public boolean connect() {
+		simulator.start();
+		return true;
+	}
+	@Override
+	public boolean close() {
+		simulator.shutdown();
+		//simulator.join();
+		return true;
+	}
 
 }
