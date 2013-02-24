@@ -1,6 +1,10 @@
 package ch.k42.auroraprime.main;
 
+import ch.k42.auroraprime.executors.Sender;
+import ch.k42.auroraprime.minions.Log;
+import ch.k42.auroraprime.minions.Utils;
 import ch.k42.auroraprime.sim.FrameSimulation;
+import ch.k42.auroraprime.sim.SimSender;
 
 public class Main {
 
@@ -8,16 +12,18 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println("Started!");
-		FrameSimulation sim = new FrameSimulation();
-		sim.start();
-		System.out.println("blub");
+		Log.d("MAIN","Started!");
+		Sender sim = new SimSender();
 
-		try {
-			Thread.sleep(15000);
-			sim.shutdown();
-			sim.join();
-		} catch (InterruptedException e) {}
+		sim.connect();
+		for(int i=0;i<15;i++){
+			sim.sendFrame(Utils.getRandomFrame());
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {}
+		}
+
+		sim.close();
 		
 		//---- Set Up Connection to Raspberry Pi
 		
