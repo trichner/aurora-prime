@@ -3,20 +3,21 @@ package ch.k42.auroraprime.net;
 import java.io.IOException;
 import java.net.*;
 
+import ch.k42.auroraprime.minions.ALSettings;
 import ch.k42.auroraprime.minions.Log;
 
 public class MulticastListener{
 	
-	private static final String MULTICAST_GROUP="225.0.0.42";
-	private static final int MULTICAST_PORT=4455;
-	private static final long TIMEOUT_MILLIS = 5000;
+	private final String MULTICAST_GROUP;
+	private final int MULTICAST_PORT;
+	private final long TIMEOUT_MILLIS = 5000;
 	
 	private class MulticastClientThread extends Thread{ //TODO
 		private MulticastSocket socket;
 		private InetAddress group;
 		private boolean QUIT = false;
 		
-		public MulticastClientThread() throws IOException{
+		public MulticastClientThread() throws IOException{			
 			socket = new MulticastSocket(MULTICAST_PORT);
 			group = InetAddress.getByName(MULTICAST_GROUP);
 			socket.joinGroup(group);
@@ -96,6 +97,11 @@ public class MulticastListener{
 	//==== Class Body
 	
 	MulticastClientThread listener;
+	
+	public MulticastListener(){
+		MULTICAST_GROUP = ALSettings.getProperty("multicastIP");
+		MULTICAST_PORT = Integer.parseInt(ALSettings.getProperty("multicastPort"));
+	}
 	
 	public boolean startListener(){
 		try {
