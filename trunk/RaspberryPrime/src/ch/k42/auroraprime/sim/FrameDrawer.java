@@ -1,15 +1,20 @@
 package ch.k42.auroraprime.sim;
 
-import java.awt.*;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 import javax.swing.*;
 
-import ch.k42.auroraprime.testing.Area51;
+import ch.k42.auroraprime.quorgs.Frame;
 
 
 public class FrameDrawer extends Canvas{
-    public FrameDrawer() {
-    }
-    ch.k42.auroraprime.quorgs.Frame frame;
+	private static final long serialVersionUID = 3931465364089899146L;
+	
+    private Frame frame = new Frame(Color.cyan);
+    private JFrame jframe;
     
     public void paint(Graphics g) {
         /* We would be using this method only for the sake
@@ -27,18 +32,23 @@ public class FrameDrawer extends Canvas{
 		}
     }
  
-    public void setFrame(ch.k42.auroraprime.quorgs.Frame frame){
+    public void updateFrame(Frame frame){
     	this.frame = frame;
     	this.repaint();
     }
     
     public void simulate() {
-    	Area51 canvas = new Area51();
-        JFrame frame = new JFrame();
-        frame.setSize(816, 840);
+    	//FrameDrawer canvas = new FrameDrawer();
+    	jframe = new JFrame();
+    	jframe.setSize(816, 840);
         //frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(canvas);
-        frame.setVisible(true); 
+    	jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	jframe.getContentPane().add(this);
+    	jframe.setVisible(true); 
+    }
+    
+    public void stop(){
+    	jframe.setVisible(false); 
+    	jframe.dispose();
     }
 }

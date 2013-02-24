@@ -12,7 +12,10 @@ public class Main {
 		FrameSimulation sim = new FrameSimulation();
 		sim.start();
 		System.out.println("blub");
+
 		try {
+			Thread.sleep(15000);
+			sim.shutdown();
 			sim.join();
 		} catch (InterruptedException e) {}
 		
