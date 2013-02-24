@@ -32,7 +32,7 @@ public class ALSettings {
 		
 	}
 	
-	static private Semaphore instanciate = new Semaphore(1);
+	//static private Semaphore instanciate = new Semaphore(1);
 	
 	static public ALSettings getInstance(){
 //		if(_instance==null){
