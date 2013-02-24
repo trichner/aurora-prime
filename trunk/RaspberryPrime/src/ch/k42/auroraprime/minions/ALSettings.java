@@ -19,7 +19,7 @@ public class ALSettings {
 
 	static private ALSettings _instance = new ALSettings();
 	
-	static private Properties properties;
+	private Properties properties;
 	
 	private ALSettings(){ // private Constructor
 		properties = new Properties();
@@ -54,20 +54,19 @@ public class ALSettings {
 	 * Saves all Settings to a Propertyfile, specified
 	 * by 'Constants.PROPERTYFILE'
 	 */
-	public void store(){
+	public static void store(){
 		Path file = Paths.get(Constants.PROPERTYFILE);
 		try {
-			properties.store(Files.newOutputStream(file), "ALSettings File");
+			getInstance().properties.store(Files.newOutputStream(file), "ALSettings File");
 		} catch (IOException e) {
 			Log.e("Can't store Property File. Looked at: " + Constants.PROPERTYFILE);
 		}
-		properties = new Properties();
 	}
 	
-	public void setProperty(String key,String value){
-		properties.setProperty(key, value);
+	public static void setProperty(String key,String value){
+		getInstance().properties.setProperty(key, value);
 	}
-	public String getProperty(String key){
-		return properties.getProperty(key);
+	public static String getProperty(String key){
+		return getInstance().properties.getProperty(key);
 	}
 }
