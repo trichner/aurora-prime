@@ -20,8 +20,9 @@ public class SimSender implements Sender {
 		isConnected = true;
 		return true;
 	}
-	@Override
-	public boolean close() {
+
+    @Override
+	public boolean disconnect() {
 		isConnected = false;
 		simulator.shutdown();
 		//simulator.join();

@@ -35,18 +35,21 @@ public class Main {
 		 simulation();
 		
 	}
-	
+
+    /*
+     * Starts a new Simulation with SimSender as the Sender
+     */
 	private static void simulation(){
 		Sender sim = new SimSender();
 		
 		sim.connect();
-		for(int i=0;i<15;i++){
-			sim.sendFrame(Utils.getRandomFrame());
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {}
-		}
-		sim.close();
+        SendJob sjob = new SendJob(sim);
+        Executor.getInstance().scheduleAtFixedRate(sjob,0,1000/30,TimeUnit.MILLISECONDS);
+        try {
+            Thread.sleep(15000);
+        } catch (InterruptedException e) {}
+        Executor.getInstance().shutdownNow();
+		sim.disconnect();
 	}
 
 }
