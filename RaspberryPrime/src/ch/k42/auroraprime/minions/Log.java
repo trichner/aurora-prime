@@ -1,30 +1,38 @@
 package ch.k42.auroraprime.minions;
 
-public class Log {
+public final class Log {
 	/**
-	 * Log error
-	 * @param msg
+	 * Log error messages
+	 * @param msg message to log
 	 */
 	public final static void e(Object msg){
 		System.err.println(msg);
 	}
 	/**
-	 * Log verbose
-	 * @param msg
+	 * Log verbose messages
+	 * @param msg message to log
 	 */
 	public final static void v(Object msg){
 		System.out.println(msg);
 	}
+    /**
+     * Log warning messages
+     * @param msg message to log
+     */
+    public final static void w(Object msg){
+        System.out.println(msg);
+    }
 	/**
-	 * Log debug
-	 * @param msg
+	 * Log debug messages
+	 * @param tag a Tag specifying the logging class
+     * @param msg message to log
 	 */
 	public final static void d(String tag,Object msg){
 		System.out.println(tag + " : " + msg);
 	}
 	/**
 	 * Log to file?
-	 * @param msg
+	 * @param msg message to log
 	 */
 	public final static void l(Object msg){
 		//Log into file?
