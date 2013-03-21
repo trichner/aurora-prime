@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linlayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
         <Button
             android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
             android:layout_marginLeft="50dp"
             android:height="90dp"
             android:text="@string/button1"
@@ -25,25 +23,20 @@
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_marginLeft="40dp"
-            android:layout_toRightOf="@+id/button1"
             android:height="90dp"
             android:text="@string/button2"
             android:width="90dp" />
+    </LinearLayout>
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="320dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-        
+
         <Button
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
             android:layout_marginLeft="50dp"
             android:height="90dp"
             android:text="@string/button3"
@@ -53,13 +46,10 @@
             android:id="@+id/button4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_marginLeft="40dp"
-            android:layout_toRightOf="@+id/button3"
             android:height="90dp"
             android:text="@string/button4"
             android:width="90dp" />
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>
