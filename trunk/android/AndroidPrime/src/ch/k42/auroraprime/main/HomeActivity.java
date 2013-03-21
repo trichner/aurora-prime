@@ -22,6 +22,12 @@ public class HomeActivity extends Activity {
 	int layoutHeight = 0;
 	int layoutWidth = 0;
 	
+	int buttonSize = 0;
+	int buttonOuterHorizontalPadding = 0;
+	int buttonInnerHorizontalPadding = 0;
+	int buttonOuterVerticalPadding = 0;
+	int buttonInnerVerticalPadding = 0;
+	
 	private class Button_Listener implements OnClickListener {
 
 		public void onClick(View v) {
@@ -74,10 +80,20 @@ public class HomeActivity extends Activity {
                 displayHeight = getResources().getDisplayMetrics().heightPixels;
                 layoutHeight = displayHeight - titleHeight - statusHeight;
                 Log.d(TAG, "layoutHeight = " + layoutHeight + " layoutWidth = " + layoutWidth);
+                
+                // Calculate Button sizes and positions
+                buttonSize = (33/100) * layoutWidth;
+                buttonOuterHorizontalPadding = (10/100) * layoutWidth;
+            	buttonInnerHorizontalPadding = layoutWidth - 2*buttonSize - 2*buttonOuterHorizontalPadding;
+            	buttonInnerVerticalPadding = buttonInnerHorizontalPadding;
+            	buttonOuterVerticalPadding = 1/2*(layoutHeight - 2*buttonSize - buttonInnerVerticalPadding);
+
+            	Log.d(TAG, "buttonSize = " + buttonSize + " buttonOuterHorizontalPadding = " + buttonOuterHorizontalPadding + " buttonInnerHorizontalPadding = " + buttonInnerHorizontalPadding
+            			+ " buttonOuterVerticalPadding = " + buttonOuterVerticalPadding + " buttonInnerVerticalPadding = " + buttonInnerVerticalPadding);
             }
         });
-        
-        //
+    
+    
             
         //die Views Suchen
         button1 = (Button) findViewById(R.id.button1);
