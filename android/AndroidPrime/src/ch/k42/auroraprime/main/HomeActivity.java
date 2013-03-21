@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -31,7 +33,6 @@ public class HomeActivity extends Activity {
 	private class Button_Listener implements OnClickListener {
 
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
 			// get id of button pressed, send intent and start ListActivity
 			Intent i=null;
 			switch (v.getId())
@@ -57,6 +58,8 @@ public class HomeActivity extends Activity {
 	Button button2;
 	Button button3;
 	Button button4;
+	LinearLayout buttonRow1;
+	LinearLayout buttonRow2;
 	
     /** Called when the activity is first created. */
     @Override
@@ -82,24 +85,38 @@ public class HomeActivity extends Activity {
                 Log.d(TAG, "layoutHeight = " + layoutHeight + " layoutWidth = " + layoutWidth);
                 
                 // Calculate Button sizes and positions
-                buttonSize = (33/100) * layoutWidth;
-                buttonOuterHorizontalPadding = (10/100) * layoutWidth;
+                buttonSize = (int)(33*layoutWidth/100);
+                buttonOuterHorizontalPadding = (int)(10*layoutWidth/100);
             	buttonInnerHorizontalPadding = layoutWidth - 2*buttonSize - 2*buttonOuterHorizontalPadding;
             	buttonInnerVerticalPadding = buttonInnerHorizontalPadding;
-            	buttonOuterVerticalPadding = 1/2*(layoutHeight - 2*buttonSize - buttonInnerVerticalPadding);
+            	buttonOuterVerticalPadding = (int) ((layoutHeight - 2*buttonSize - buttonInnerVerticalPadding)/2);
 
             	Log.d(TAG, "buttonSize = " + buttonSize + " buttonOuterHorizontalPadding = " + buttonOuterHorizontalPadding + " buttonInnerHorizontalPadding = " + buttonInnerHorizontalPadding
             			+ " buttonOuterVerticalPadding = " + buttonOuterVerticalPadding + " buttonInnerVerticalPadding = " + buttonInnerVerticalPadding);
+            	
+                // set custom view dimensions
+                button1.setHeight(buttonSize);
+                button2.setHeight(buttonSize);
+                button3.setHeight(buttonSize);
+                button4.setHeight(buttonSize);
+                button1.setWidth(buttonSize);
+                button2.setWidth(buttonSize);
+                button3.setWidth(buttonSize);
+                button4.setWidth(buttonSize);
+
+                //buttonRow1.setLayoutParams(new LinearLayout.LayoutParams(-1, 158));
+                //buttonRow2.setLayoutParams(new LinearLayout.LayoutParams(-1, 158));
             }
         });
-    
-    
             
         //die Views Suchen
+        buttonRow1 = (LinearLayout) findViewById(R.id.buttonRow1);
+        buttonRow2 = (LinearLayout) findViewById(R.id.buttonRow2);
         button1 = (Button) findViewById(R.id.button1);
         button2 = (Button) findViewById(R.id.button2);
         button3 = (Button) findViewById(R.id.button3);
         button4 = (Button) findViewById(R.id.button4);
+        
         
         OnClickListener listener = new Button_Listener();
         
