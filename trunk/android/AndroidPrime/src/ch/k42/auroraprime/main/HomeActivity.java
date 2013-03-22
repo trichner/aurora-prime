@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
+//import android.view.ViewGroup;
+//import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.RelativeLayout;
 import android.content.Intent;
 import android.graphics.Rect;
 
@@ -58,8 +60,8 @@ public class HomeActivity extends Activity {
 	Button button2;
 	Button button3;
 	Button button4;
-	LinearLayout buttonRow1;
-	LinearLayout buttonRow2;
+	//LinearLayout buttonRow1;
+	//LinearLayout buttonRow2;
 	
     /** Called when the activity is first created. */
     @Override
@@ -104,14 +106,40 @@ public class HomeActivity extends Activity {
                 button3.setWidth(buttonSize);
                 button4.setWidth(buttonSize);
 
-                //buttonRow1.setLayoutParams(new LinearLayout.LayoutParams(-1, 158));
-                //buttonRow2.setLayoutParams(new LinearLayout.LayoutParams(-1, 158));
+                LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
+                        LayoutParams.WRAP_CONTENT,      
+                        LayoutParams.WRAP_CONTENT
+                );
+                params1.setMargins(buttonOuterHorizontalPadding, buttonOuterVerticalPadding, 0, 0);
+                button1.setLayoutParams(params1);
+                
+                LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(
+                        LayoutParams.WRAP_CONTENT,      
+                        LayoutParams.WRAP_CONTENT
+                );
+                params2.setMargins(buttonInnerHorizontalPadding, buttonOuterVerticalPadding, 0, 0);
+                button2.setLayoutParams(params2);
+                
+                LinearLayout.LayoutParams params3 = new LinearLayout.LayoutParams(
+                        LayoutParams.WRAP_CONTENT,      
+                        LayoutParams.WRAP_CONTENT
+                );
+                params3.setMargins(buttonOuterHorizontalPadding, buttonInnerVerticalPadding, 0, 0);
+                button3.setLayoutParams(params3);
+                
+                LinearLayout.LayoutParams params4 = new LinearLayout.LayoutParams(
+                        LayoutParams.WRAP_CONTENT,      
+                        LayoutParams.WRAP_CONTENT
+                );
+                params4.setMargins(buttonInnerHorizontalPadding, buttonInnerVerticalPadding, 0, 0);
+                button4.setLayoutParams(params4);
+
             }
         });
             
         //die Views Suchen
-        buttonRow1 = (LinearLayout) findViewById(R.id.buttonRow1);
-        buttonRow2 = (LinearLayout) findViewById(R.id.buttonRow2);
+        //buttonRow1 = (LinearLayout) findViewById(R.id.buttonRow1);
+        //buttonRow2 = (LinearLayout) findViewById(R.id.buttonRow2);
         button1 = (Button) findViewById(R.id.button1);
         button2 = (Button) findViewById(R.id.button2);
         button3 = (Button) findViewById(R.id.button3);
