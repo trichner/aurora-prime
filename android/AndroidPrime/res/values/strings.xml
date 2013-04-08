@@ -10,4 +10,20 @@
     <string name="button4">Feld 4</string>
 
     <string name="connectButtonText">connect</string>
+    <string name="B1_1">B1_1</string>
+    <string name="B1_2">B1_2</string>
+    <string name="B1_3">B1_3</string><string name="B1_4">B1_4</string><string name="B2_1">B2_1</string>
+    <string name="B2_2">B2_2</string>
+    
+    
+    <string name="B2_3">B2_3</string>
+    <string name="B2_4">B2_4</string>
+    <string name="B3_1">B3_1</string>
+    <string name="B3_2">B3_2</string>
+    <string name="B3_3">B3_3</string>
+    <string name="B3_4">B3_4</string>
+    <string name="B4_1">B4_1</string>
+    <string name="B4_2">B4_2</string>
+    <string name="B4_3">B4_3</string>
+    <string name="B4_4">B4_4</string>
 </resources>
