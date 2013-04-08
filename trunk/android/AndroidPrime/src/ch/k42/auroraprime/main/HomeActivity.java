@@ -76,6 +76,14 @@ public class HomeActivity extends Activity {
 	Button B2_2;
 	Button B2_3;
 	Button B2_4;
+	Button B3_1;
+	Button B3_2;
+	Button B3_3;
+	Button B3_4;
+	Button B4_1;
+	Button B4_2;
+	Button B4_3;
+	Button B4_4;
 	//LinearLayout buttonRow1;
 	//LinearLayout buttonRow2;
 	
@@ -175,6 +183,22 @@ public class HomeActivity extends Activity {
                 B2_2.setWidth(smallButtonSize);
                 B2_3.setWidth(smallButtonSize);
                 B2_4.setWidth(smallButtonSize);
+                B3_1.setHeight(smallButtonSize);
+                B3_2.setHeight(smallButtonSize);
+                B3_3.setHeight(smallButtonSize);
+                B3_4.setHeight(smallButtonSize);
+                B4_1.setHeight(smallButtonSize);
+                B4_2.setHeight(smallButtonSize);
+                B4_3.setHeight(smallButtonSize);
+                B4_4.setHeight(smallButtonSize);
+                B3_1.setWidth(smallButtonSize);
+                B3_2.setWidth(smallButtonSize);
+                B3_3.setWidth(smallButtonSize);
+                B3_4.setWidth(smallButtonSize);
+                B4_1.setWidth(smallButtonSize);
+                B4_2.setWidth(smallButtonSize);
+                B4_3.setWidth(smallButtonSize);
+                B4_4.setWidth(smallButtonSize);
                 
                 LinearLayout.LayoutParams params1_1 = new LinearLayout.LayoutParams(
                         LayoutParams.WRAP_CONTENT,      
@@ -232,6 +256,61 @@ public class HomeActivity extends Activity {
                 params2_4.setMargins(smallButtonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
                 B2_4.setLayoutParams(params2_4);
                 
+                LinearLayout.LayoutParams params3_1 = new LinearLayout.LayoutParams(
+                        LayoutParams.WRAP_CONTENT,      
+                        LayoutParams.WRAP_CONTENT
+                );
+                params3_1.setMargins(smallButtonOuterHorizontalPadding, smallButtonOuterVerticalPadding+buttonSize+buttonInnerVerticalPadding, 0, 0);
+                B3_1.setLayoutParams(params3_1);
+                
+                LinearLayout.LayoutParams params3_2 = new LinearLayout.LayoutParams(
+                        LayoutParams.WRAP_CONTENT,      
+                        LayoutParams.WRAP_CONTENT
+                );
+                params3_2.setMargins(smallButtonInnerHorizontalPadding, smallButtonOuterVerticalPadding+buttonSize+buttonInnerVerticalPadding, 0, 0);
+                B3_2.setLayoutParams(params3_2);
+                
+                LinearLayout.LayoutParams params3_3 = new LinearLayout.LayoutParams(
+                        LayoutParams.WRAP_CONTENT,      
+                        LayoutParams.WRAP_CONTENT
+                );
+                params3_3.setMargins(smallButtonOuterHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
+                B3_3.setLayoutParams(params3_3);
+                
+                LinearLayout.LayoutParams params3_4 = new LinearLayout.LayoutParams(
+                        LayoutParams.WRAP_CONTENT,      
+                        LayoutParams.WRAP_CONTENT
+                );
+                params3_4.setMargins(smallButtonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
+                B3_4.setLayoutParams(params3_4);
+                
+                LinearLayout.LayoutParams params4_1 = new LinearLayout.LayoutParams(
+                        LayoutParams.WRAP_CONTENT,      
+                        LayoutParams.WRAP_CONTENT
+                );
+                params4_1.setMargins(smallButtonOuterHorizontalPadding+buttonSize+buttonInnerHorizontalPadding, smallButtonOuterVerticalPadding+buttonSize+buttonInnerVerticalPadding, 0, 0);
+                B4_1.setLayoutParams(params4_1);
+                
+                LinearLayout.LayoutParams params4_2 = new LinearLayout.LayoutParams(
+                        LayoutParams.WRAP_CONTENT,      
+                        LayoutParams.WRAP_CONTENT
+                );
+                params4_2.setMargins(smallButtonInnerHorizontalPadding, smallButtonOuterVerticalPadding+buttonSize+buttonInnerVerticalPadding, 0, 0);
+                B4_2.setLayoutParams(params4_2);
+                
+                LinearLayout.LayoutParams params4_3 = new LinearLayout.LayoutParams(
+                        LayoutParams.WRAP_CONTENT,      
+                        LayoutParams.WRAP_CONTENT
+                );
+                params4_3.setMargins(smallButtonOuterHorizontalPadding+buttonSize+buttonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
+                B4_3.setLayoutParams(params4_3);
+                
+                LinearLayout.LayoutParams params4_4 = new LinearLayout.LayoutParams(
+                        LayoutParams.WRAP_CONTENT,      
+                        LayoutParams.WRAP_CONTENT
+                );
+                params4_4.setMargins(smallButtonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
+                B4_4.setLayoutParams(params4_4);
                 
                 
                 
@@ -254,6 +333,14 @@ public class HomeActivity extends Activity {
         B2_2 = (Button) findViewById(R.id.B2_2);
         B2_3 = (Button) findViewById(R.id.B2_3);
         B2_4 = (Button) findViewById(R.id.B2_4);
+        B3_1 = (Button) findViewById(R.id.B3_1);
+        B3_2 = (Button) findViewById(R.id.B3_2);
+        B3_3 = (Button) findViewById(R.id.B3_3);
+        B3_4 = (Button) findViewById(R.id.B3_4);
+        B4_1 = (Button) findViewById(R.id.B4_1);
+        B4_2 = (Button) findViewById(R.id.B4_2);
+        B4_3 = (Button) findViewById(R.id.B4_3);
+        B4_4 = (Button) findViewById(R.id.B4_4);
         
         
         OnClickListener listener = new Button_Listener();
