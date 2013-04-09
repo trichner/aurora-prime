@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.RelativeLayout;
+//import android.widget.RelativeLayout;
 import android.content.Intent;
 import android.graphics.Rect;
 
@@ -43,20 +43,28 @@ public class HomeActivity extends Activity {
 
 		public void onClick(View v) {
 			// get id of button pressed, send intent and start ListActivity
-			Intent i=null;
+			//Intent i=null;
 			switch (v.getId())
 			{
-			case R.id.button1: i = new Intent(HomeActivity.this, ListActivity.class);
-							   i.putExtra("sourceButton", "button1"); break;
-			case R.id.button2: i = new Intent(HomeActivity.this, ListActivity.class);
-			   				   i.putExtra("sourceButton", "button2"); break;
-			case R.id.button3: i = new Intent(HomeActivity.this, ListActivity.class);
-							   i.putExtra("sourceButton", "button3"); break;
-			case R.id.button4: i = new Intent(HomeActivity.this, ListActivity.class);
-							   i.putExtra("sourceButton", "button4"); break;
+			case R.id.button1: 	switchButtonVisibility(1);
+							   	//i = new Intent(HomeActivity.this, ListActivity.class);
+							   	//i.putExtra("sourceButton", "button1"); 
+								break;
+			case R.id.button2: 	switchButtonVisibility(2);
+								//i = new Intent(HomeActivity.this, ListActivity.class);
+			   				   	//i.putExtra("sourceButton", "button2"); 
+								break;
+			case R.id.button3: 	switchButtonVisibility(3);
+								//i = new Intent(HomeActivity.this, ListActivity.class);
+							   	//i.putExtra("sourceButton", "button3"); 
+								break;
+			case R.id.button4:	switchButtonVisibility(4);
+								//i = new Intent(HomeActivity.this, ListActivity.class);
+							   	//i.putExtra("sourceButton", "button4"); 
+								break;
 			}
 			Log.d(TAG, "onClicked");
-			startActivity(i);
+			//startActivity(i);
 		}
 		
 	}
@@ -341,7 +349,22 @@ public class HomeActivity extends Activity {
         B4_2 = (Button) findViewById(R.id.B4_2);
         B4_3 = (Button) findViewById(R.id.B4_3);
         B4_4 = (Button) findViewById(R.id.B4_4);
-        
+        B1_1.setVisibility(4);
+		B1_2.setVisibility(4);
+		B1_3.setVisibility(4);
+		B1_4.setVisibility(4);
+        B2_1.setVisibility(4);
+		B2_2.setVisibility(4);
+		B2_3.setVisibility(4);
+		B2_4.setVisibility(4);
+		B3_1.setVisibility(4);
+		B3_2.setVisibility(4);
+		B3_3.setVisibility(4);
+		B3_4.setVisibility(4);
+		B4_1.setVisibility(4);
+		B4_2.setVisibility(4);
+		B4_3.setVisibility(4);
+		B4_4.setVisibility(4);
         
         OnClickListener listener = new Button_Listener();
         
@@ -351,6 +374,84 @@ public class HomeActivity extends Activity {
         button4.setOnClickListener(listener);
         
        
+    }
+    
+    // make small buttons visible if field button is clicked, make small buttons invisible if clicked again or another
+    // field is clicked
+    private void switchButtonVisibility (int Field){
+    	switch (Field){
+    		case 1: if(B1_1.getVisibility()==0) B1_1.setVisibility(4); else B1_1.setVisibility(0);
+    				if(B1_2.getVisibility()==0) B1_2.setVisibility(4); else B1_2.setVisibility(0);
+    				if(B1_3.getVisibility()==0) B1_3.setVisibility(4); else B1_3.setVisibility(0);
+    				if(B1_4.getVisibility()==0) B1_4.setVisibility(4); else B1_4.setVisibility(0);
+    				B2_1.setVisibility(4);
+    				B2_2.setVisibility(4);
+    				B2_3.setVisibility(4);
+    				B2_4.setVisibility(4);
+    				B3_1.setVisibility(4);
+    				B3_2.setVisibility(4);
+    				B3_3.setVisibility(4);
+    				B3_4.setVisibility(4);
+    				B4_1.setVisibility(4);
+    				B4_2.setVisibility(4);
+    				B4_3.setVisibility(4);
+    				B4_4.setVisibility(4);
+    				break;
+    				
+    		case 2: if(B2_1.getVisibility()==0) B2_1.setVisibility(4); else B2_1.setVisibility(0);
+					if(B2_2.getVisibility()==0) B2_2.setVisibility(4); else B2_2.setVisibility(0);
+					if(B2_3.getVisibility()==0) B2_3.setVisibility(4); else B2_3.setVisibility(0);
+					if(B2_4.getVisibility()==0) B2_4.setVisibility(4); else B2_4.setVisibility(0);
+					B1_1.setVisibility(4);
+					B1_2.setVisibility(4);
+					B1_3.setVisibility(4);
+					B1_4.setVisibility(4);
+					B3_1.setVisibility(4);
+					B3_2.setVisibility(4);
+					B3_3.setVisibility(4);
+					B3_4.setVisibility(4);
+					B4_1.setVisibility(4);
+					B4_2.setVisibility(4);
+					B4_3.setVisibility(4);
+					B4_4.setVisibility(4);
+					break;
+					
+    		case 3: if(B3_1.getVisibility()==0) B3_1.setVisibility(4); else B3_1.setVisibility(0);
+					if(B3_2.getVisibility()==0) B3_2.setVisibility(4); else B3_2.setVisibility(0);
+					if(B3_3.getVisibility()==0) B3_3.setVisibility(4); else B3_3.setVisibility(0);
+					if(B3_4.getVisibility()==0) B3_4.setVisibility(4); else B3_4.setVisibility(0);
+					B1_1.setVisibility(4);
+					B1_2.setVisibility(4);
+					B1_3.setVisibility(4);
+					B1_4.setVisibility(4);
+					B2_1.setVisibility(4);
+					B2_2.setVisibility(4);
+					B2_3.setVisibility(4);
+					B2_4.setVisibility(4);
+					B4_1.setVisibility(4);
+					B4_2.setVisibility(4);
+					B4_3.setVisibility(4);
+					B4_4.setVisibility(4);
+					break;
+					
+    		case 4: if(B4_1.getVisibility()==0) B4_1.setVisibility(4); else B4_1.setVisibility(0);
+    				if(B4_2.getVisibility()==0) B4_2.setVisibility(4); else B4_2.setVisibility(0);
+    				if(B4_3.getVisibility()==0) B4_3.setVisibility(4); else B4_3.setVisibility(0);
+					if(B4_4.getVisibility()==0) B4_4.setVisibility(4); else B4_4.setVisibility(0);
+					B1_1.setVisibility(4);
+					B1_2.setVisibility(4);
+					B1_3.setVisibility(4);
+					B1_4.setVisibility(4);
+					B2_1.setVisibility(4);
+					B2_2.setVisibility(4);
+					B2_3.setVisibility(4);
+					B2_4.setVisibility(4);
+					B3_1.setVisibility(4);
+					B3_2.setVisibility(4);
+					B3_3.setVisibility(4);
+					B3_4.setVisibility(4);
+					break;
+    	}
     }
 
 }
