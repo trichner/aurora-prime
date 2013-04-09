@@ -134,7 +134,7 @@ public class HomeActivity extends Activity {
             	smallButtonOuterVerticalPadding = (int) buttonOuterVerticalPadding-(smallButtonSize/2);
             	smallButtonInnerHorizontalPadding = smallButtonInnerVerticalPadding = smallButtonSize;
             	
-            	Log.d(TAG, "smallbuttonSize = " + smallButtonSize + " smallButtonOuterHorizontalPadding = " + smallButtonOuterHorizontalPadding + " smallButtonOuterVerticalPadding " + smallButtonOuterVerticalPadding);
+            	Log.d(TAG, "smallbuttonSize = " + smallButtonSize);
             	
                 // set custom view dimensions
                 button1.setHeight(buttonSize);
