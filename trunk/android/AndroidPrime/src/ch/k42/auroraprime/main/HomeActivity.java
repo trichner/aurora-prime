@@ -48,7 +48,10 @@ public class HomeActivity extends Activity {
 	int smallButtonInnerHorizontalPadding = 0;
 	int smallButtonInnerVerticalPadding = 0;
 	
-	DeviceDiscovery deviceDiscoverer;
+	IDeviceDiscovery deviceDiscoverer;
+	PeriodicTaskPerformer deviceListUpdater;
+	
+	List<ALDevice> deviceList;
 	
 	//listener for the four fields
 	private class bigButtonListener implements OnClickListener {
@@ -128,6 +131,7 @@ public class HomeActivity extends Activity {
 	Button B4_4;
 	
 	Spinner deviceListSpinner;
+
 	
     /** Called when the activity is first created. */
     @Override
@@ -412,8 +416,22 @@ public class HomeActivity extends Activity {
         button4.setOnClickListener(bigListener);
         deviceListSpinner.setOnItemSelectedListener(spinnerListener);
         
-        refreshDeviceList();
-       
+        //Create a new DeviceDiscoverer
+        deviceDiscoverer = IDeviceDiscoveryFactory.getInstance();
+        
+        // create a new PeriodicTaskPerformer who refreshes the Device List every 20 seonds
+        deviceListUpdater = new PeriodicTaskPerformer(new Runnable() {
+            public void run() {
+               refreshDeviceList();
+            }
+         });
+        // start the Updater
+        deviceListUpdater.startUpdates();
+    }
+    
+    public void onResume(Bundle savedInstanceState) {
+    	
+    
     }
     
     // make small buttons visible if field button is clicked, make small buttons invisible if clicked again or another
@@ -493,19 +511,22 @@ public class HomeActivity extends Activity {
 					break;
     	}
     }
-
+    
+    //method which uses DeviceDiscovery to refresh the deviceList
     private void refreshDeviceList() {
-    	// TODO implement actual usage of device discovery
     	
     	//test list until device discovery is implemented
-    	List<String> testList = new ArrayList<String>();
-    		testList.add("Device 1");
-    		testList.add("Device 2");
-    		testList.add("Device 3");
-    		
-    		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-    				android.R.layout.simple_spinner_dropdown_item,testList);
+//    	List<String> testList = new ArrayList<String>();
+//    		testList.add("Device 1");
+//    		testList.add("Device 2");
+//    		testList.add("Device 3");
+//    		
+    	deviceList = deviceDiscoverer.getDiscoveredDevices();
+    	
+    		ArrayAdapter<ALDevice> dataAdapter = new ArrayAdapter<ALDevice>(this,
+    				android.R.layout.simple_spinner_dropdown_item,deviceList);
     		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     		deviceListSpinner.setAdapter(dataAdapter);
     }
+
 }
