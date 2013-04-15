@@ -62,7 +62,7 @@ public class Frame1bit implements IFrame8x8{
 
     @Override
     public int toBytes8bit(byte[] buf) {
-        return 0;  //TODO To change body of implemented methods use File | Settings | File Templates.
+        return 0;  //TODO Implement an 8bit representation of this
     }
 
     @Override
