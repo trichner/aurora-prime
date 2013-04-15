@@ -1,6 +1,10 @@
 package ch.k42.auroraprime.main;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ch.k42.auroraprime.R;
+import ch.k42.auroraprime.net.*;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,10 +13,15 @@ import android.view.View.OnClickListener;
 //import android.view.ViewGroup;
 //import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.Spinner;
+import android.widget.Toast;
 //import android.widget.RelativeLayout;
 import android.content.Intent;
 import android.graphics.Rect;
@@ -39,7 +48,11 @@ public class HomeActivity extends Activity {
 	int smallButtonInnerHorizontalPadding = 0;
 	int smallButtonInnerVerticalPadding = 0;
 	
-	private class Button_Listener implements OnClickListener {
+	DeviceDiscovery deviceDiscoverer;
+	
+	//listener for the four fields
+	private class bigButtonListener implements OnClickListener {
+
 
 		public void onClick(View v) {
 			// get id of button pressed, send intent and start ListActivity
@@ -69,8 +82,29 @@ public class HomeActivity extends Activity {
 		
 	}
 	
+	//listener for the elements on the deviceList drop-down menu
+	//will try to connect to the selected device in list
+	private class deviceListListener implements OnItemSelectedListener{
+
+		public void onItemSelected(AdapterView<?> parent, View view, int pos,
+				long id) {
+			
+			//toast which gives the selected device for testing
+			Toast.makeText(parent.getContext(), 
+					"OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
+					Toast.LENGTH_SHORT).show();
+			
+		}
+
+		public void onNothingSelected(AdapterView<?> arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
 	
 	private static final String TAG = "HomeActivity";
+	
 	Button button1;
 	Button button2;
 	Button button3;
@@ -92,8 +126,8 @@ public class HomeActivity extends Activity {
 	Button B4_2;
 	Button B4_3;
 	Button B4_4;
-	//LinearLayout buttonRow1;
-	//LinearLayout buttonRow2;
+	
+	Spinner deviceListSpinner;
 	
     /** Called when the activity is first created. */
     @Override
@@ -123,7 +157,7 @@ public class HomeActivity extends Activity {
                 buttonOuterHorizontalPadding = (int)(10*layoutWidth/100);
             	buttonInnerHorizontalPadding = layoutWidth - 2*buttonSize - 2*buttonOuterHorizontalPadding;
             	buttonInnerVerticalPadding = buttonInnerHorizontalPadding;
-            	buttonOuterVerticalPadding = (int) ((layoutHeight - 2*buttonSize - buttonInnerVerticalPadding)/2);
+            	buttonOuterVerticalPadding = (int) ((layoutHeight - 2*buttonSize - buttonInnerVerticalPadding)/1.5);
 
             	Log.d(TAG, "buttonSize = " + buttonSize + " buttonOuterHorizontalPadding = " + buttonOuterHorizontalPadding + " buttonInnerHorizontalPadding = " + buttonInnerHorizontalPadding
             			+ " buttonOuterVerticalPadding = " + buttonOuterVerticalPadding + " buttonInnerVerticalPadding = " + buttonInnerVerticalPadding);
@@ -349,6 +383,9 @@ public class HomeActivity extends Activity {
         B4_2 = (Button) findViewById(R.id.B4_2);
         B4_3 = (Button) findViewById(R.id.B4_3);
         B4_4 = (Button) findViewById(R.id.B4_4);
+        
+        deviceListSpinner = (Spinner) findViewById(R.id.deviceListSpinner);
+        
         B1_1.setVisibility(4);
 		B1_2.setVisibility(4);
 		B1_3.setVisibility(4);
@@ -366,13 +403,16 @@ public class HomeActivity extends Activity {
 		B4_3.setVisibility(4);
 		B4_4.setVisibility(4);
         
-        OnClickListener listener = new Button_Listener();
+        OnClickListener bigListener = new bigButtonListener();
+        deviceListListener spinnerListener = new deviceListListener();
         
-        button1.setOnClickListener(listener);
-        button2.setOnClickListener(listener);
-        button3.setOnClickListener(listener);
-        button4.setOnClickListener(listener);
+        button1.setOnClickListener(bigListener);
+        button2.setOnClickListener(bigListener);
+        button3.setOnClickListener(bigListener);
+        button4.setOnClickListener(bigListener);
+        deviceListSpinner.setOnItemSelectedListener(spinnerListener);
         
+        refreshDeviceList();
        
     }
     
@@ -454,4 +494,18 @@ public class HomeActivity extends Activity {
     	}
     }
 
+    private void refreshDeviceList() {
+    	// TODO implement actual usage of device discovery
+    	
+    	//test list until device discovery is implemented
+    	List<String> testList = new ArrayList<String>();
+    		testList.add("Device 1");
+    		testList.add("Device 2");
+    		testList.add("Device 3");
+    		
+    		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+    				android.R.layout.simple_spinner_dropdown_item,testList);
+    		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    		deviceListSpinner.setAdapter(dataAdapter);
+    }
 }

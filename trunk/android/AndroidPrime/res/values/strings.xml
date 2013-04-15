@@ -1,29 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="hello">Hello World, HomeActivity!</string>
     <string name="app_name">AndroidPrime</string>
     
-    <string name="button1">Feld 1</string>
-    <string name="button2">Feld 2</string>
-    <string name="button3">Feld 3</string>
-    <string name="button4">Feld 4</string>
-
-    <string name="connectButtonText">connect</string>
-    <string name="B1_1">B1_1</string>
-    <string name="B1_2">B1_2</string>
-    <string name="B1_3">B1_3</string><string name="B1_4">B1_4</string><string name="B2_1">B2_1</string>
-    <string name="B2_2">B2_2</string>
+    <string name="button1">Quorg1</string>
+    <string name="button2">Quorg2</string>
+    <string name="button3">Quorg3</string>
+    <string name="button4">Quorg4</string>
+    <string name="B1_1">1_1</string>
+    <string name="B1_2">1_2</string>
+    <string name="B1_3">1_3</string><string name="B1_4">1_4</string><string name="B2_1">2_1</string>
+    <string name="B2_2">2_2</string>
     
     
-    <string name="B2_3">B2_3</string>
-    <string name="B2_4">B2_4</string>
-    <string name="B3_1">B3_1</string>
-    <string name="B3_2">B3_2</string>
-    <string name="B3_3">B3_3</string>
-    <string name="B3_4">B3_4</string>
-    <string name="B4_1">B4_1</string>
-    <string name="B4_2">B4_2</string>
-    <string name="B4_3">B4_3</string>
-    <string name="B4_4">B4_4</string>
+    <string name="B2_3">2_3</string>
+    <string name="B2_4">2_4</string>
+    <string name="B3_1">3_1</string>
+    <string name="B3_2">3_2</string>
+    <string name="B3_3">3_3</string>
+    <string name="B3_4">3_4</string>
+    <string name="B4_1">4_1</string>
+    <string name="B4_2">4_2</string>
+    <string name="B4_3">4_3</string>
+    <string name="B4_4">4_4</string>
 </resources>
