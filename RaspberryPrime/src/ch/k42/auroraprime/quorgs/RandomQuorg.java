@@ -1,5 +1,6 @@
 package ch.k42.auroraprime.quorgs;
 
+import ch.k42.auroraprime.minions.Log;
 import ch.k42.auroraprime.minions.Utils;
 
 /**
@@ -8,23 +9,27 @@ import ch.k42.auroraprime.minions.Utils;
  *
  */
 public class RandomQuorg extends Quorg {
-	private Frame frame = Utils.getRandomFrame();
+	private IFrame8x8 frame = Utils.getRandomFrame1bit();
 
 	@Override
-	public Frame getFrame() {
-		Frame ret = frame;
+	public IFrame8x8 getFrame() {
+		IFrame8x8 ret = frame;
 		this.interrupt();
 		return ret;
 	}
 
 	@Override
 	public void run() {
+        quit=false;
+        Log.d("RandomQuorg","started");
 		while(!quit){
-			frame = Utils.getRandomFrame();
+            Log.d("RandomQuorg","generating random quorg...");
+			frame = Utils.getRandomFrame1bit();
 			
 			try {
-				Thread.sleep(10000);
+				this.sleep(10000);
 			} catch (InterruptedException e) {}
 		}
+        Log.d("RandomQuorg","stopped");
 	}
 }
