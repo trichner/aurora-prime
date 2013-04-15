@@ -6,6 +6,7 @@ public abstract class Quorg extends Thread {
 	
 	public void terminate(){
 		quit = true;
+        this.interrupt();
 	}
     public boolean isRunning(){
         return !quit;

@@ -63,6 +63,7 @@ public class Main {
 
         Executor.getInstance().shutdownNow();
 		sim.disconnect();               // Free Connection
+        Quorgs.getInstance().removeAll();
 	}
 
 }
