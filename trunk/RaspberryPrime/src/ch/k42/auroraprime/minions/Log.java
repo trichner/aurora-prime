@@ -8,6 +8,14 @@ public final class Log {
 	public final static void e(Object msg){
 		System.err.println(msg);
 	}
+    /**
+     * Log error messages
+     * @param tag a Tag specifying the logging class
+     * @param msg message to log
+     */
+    public final static void e(String tag,Object msg){
+        System.err.println(tag + " : " + msg);
+    }
 	/**
 	 * Log verbose messages
 	 * @param msg message to log

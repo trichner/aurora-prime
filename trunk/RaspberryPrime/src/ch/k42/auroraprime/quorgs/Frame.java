@@ -1,6 +1,7 @@
 package ch.k42.auroraprime.quorgs;
 
 import java.awt.Color;
+import java.nio.ByteBuffer;
 
 import ch.k42.auroraprime.minions.Log;
 /**
@@ -16,11 +17,11 @@ public class Frame {
 	
 	// Size of the Matrix
 	public static final int N_ROW = 8;
-	public static final int N_COL = 32;
+	public static final int N_COL = 8;
 	
 	// Bitmask for the % operator for the given size of the matrix, works only if size=2^n
 	private static final int N_ROW_BMASK = 0x07;
-	private static final int N_COL_BMASK = 0x1F;
+	private static final int N_COL_BMASK = 0x07;
 	
 	private Color matrix[][] = new Color[N_ROW][N_COL];
 
@@ -58,9 +59,9 @@ public class Frame {
 	 */
 	public Frame(int r,int g,int b){
 		//this makes sure r,g and b are between 0-255
-		r = r & 0xFF;
-		g = g & 0xFF;
-		b = b & 0xFF;
+		r &= 0xFF;
+		g &= 0xFF;
+		b &= 0xFF;
 		
 		initMatrix(new Color(r,g,b));
 	}

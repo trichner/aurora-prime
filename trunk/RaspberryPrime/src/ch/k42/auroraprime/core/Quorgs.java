@@ -1,4 +1,4 @@
-package ch.k42.auroraprime.ch.k42.auroraprime.core;
+package ch.k42.auroraprime.core;
 
 import ch.k42.auroraprime.quorgs.Quorg;
 
@@ -19,7 +19,7 @@ public class Quorgs {
         quorgs = new HashMap<Integer, Quorg>();
     }
 
-    public Quorgs getInstance(){
+    public static Quorgs getInstance(){
         return  instance;
     }
 

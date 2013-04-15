@@ -8,12 +8,14 @@ import java.awt.Graphics2D;
 import javax.swing.*;
 
 import ch.k42.auroraprime.quorgs.Frame;
+import ch.k42.auroraprime.quorgs.Frame1bit;
+import ch.k42.auroraprime.quorgs.IFrame8x8;
 
 
 public class FrameDrawer extends Canvas{
 	private static final long serialVersionUID = 3931465364089899146L;
 	
-    private Frame frame = new Frame(Color.cyan);
+    private IFrame8x8 frame = new Frame1bit();
     private JFrame jframe;
     
     public void paint(Graphics g) {
@@ -32,7 +34,7 @@ public class FrameDrawer extends Canvas{
 		}
     }
  
-    public void updateFrame(Frame frame){
+    public void updateFrame(IFrame8x8 frame){
     	this.frame = frame;
     	this.repaint();
     }
