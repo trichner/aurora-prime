@@ -102,7 +102,7 @@
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:text="@string/B1_3" />
+                android:text="@string/B1_3"  /> 
 
             <Button
                 android:id="@+id/B1_4"
@@ -248,6 +248,18 @@
                 android:layout_height="wrap_content"
                 android:text="@string/B4_4" />
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <Spinner
+            android:id="@+id/deviceListSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </FrameLayout>
