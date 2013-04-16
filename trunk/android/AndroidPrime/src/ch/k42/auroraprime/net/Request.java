@@ -1,6 +1,8 @@
 package ch.k42.auroraprime.net;
 
-public class Request {
+import java.io.Serializable;
+
+public class Request implements Serializable{
 	public enum Command{
 		SETQUORG,
 		STARTQUORG,
