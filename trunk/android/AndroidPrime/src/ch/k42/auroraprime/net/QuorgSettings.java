@@ -1,6 +1,8 @@
 package ch.k42.auroraprime.net;
 
-public class QuorgSettings {
+import java.io.Serializable;
+
+public class QuorgSettings implements Serializable {
 	private int screen;
 	private int quorgID;
 	private String[] settings;
