@@ -2,7 +2,7 @@ package ch.k42.auroraprime.net;
 
 public class StringHandler extends RequestHandler {
 
-	@Override
+	//@Override
 	public Object getResponse(Object request) {
 		String s = (String) request;
 		System.out.println(s);
