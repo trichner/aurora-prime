@@ -6,8 +6,12 @@ import java.util.List;
 import ch.k42.auroraprime.R;
 import ch.k42.auroraprime.net.*;
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 //import android.view.ViewGroup;
@@ -48,6 +52,8 @@ public class HomeActivity extends Activity {
 	int smallButtonInnerHorizontalPadding = 0;
 	int smallButtonInnerVerticalPadding = 0;
 	
+	Intent i;
+	
 	IDeviceDiscovery deviceDiscoverer;
 	PeriodicTaskPerformer deviceListUpdater;
 	
@@ -55,7 +61,6 @@ public class HomeActivity extends Activity {
 	
 	//listener for the four fields
 	private class bigButtonListener implements OnClickListener {
-
 
 		public void onClick(View v) {
 			// get id of button pressed, send intent and start ListActivity
@@ -85,6 +90,32 @@ public class HomeActivity extends Activity {
 		
 	}
 	
+	//listener for the change module button
+	private class changeModuleListener implements OnClickListener{
+
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			switch (v.getId())
+			{
+			case R.id.B1_3: 	i = new Intent(HomeActivity.this, ListActivity.class);
+							   	//i.putExtra("sourceButton", "button1"); 
+								break;
+			case R.id.B2_3: 	i = new Intent(HomeActivity.this, ListActivity.class);
+			   				   	//i.putExtra("sourceButton", "button2"); 
+								break;
+			case R.id.B3_3: 	i = new Intent(HomeActivity.this, ListActivity.class);
+							   	//i.putExtra("sourceButton", "button3"); 
+								break;
+			case R.id.B4_3:		i = new Intent(HomeActivity.this, ListActivity.class);
+							   	//i.putExtra("sourceButton", "button4"); 
+								break;
+			}
+			Log.d(TAG, "changeModuleClicked");
+			startActivity(i);
+		}
+		
+	}
+	
 	//listener for the elements on the deviceList drop-down menu
 	//will try to connect to the selected device in list
 	private class deviceListListener implements OnItemSelectedListener{
@@ -94,7 +125,7 @@ public class HomeActivity extends Activity {
 			
 			//toast which gives the selected device for testing
 			Toast.makeText(parent.getContext(), 
-					"OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
+					"OnItemSelectedListener : " + parent.getItemAtPosition(pos).getClass(),
 					Toast.LENGTH_SHORT).show();
 			
 		}
@@ -409,15 +440,22 @@ public class HomeActivity extends Activity {
         
         OnClickListener bigListener = new bigButtonListener();
         deviceListListener spinnerListener = new deviceListListener();
+        changeModuleListener buttonChangeModuleListener = new changeModuleListener();
         
         button1.setOnClickListener(bigListener);
         button2.setOnClickListener(bigListener);
         button3.setOnClickListener(bigListener);
         button4.setOnClickListener(bigListener);
+        
+        B1_3.setOnClickListener(buttonChangeModuleListener);
+        B2_3.setOnClickListener(buttonChangeModuleListener);
+        B3_3.setOnClickListener(buttonChangeModuleListener);
+        B4_3.setOnClickListener(buttonChangeModuleListener);
+        
         deviceListSpinner.setOnItemSelectedListener(spinnerListener);
         
         //Create a new DeviceDiscoverer
-        deviceDiscoverer = IDeviceDiscoveryFactory.getInstance();
+        deviceDiscoverer = DeviceDiscoveryFactory.getInstance();
         
         // create a new PeriodicTaskPerformer who refreshes the Device List every 20 seonds
         deviceListUpdater = new PeriodicTaskPerformer(new Runnable() {
@@ -431,7 +469,14 @@ public class HomeActivity extends Activity {
     
     public void onResume(Bundle savedInstanceState) {
     	
+    	deviceListUpdater.startUpdates();
+    	refreshDeviceList();
+    	
+    }
     
+    public void onPause(Bundle savedInstanceState) {
+    	
+    	deviceListUpdater.stopUpdates();
     }
     
     // make small buttons visible if field button is clicked, make small buttons invisible if clicked again or another
@@ -515,18 +560,41 @@ public class HomeActivity extends Activity {
     //method which uses DeviceDiscovery to refresh the deviceList
     private void refreshDeviceList() {
     	
-    	//test list until device discovery is implemented
-//    	List<String> testList = new ArrayList<String>();
-//    		testList.add("Device 1");
-//    		testList.add("Device 2");
-//    		testList.add("Device 3");
-//    		
-    	deviceList = deviceDiscoverer.getDiscoveredDevices();
+    		
+    	new DiscoverDevicesTask().execute();
     	
-    		ArrayAdapter<ALDevice> dataAdapter = new ArrayAdapter<ALDevice>(this,
+    	ArrayAdapter<ALDevice> dataAdapter = new ArrayAdapter<ALDevice>(this,
     				android.R.layout.simple_spinner_dropdown_item,deviceList);
-    		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    		deviceListSpinner.setAdapter(dataAdapter);
+    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    	deviceListSpinner.setAdapter(dataAdapter);
     }
-
+    
+    //Asynk task to discover devices, used in refreshDeviceList
+    private class DiscoverDevicesTask extends AsyncTask<Void,Integer,Integer> {
+		@Override
+		protected Integer doInBackground(Void... params) {
+		deviceList = deviceDiscoverer.getDiscoveredDevices();
+		return null;
+		}	
+    }
+    
+    //onCreateOptionsMenu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+    	MenuInflater inflater = getMenuInflater();
+    	inflater.inflate(R.menu.menu, menu);
+    	return true;
+    }
+    
+    //onOptionsItemSelected
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+    	switch (item.getItemId()){
+    		case R.id.itemPrefs:
+    			startActivity(new Intent(this, PrefsActivity.class));
+    			break;
+    	}
+    	return true;
+    }
+    
 }

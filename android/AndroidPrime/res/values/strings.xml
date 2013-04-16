@@ -22,4 +22,6 @@
     <string name="B4_2">4_2</string>
     <string name="B4_3">4_3</string>
     <string name="B4_4">4_4</string>
+    <string name="usernamePreferenceTitle">Username</string>
+    <string name="stringTitlePrefs">Prefs</string>
 </resources>
