@@ -470,7 +470,6 @@ public class HomeActivity extends Activity {
     public void onResume(Bundle savedInstanceState) {
     	
     	deviceListUpdater.startUpdates();
-    	refreshDeviceList();
     	
     }
     
@@ -559,14 +558,20 @@ public class HomeActivity extends Activity {
     
     //method which uses DeviceDiscovery to refresh the deviceList
     private void refreshDeviceList() {
+//    	
+//    	new DiscoverDevicesTask().execute();
     	
-    		
-    	new DiscoverDevicesTask().execute();
+    	deviceList = deviceDiscoverer.getDiscoveredDevices();
     	
-    	ArrayAdapter<ALDevice> dataAdapter = new ArrayAdapter<ALDevice>(this,
-    				android.R.layout.simple_spinner_dropdown_item,deviceList);
-    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    	deviceListSpinner.setAdapter(dataAdapter);
+//    	ArrayAdapter<ALDevice> dataAdapter = new ArrayAdapter<ALDevice>(this,
+//				android.R.layout.simple_spinner_dropdown_item,deviceList);
+//    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//    	deviceListSpinner.setAdapter(dataAdapter);
+//	
+		ALDeviceAdapter dataAdapter = new ALDeviceAdapter(this,
+			android.R.layout.simple_spinner_dropdown_item,deviceList);
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		deviceListSpinner.setAdapter(dataAdapter);
     }
     
     //Asynk task to discover devices, used in refreshDeviceList
@@ -574,7 +579,7 @@ public class HomeActivity extends Activity {
 		@Override
 		protected Integer doInBackground(Void... params) {
 		deviceList = deviceDiscoverer.getDiscoveredDevices();
-		return null;
+		return 0;
 		}	
     }
     
