@@ -1,6 +1,6 @@
 package ch.k42.auroraprime.net;
 
-public class StringHandler implements RequestHandler {
+public class StringHandler extends RequestHandler {
 
 	@Override
 	public Object getResponse(Object request) {

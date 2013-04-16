@@ -1,5 +1,5 @@
 package ch.k42.auroraprime.net;
 
-public interface RequestHandlerFactory {
-	public RequestHandler getInstance();
+public abstract class RequestHandlerFactory {
+	public abstract RequestHandler getInstance();
 }
