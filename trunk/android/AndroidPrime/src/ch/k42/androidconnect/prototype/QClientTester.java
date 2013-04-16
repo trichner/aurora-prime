@@ -1,7 +1,7 @@
-package ch.k42.auroraprime.net;
+package ch.k42.androidconnect.prototype;
 
 
-public class NetTester {
+public class QClientTester {
 
 	private static void panicHelp(){
 		System.out.println("Usage: java ... command ");
@@ -25,13 +25,8 @@ public class NetTester {
 				panicHelp();
 			}
 			// Start Server
-			 AthmosServer server = new AthmosServer();
-			 server.start(Integer.parseInt(args[1]),new RequestHandlerFactory() {
-					@Override
-					public RequestHandler getInstance() {
-						return new StringHandler();
-					}
-				});
+			 QServer server = new QServer();
+			 server.start(Integer.parseInt(args[1]));
 			 
 			
 		}else if(args[0].equals("client")){
@@ -41,7 +36,7 @@ public class NetTester {
 			}
 			//open connection, send one request
 			try {
-				IClient client = new AthmosClient();
+				QClientImpl client = new QClientImpl();
 				client.connect(args[1], Integer.parseInt(args[2]));
 				System.out.print((String) client.sendRequest("lollll"));
 			} catch (Exception e) {
