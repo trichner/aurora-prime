@@ -18,12 +18,18 @@ public class AndroidPrimeApplication extends Application {
 	}
 
 	IDeviceDiscovery deviceDiscoverer;
+	
 	IClient connectClient;
+	
+	public void newClient() {
+		connectClient = ClientFactory.getInstance();
+	}
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		connectClient = ClientFactory.getInstance();
+		
 	}
 
 }

@@ -2,6 +2,7 @@ package testing;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,21 +19,14 @@ public class DeviceDiscoveryTestdummy implements IDeviceDiscovery {
 
 		list = new ArrayList<ALDevice>();
 		
-		InetAddress inetAddress;
-		try {
-		
-		inetAddress = InetAddress.getByName("1.2.3.4");
+		InetSocketAddress inetAddress;
+		inetAddress = new InetSocketAddress("1.2.3.4", 1337);
 		ALDevice alDevice = new ALDevice(inetAddress, "Horsts Lampe");
 		list.add(alDevice);
 		
-		InetAddress inetAddress2 = InetAddress.getByName("1.2.3.5");
+		InetSocketAddress inetAddress2 = new InetSocketAddress("1.2.3.5", 1337);
 		ALDevice alDevice2 = new ALDevice(inetAddress2, "Manfreds Lampe");
 		list.add(alDevice2);
-		
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		return list;
 	}

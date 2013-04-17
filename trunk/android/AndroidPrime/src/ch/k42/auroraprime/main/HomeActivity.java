@@ -1,5 +1,6 @@
 package ch.k42.auroraprime.main;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,10 +134,17 @@ public class HomeActivity extends Activity {
 			
 			AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
 			
-			if ourApplication.connectClient.isConnected() {
-				
+			if (ourApplication.connectClient.isConnected()) {
+				ourApplication.connectClient.disconnect();
+				ourApplication.newClient();
 			};
-			
+				try {
+					ourApplication.connectClient.connect(targetDevice.getAddress());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					Log.d(TAG, "client Connection Failed!");
+				}
 		}
 
 		public void onNothingSelected(AdapterView<?> arg0) {
