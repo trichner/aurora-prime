@@ -1,29 +1,27 @@
 package ch.k42.auroraprime.net;
 
-import java.net.InetAddress;
+import java.net.InetSocketAddress;
 
 public class ALDevice {
-	private InetAddress address;
+	private InetSocketAddress address;
 	private String name;
 	private String deviceID;
 	private String version;
 	
-	public ALDevice(InetAddress address, String name, String deviceID, String version){
+	public ALDevice(InetSocketAddress address, String name, String deviceID, String version){
 		this.address = address;
 		this.name = name;
 		this.deviceID = deviceID;
 		this.version = version;
 	}
 	
-	public ALDevice(InetAddress address, String deviceID){
+	public ALDevice(InetSocketAddress address, String deviceID){
 		this(address,"Ambient-Light " + deviceID,deviceID,"0000");
 	}
 	
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
-		//sb.append(this.address.getCanonicalHostName());
-		//sb.append(" : ");
-//		sb.append(this.address.getCanonicalHostName());
+		sb.append(this.address.getHostName());
 		sb.append(" : ");
 		sb.append(this.name);
 		sb.append(" vers.: ");
@@ -39,7 +37,7 @@ public class ALDevice {
 		this.name = name;
 	}
 
-	public InetAddress getAddress() {
+	public InetSocketAddress getAddress() {
 		return address;
 	}
 
@@ -50,11 +48,5 @@ public class ALDevice {
 	public String getVersion() {
 		return version;
 	}
-	@Override
-	public boolean equals(Object o){
-		if(o==null || !(o instanceof ALDevice))
-			return false;
-		ALDevice d = (ALDevice) o;
-		return d.address.equals(address) && d.name.equals(name);
-	}
+	
 }
