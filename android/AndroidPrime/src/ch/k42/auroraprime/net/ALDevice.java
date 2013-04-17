@@ -21,6 +21,8 @@ public class ALDevice {
 	
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
+		//sb.append(this.address.getCanonicalHostName());
+		//sb.append(" : ");
 //		sb.append(this.address.getCanonicalHostName());
 		sb.append(" : ");
 		sb.append(this.name);
@@ -48,5 +50,11 @@ public class ALDevice {
 	public String getVersion() {
 		return version;
 	}
-	
+	@Override
+	public boolean equals(Object o){
+		if(o==null || !(o instanceof ALDevice))
+			return false;
+		ALDevice d = (ALDevice) o;
+		return d.address.equals(address) && d.name.equals(name);
+	}
 }
