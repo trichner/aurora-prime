@@ -23,6 +23,8 @@ private TableRow tableRow4;
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			Intent i = new Intent(ListActivity.this, HomeActivity.class);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); 
+			i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(i);
 		}
 		

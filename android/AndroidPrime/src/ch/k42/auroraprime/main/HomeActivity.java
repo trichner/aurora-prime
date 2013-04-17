@@ -124,10 +124,18 @@ public class HomeActivity extends Activity {
 		public void onItemSelected(AdapterView<?> parent, View view, int pos,
 				long id) {
 			
+			ALDevice targetDevice = ((ALDevice) parent.getItemAtPosition(pos));
+			
 			//toast which gives the selected device for testing
 			Toast.makeText(parent.getContext(), 
-					"Selected " + parent.getItemAtPosition(pos).getClass().getName(),
+					"Selected " + targetDevice.getName(),
 					Toast.LENGTH_SHORT).show();
+			
+			AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
+			
+			if ourApplication.connectClient.isConnected() {
+				
+			};
 			
 		}
 
@@ -389,10 +397,6 @@ public class HomeActivity extends Activity {
                 );
                 params4_4.setMargins(smallButtonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
                 B4_4.setLayoutParams(params4_4);
-                
-                
-                
-                
               
             }
         });
@@ -465,21 +469,23 @@ public class HomeActivity extends Activity {
             }
          });
 //         start the Updater
-      deviceListUpdater.startUpdates();
+        deviceListUpdater.startUpdates();
 //        RefreshDeviceList();
+        Log.d(TAG,"onCreated");
     }
     
     public void onResume(Bundle savedInstanceState) {
-    	
-//    	deviceListUpdater.startUpdates();
+    	super.onResume();
+    	deviceListUpdater.startUpdates();
 //    	new RefreshDeviceList().execute();
-    	RefreshDeviceList();
-    	
+//    	RefreshDeviceList();
+    	Log.d(TAG,"onResumed");
     }
     
     public void onPause(Bundle savedInstanceState) {
-    	
-//    	deviceListUpdater.stopUpdates();
+//    	super.onPause();
+    	deviceListUpdater.stopUpdates();
+    	Log.d(TAG,"onPaused");
     }
     
     // make small buttons visible if field button is clicked, make small buttons invisible if clicked again or another
@@ -575,11 +581,15 @@ public class HomeActivity extends Activity {
 //	    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //	    	deviceListSpinner.setAdapter(dataAdapter);
 	    	
-			ALDeviceAdapter dataAdapter = new ALDeviceAdapter(this,
-			deviceList);
-			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			deviceListSpinner.setAdapter(dataAdapter);
-	    	
+			
+			if (deviceListSpinner.getAdapter() == null){
+				ALDeviceAdapter dataAdapter = new ALDeviceAdapter(this,
+				deviceList);
+				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				deviceListSpinner.setAdapter(dataAdapter);
+			} else {
+				((ALDeviceAdapter)deviceListSpinner.getAdapter()).refill(deviceList);
+			}
 //			return null;
 			
 //		}
