@@ -1,12 +1,12 @@
 package ch.k42.auroraprime.testing;
 
-import java.util.List;
-
 import ch.k42.auroraprime.minions.Log;
-import ch.k42.auroraprime.net.ALDevice;
-import ch.k42.auroraprime.net.DeviceDiscovery;
-import ch.k42.auroraprime.net.IDeviceDiscovery;
-import ch.k42.auroraprime.net.MulticastListener;
+import ch.k42.auroraprime.multicast.ALDevice;
+import ch.k42.auroraprime.multicast.DeviceDiscovery;
+import ch.k42.auroraprime.multicast.IDeviceDiscovery;
+import ch.k42.auroraprime.multicast.MulticastListener;
+
+import java.util.List;
 
 public class MulticastTesting{
 	/**
@@ -36,7 +36,7 @@ public class MulticastTesting{
 	public static void client(){
 		IDeviceDiscovery discovery = new DeviceDiscovery();
 		List<ALDevice> list = discovery.getDiscoveredDevices();
-		Log.v("List of discovered devices:");
+        Log.v("List of discovered devices:");
 		for(ALDevice dev : list){
 			Log.v(dev);
 		}

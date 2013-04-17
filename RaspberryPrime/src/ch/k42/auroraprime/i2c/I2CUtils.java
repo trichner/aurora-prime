@@ -1,4 +1,4 @@
-package ch.k42.auroraprime.i2c.testing;
+package ch.k42.auroraprime.i2c;
 
 import ch.k42.auroraprime.minions.Log;
 import com.pi4j.io.i2c.I2CBus;

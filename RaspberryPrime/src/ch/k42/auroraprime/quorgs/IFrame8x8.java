@@ -1,7 +1,5 @@
 package ch.k42.auroraprime.quorgs;
 
-import ch.k42.auroraprime.minions.Log;
-
 import java.awt.*;
 
 /**

@@ -18,6 +18,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="pi4j-core" level="project" />
+    <orderEntry type="library" name="pi4j-core-javadoc" level="project" />
   </component>
 </module>
 

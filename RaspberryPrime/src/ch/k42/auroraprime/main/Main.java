@@ -57,7 +57,9 @@ public class Main {
         //==== Running
         try {
             Thread.sleep(15000);
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+            Log.e("stahp! what are you doing??!");
+        }
 
         //==== stopping
 
