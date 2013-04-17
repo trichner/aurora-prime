@@ -16,14 +16,14 @@ import android.widget.TextView;
 
 public class ALDeviceAdapter extends ArrayAdapter<ALDevice>{
 
-		Context context;
+		private final Activity activity;
 		int layoutResourceId;
-		List<ALDevice> data = null;
+		List<ALDevice> data;
 		
-		public ALDeviceAdapter(Context context, int layoutResourceId, List<ALDevice> data) {
-			 super(context, layoutResourceId, data);
-			 this.layoutResourceId = layoutResourceId;
-			 this.context = context;
+		public ALDeviceAdapter(Activity activity, List<ALDevice> data) {
+			 super(activity, R.layout.device_spinner_item_row, data);
+			 this.activity = activity;
+//			 this.context = context;
 			 this.data = data;
 		}
 		
@@ -35,8 +35,8 @@ public class ALDeviceAdapter extends ArrayAdapter<ALDevice>{
 			
 			if (row == null)
 			{
-				LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-				row = inflater.inflate(layoutResourceId, null);
+				LayoutInflater inflater = activity.getLayoutInflater();
+				row = inflater.inflate(R.layout.device_spinner_item_row, null);
 			
 			
 				txView = new DeviceListElementView();
@@ -53,6 +53,31 @@ public class ALDeviceAdapter extends ArrayAdapter<ALDevice>{
 			
 		}
 		
+		@Override
+		public View getDropDownView(int position, View convertView,
+				ViewGroup parent) {
+			View row = convertView;
+			DeviceListElementView txView = null;
+			
+			if (row == null)
+			{
+				LayoutInflater inflater = activity.getLayoutInflater();
+				row = inflater.inflate(R.layout.device_spinner_item_row, null);
+			
+			
+				txView = new DeviceListElementView();
+				txView.text = (TextView) row.findViewById(R.id.device_text);
+			
+				row.setTag(txView);
+			} else {
+				txView = (DeviceListElementView) row.getTag();
+			}
+			
+			ALDevice currentDevice = data.get(position);
+			txView.text.setText(currentDevice.getName());
+			return row;
+		}
+
 		protected static class DeviceListElementView {
 			protected TextView text;
 		}

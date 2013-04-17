@@ -57,7 +57,8 @@ public class HomeActivity extends Activity {
 	IDeviceDiscovery deviceDiscoverer;
 	PeriodicTaskPerformer deviceListUpdater;
 	
-	List<ALDevice> deviceList;
+	List<ALDevice> deviceList = new ArrayList<ALDevice>();
+	ALDevice selectedDevice;
 	
 	//listener for the four fields
 	private class bigButtonListener implements OnClickListener {
@@ -125,7 +126,7 @@ public class HomeActivity extends Activity {
 			
 			//toast which gives the selected device for testing
 			Toast.makeText(parent.getContext(), 
-					"OnItemSelectedListener : " + parent.getItemAtPosition(pos).getClass(),
+					"Selected " + parent.getItemAtPosition(pos).getClass().getName(),
 					Toast.LENGTH_SHORT).show();
 			
 		}
@@ -457,25 +458,28 @@ public class HomeActivity extends Activity {
         //Create a new DeviceDiscoverer
         deviceDiscoverer = DeviceDiscoveryFactory.getInstance();
         
-        // create a new PeriodicTaskPerformer who refreshes the Device List every 20 seonds
+//         create a new PeriodicTaskPerformer who refreshes the Device List every 20 seonds
         deviceListUpdater = new PeriodicTaskPerformer(new Runnable() {
             public void run() {
-               refreshDeviceList();
+               RefreshDeviceList();
             }
          });
-        // start the Updater
-        deviceListUpdater.startUpdates();
+//         start the Updater
+      deviceListUpdater.startUpdates();
+//        RefreshDeviceList();
     }
     
     public void onResume(Bundle savedInstanceState) {
     	
-    	deviceListUpdater.startUpdates();
+//    	deviceListUpdater.startUpdates();
+//    	new RefreshDeviceList().execute();
+    	RefreshDeviceList();
     	
     }
     
     public void onPause(Bundle savedInstanceState) {
     	
-    	deviceListUpdater.stopUpdates();
+//    	deviceListUpdater.stopUpdates();
     }
     
     // make small buttons visible if field button is clicked, make small buttons invisible if clicked again or another
@@ -557,39 +561,46 @@ public class HomeActivity extends Activity {
     }
     
     //method which uses DeviceDiscovery to refresh the deviceList
-    private void refreshDeviceList() {
+    public void RefreshDeviceList() {
 //    	
-//    	new DiscoverDevicesTask().execute();
     	
-    	deviceList = deviceDiscoverer.getDiscoveredDevices();
-    	
-//    	ArrayAdapter<ALDevice> dataAdapter = new ArrayAdapter<ALDevice>(this,
-//				android.R.layout.simple_spinner_dropdown_item,deviceList);
-//    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//    	deviceListSpinner.setAdapter(dataAdapter);
-//	
-		ALDeviceAdapter dataAdapter = new ALDeviceAdapter(this,
-			android.R.layout.simple_spinner_dropdown_item,deviceList);
-		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		deviceListSpinner.setAdapter(dataAdapter);
+//		@Override
+//		protected Integer doInBackground(Void... arg0) {
+			// TODO Auto-generated method stub
+			
+			deviceList = deviceDiscoverer.getDiscoveredDevices();
+	    	
+//	    	ArrayAdapter<ALDevice> dataAdapter = new ArrayAdapter<ALDevice>(this,
+//					android.R.layout.simple_spinner_dropdown_item,deviceList);
+//	    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//	    	deviceListSpinner.setAdapter(dataAdapter);
+	    	
+			ALDeviceAdapter dataAdapter = new ALDeviceAdapter(this,
+			deviceList);
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			deviceListSpinner.setAdapter(dataAdapter);
+	    	
+//			return null;
+			
+//		}
     }
     
-    //Asynk task to discover devices, used in refreshDeviceList
-    private class DiscoverDevicesTask extends AsyncTask<Void,Integer,Integer> {
-		@Override
-		protected Integer doInBackground(Void... params) {
-		deviceList = deviceDiscoverer.getDiscoveredDevices();
-		return 0;
-		}	
-    }
-    
-    //onCreateOptionsMenu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-    	MenuInflater inflater = getMenuInflater();
-    	inflater.inflate(R.menu.menu, menu);
-    	return true;
-    }
+//    //Asynk task to discover devices, used in refreshDeviceList
+//    private class DiscoverDevicesTask extends AsyncTask<Void,Integer,Integer> {
+//		@Override
+//		protected Integer doInBackground(Void... params) {
+//		deviceList = deviceDiscoverer.getDiscoveredDevices();
+//		return 0;
+//		}	
+//    }
+//    
+//    //onCreateOptionsMenu
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu){
+//    	MenuInflater inflater = getMenuInflater();
+//    	inflater.inflate(R.menu.menu, menu);
+//    	return true;
+//    }
     
     //onOptionsItemSelected
     @Override

@@ -21,7 +21,7 @@ public class ALDevice {
 	
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
-		sb.append(this.address.getCanonicalHostName());
+//		sb.append(this.address.getCanonicalHostName());
 		sb.append(" : ");
 		sb.append(this.name);
 		sb.append(" vers.: ");
