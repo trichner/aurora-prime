@@ -1,5 +1,7 @@
 package ch.k42.auroraprime.main;
 
+import ch.k42.auroraprime.net.ClientFactory;
+import ch.k42.auroraprime.net.IClient;
 import ch.k42.auroraprime.net.IDeviceDiscovery;
 import android.app.Application;
 
@@ -16,10 +18,12 @@ public class AndroidPrimeApplication extends Application {
 	}
 
 	IDeviceDiscovery deviceDiscoverer;
+	IClient connectClient;
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		connectClient = ClientFactory.getInstance();
 	}
 
 }

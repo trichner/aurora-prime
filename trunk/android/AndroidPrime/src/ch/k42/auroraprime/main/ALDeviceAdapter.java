@@ -78,6 +78,12 @@ public class ALDeviceAdapter extends ArrayAdapter<ALDevice>{
 			return row;
 		}
 
+		public void refill(List<ALDevice> newData){
+			this.clear();
+			addAll(newData);
+			notifyDataSetChanged();
+		}
+		
 		protected static class DeviceListElementView {
 			protected TextView text;
 		}
