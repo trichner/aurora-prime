@@ -1,4 +1,4 @@
-package ch.k42.auroraprime.net;
+package ch.k42.auroraprime.multicast;
 
 public class IDeviceDiscoveryFactory {
 	public static IDeviceDiscovery getInstance(){

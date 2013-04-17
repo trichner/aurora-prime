@@ -1,4 +1,4 @@
-package ch.k42.auroraprime.net;
+package ch.k42.auroraprime.multicast;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import ch.k42.auroraprime.minions.Log;
 
 public class DeviceDiscovery implements IDeviceDiscovery {
+    private static final String TAG = "DEVICE DISCOVERY";
 	private final static int TIMEOUT = 5000;
 	@Override
 	public List<ALDevice> getDiscoveredDevices() {
@@ -21,7 +22,7 @@ public class DeviceDiscovery implements IDeviceDiscovery {
 			//---- print discovered devices
 			Log.v("Found devices:");
 			for(ALDevice dev : list){
-				Log.d("DEVICE DISCOVERY",dev);
+				Log.d(TAG,dev);
 			}
 		} catch (SocketException e) {
 			Log.e(e.getMessage());

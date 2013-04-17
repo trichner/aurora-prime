@@ -1,9 +1,9 @@
 package ch.k42.auroraprime.i2c;
 
 import ch.k42.auroraprime.executors.Sender;
-import ch.k42.auroraprime.i2c.testing.I2CUtils;
 import ch.k42.auroraprime.minions.Log;
 import ch.k42.auroraprime.quorgs.IFrame8x8;
+import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
 
 import java.io.IOException;
@@ -22,6 +22,7 @@ public class I2CSender implements Sender {
     private static final String TAG = "I2CSender";
     private Map<Integer,IMatrix> matrices;
     private boolean isConnected;
+    private I2CBus bus;
 
     @Override
     public boolean sendFrame(int id, IFrame8x8 f) {
@@ -34,9 +35,11 @@ public class I2CSender implements Sender {
     @Override
     public boolean connect() {
         List<I2CDevice> devices;
+
         matrices = new HashMap<Integer, IMatrix>();
         try {
-            devices = I2CUtils.discoverDevices(I2CUtils.getDefaultBus());
+            bus = I2CUtils.getDefaultBus();
+            devices = I2CUtils.discoverDevices(bus);
             for(int i=0;i<devices.size();i++){
                 matrices.put(i,new I2CMatrix(i,devices.get(i))); // TODO make ID less random
             }
@@ -52,6 +55,11 @@ public class I2CSender implements Sender {
     @Override
     public boolean disconnect() {
         isConnected = false;
+        try {
+            bus.close();
+        } catch (IOException e) {
+            Log.e(TAG,"Failed to close i2c bus: "+e.getMessage());
+        }
         return true;  //TODO close i2c bus? -> better not?
     }
 

@@ -1,4 +1,4 @@
-package ch.k42.auroraprime.net;
+package ch.k42.auroraprime.multicast;
 
 import java.io.IOException;
 import java.net.*;

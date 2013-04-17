@@ -17,7 +17,7 @@ public class Frame1bit implements IFrame8x8{
     private long green=0;
     private long blue=0;
 
-    public Frame1bit(){};
+    public Frame1bit(){}
 
     public Frame1bit(long r,long g,long b){
         this.red = r;
@@ -75,6 +75,6 @@ public class Frame1bit implements IFrame8x8{
             green >>>= 8;
             blue  >>>= 8;
         }
-        return 3*SIZE;  //To change body of implemented methods use File | Settings | File Templates.
+        return 3*SIZE;
     }
 }
