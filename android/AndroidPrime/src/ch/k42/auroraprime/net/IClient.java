@@ -1,6 +1,8 @@
 package ch.k42.auroraprime.net;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 
 public interface IClient {
 	public class UnableToConnectException extends Exception{
@@ -17,9 +19,9 @@ public interface IClient {
 	 * Opens a socket to the specified ip and port
 	 * @param ip servers address (IP)
 	 * @param port servers port
-	 * @throws IOException if unable to connect
+	 * @throws java.io.IOException if unable to connect
 	 */
-	public void connect(String ip, int port) throws IOException;
+	public void connect(InetSocketAddress ip) throws IOException;
 	/**
 	 * Closes the socket
 	 */

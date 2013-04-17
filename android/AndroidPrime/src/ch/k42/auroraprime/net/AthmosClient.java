@@ -11,10 +11,9 @@ public class AthmosClient implements IClient {
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 	
-	public void connect(String ip, int port) throws IOException {
+	public void connect(InetSocketAddress ip) throws IOException {
 			socket = new Socket();
-			SocketAddress sockaddr = new InetSocketAddress(ip, port);
-			socket.connect(sockaddr, 3000);
+			socket.connect(ip, 3000);
 			out = new ObjectOutputStream(socket.getOutputStream());
 			in = new ObjectInputStream(socket.getInputStream());
 			connected = true;

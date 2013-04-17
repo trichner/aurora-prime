@@ -1,5 +1,7 @@
 package ch.k42.auroraprime.net;
 
+import java.net.InetSocketAddress;
+
 
 public class NetTester {
 
@@ -42,7 +44,7 @@ public class NetTester {
 			//open connection, send one request
 			try {
 				IClient client = new AthmosClient();
-				client.connect(args[1], Integer.parseInt(args[2]));
+				client.connect(new InetSocketAddress(args[1],Integer.parseInt(args[2])));
 				System.out.print((String) client.sendRequest("lollll"));
 			} catch (Exception e) {
 				System.out.print("Q: Something failed");
