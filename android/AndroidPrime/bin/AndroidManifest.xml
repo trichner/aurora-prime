@@ -20,7 +20,6 @@
             
         </activity>
         <activity android:name=".main.ListActivity"></activity>
-        <activity android:name=".main.PrefsActivity"></activity>
         
     </application>
 
