@@ -140,19 +140,29 @@ public class HomeActivity extends Activity {
 			
 			AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
 			
-//			if (ourApplication.connectClient.isConnected()) {
-//				ourApplication.connectClient.disconnect();
-//				ourApplication.newClient();
-//			};
-//				try {
-//					ourApplication.connectClient.connect(targetDevice.getAddress());
+			if (ourApplication.connectClient.isConnected()) {
+				ourApplication.connectClient.disconnect();
+				ourApplication.newClient();
+				Log.d(TAG, "new Client Created");
+			};
+				try {
+//					ourApplication.connectClient.connect(netTesterDevice.getAddress());
+					
+					//test client
+					IClient client = new AthmosClient();
+					client.connect(netTesterDevice.getAddress());
+					Log.d(TAG, "Connection Attempt");
 //					String s = (String) ourApplication.connectClient.sendRequest("lollll");
-//					Log.d(TAG, "request sent, response: " + s);
-//				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					
+					//test send
+					String s = (String) client.sendRequest("lollll");
+					Log.d(TAG, "request sent, response: " + s);
+					
+				} catch (IOException e) {
+//					 TODO Auto-generated catch block 
 //					e.printStackTrace();
-//					Log.d(TAG, "client Connection Failed!");
-//				}
+					Log.d(TAG, "client Connection Failed!");
+				}
 		}
 
 		public void onNothingSelected(AdapterView<?> arg0) {
