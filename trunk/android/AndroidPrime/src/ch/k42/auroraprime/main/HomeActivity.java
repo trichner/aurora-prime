@@ -1,6 +1,7 @@
 package ch.k42.auroraprime.main;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,6 +128,11 @@ public class HomeActivity extends Activity {
 			
 			ALDevice targetDevice = ((ALDevice) parent.getItemAtPosition(pos));
 			
+			//adress for net tester
+			InetSocketAddress inetAddress;
+			inetAddress = new InetSocketAddress("127.0.0.1", 1337);
+			ALDevice netTesterDevice = new ALDevice(inetAddress, "NetTester");
+			
 			//toast which gives the selected device for testing
 			Toast.makeText(parent.getContext(), 
 					"Selected " + targetDevice.getName(),
@@ -139,7 +145,9 @@ public class HomeActivity extends Activity {
 				ourApplication.newClient();
 			};
 				try {
-					ourApplication.connectClient.connect(targetDevice.getAddress());
+					ourApplication.connectClient.connect(netTesterDevice.getAddress());
+					String s = (String) ourApplication.connectClient.sendRequest("lollll");
+					Log.d(TAG, "request sent, response: " + s);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
