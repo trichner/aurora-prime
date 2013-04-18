@@ -140,19 +140,19 @@ public class HomeActivity extends Activity {
 			
 			AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
 			
-			if (ourApplication.connectClient.isConnected()) {
-				ourApplication.connectClient.disconnect();
-				ourApplication.newClient();
-			};
-				try {
-					ourApplication.connectClient.connect(netTesterDevice.getAddress());
-					String s = (String) ourApplication.connectClient.sendRequest("lollll");
-					Log.d(TAG, "request sent, response: " + s);
-				} catch (IOException e) {
+//			if (ourApplication.connectClient.isConnected()) {
+//				ourApplication.connectClient.disconnect();
+//				ourApplication.newClient();
+//			};
+//				try {
+//					ourApplication.connectClient.connect(targetDevice.getAddress());
+//					String s = (String) ourApplication.connectClient.sendRequest("lollll");
+//					Log.d(TAG, "request sent, response: " + s);
+//				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
-					Log.d(TAG, "client Connection Failed!");
-				}
+//					e.printStackTrace();
+//					Log.d(TAG, "client Connection Failed!");
+//				}
 		}
 
 		public void onNothingSelected(AdapterView<?> arg0) {
