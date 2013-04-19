@@ -13,15 +13,17 @@ package ch.k24.auroraprime.quorg;
 public class Quorg {
 
 		private int image;
+		private int quorgID;
 		private String name;
 		private boolean hasSettings;
 		
 		// constructors
 		
-		public Quorg(int image, String name, boolean hasSettings) {
+		public Quorg(int image,int quorgID, String name, boolean hasSettings) {
 			
 			super();
 			this.image = image;
+			this.quorgID = quorgID;
 			this.name = name;
 			this.hasSettings = hasSettings;
 			
@@ -44,11 +46,17 @@ public class Quorg {
 		public void setName(String name) {
 			this.name = name;
 		}
-		public boolean isHasSettings() {
+		public boolean hasSettings() {
 			return hasSettings;
 		}
 		public void setHasSettings(boolean hasSettings) {
 			this.hasSettings = hasSettings;
+		}
+		public int getQuorgID() {
+			return quorgID;
+		}
+		public void setQuorgID(int quorgID) {
+			this.quorgID = quorgID;
 		}
 
 		
