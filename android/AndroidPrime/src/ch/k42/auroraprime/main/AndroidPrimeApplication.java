@@ -30,6 +30,7 @@ public class AndroidPrimeApplication extends Application {
 		super.onCreate();
 		connectClient = ClientFactory.getInstance();
 		
+		
 	}
 
 }

@@ -15,22 +15,22 @@ public class StaticQuorgListGenerator implements IQuorgListGenerator {
 		
 		//Red LED Quorg definition
 		
-		Quorg redLedQuorg = new Quorg(R.drawable.redlight, "Red LED Field", false);
+		Quorg redLedQuorg = new Quorg(R.drawable.redlight,001, "Red LED Field", false);
 		list.add(redLedQuorg);
 		
 		//Green LED Quorg definition
 		
-		Quorg greenLedQuorg = new Quorg(R.drawable.greenlight, "Green LED Field", false);
+		Quorg greenLedQuorg = new Quorg(R.drawable.greenlight,002, "Green LED Field", false);
 		list.add(greenLedQuorg);
 				
 		//Blue LED Quorg definition
 				
-		Quorg blueLedQuorg = new Quorg(R.drawable.bluelight, "Blue LED Field", false);
+		Quorg blueLedQuorg = new Quorg(R.drawable.bluelight,003, "Blue LED Field", false);
 		list.add(blueLedQuorg);
 		
 		//Clock Quorg definition
 		
-		Quorg clockQuorg = new Quorg(R.drawable.clock, "Clock", false);
+		Quorg clockQuorg = new Quorg(R.drawable.clock,004, "Clock", true);
 		list.add(clockQuorg);
 
 		return list;

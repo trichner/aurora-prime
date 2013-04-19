@@ -87,7 +87,7 @@ public class HomeActivity extends Activity {
 							   	//i.putExtra("sourceButton", "button4"); 
 								break;
 			}
-			Log.d(TAG, "onClicked");
+			Log.d(TAG, "onBigButtonClicked");
 			//startActivity(i);
 		}
 		
@@ -100,16 +100,20 @@ public class HomeActivity extends Activity {
 			// TODO Auto-generated method stub
 			switch (v.getId())
 			{
-			case R.id.B1_3: 	i = new Intent(HomeActivity.this, ListActivity.class);
+			case R.id.B1_3: 	switchButtonVisibility(1);
+								i = new Intent(HomeActivity.this, ListActivity.class);
 							   	//i.putExtra("sourceButton", "button1"); 
 								break;
-			case R.id.B2_3: 	i = new Intent(HomeActivity.this, ListActivity.class);
+			case R.id.B2_3: 	switchButtonVisibility(2);
+								i = new Intent(HomeActivity.this, ListActivity.class);
 			   				   	//i.putExtra("sourceButton", "button2"); 
 								break;
-			case R.id.B3_3: 	i = new Intent(HomeActivity.this, ListActivity.class);
+			case R.id.B3_3: 	switchButtonVisibility(3);
+								i = new Intent(HomeActivity.this, ListActivity.class);
 							   	//i.putExtra("sourceButton", "button3"); 
 								break;
-			case R.id.B4_3:		i = new Intent(HomeActivity.this, ListActivity.class);
+			case R.id.B4_3:		switchButtonVisibility(4);
+								i = new Intent(HomeActivity.this, ListActivity.class);
 							   	//i.putExtra("sourceButton", "button4"); 
 								break;
 			}
@@ -126,43 +130,44 @@ public class HomeActivity extends Activity {
 		public void onItemSelected(AdapterView<?> parent, View view, int pos,
 				long id) {
 			
-			ALDevice targetDevice = ((ALDevice) parent.getItemAtPosition(pos));
+			ALDevice selectedDevice = ((ALDevice) parent.getItemAtPosition(pos));
 			
+			new connectTask().execute();
 			//adress for net tester
-			InetSocketAddress inetAddress;
-			inetAddress = new InetSocketAddress("127.0.0.1", 1337);
-			ALDevice netTesterDevice = new ALDevice(inetAddress, "NetTester");
+//			InetSocketAddress inetAddress;
+//			inetAddress = new InetSocketAddress("172.30.81.242", 1337);
+//			ALDevice netTesterDevice = new ALDevice(inetAddress, "NetTester");
 			
 			//toast which gives the selected device for testing
-			Toast.makeText(parent.getContext(), 
-					"Selected " + targetDevice.getName(),
-					Toast.LENGTH_SHORT).show();
+//			Toast.makeText(parent.getContext(), 
+//					"Selected " + selectedDevice.getName(),
+//					Toast.LENGTH_SHORT).show();
 			
-			AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
-			
-			if (ourApplication.connectClient.isConnected()) {
-				ourApplication.connectClient.disconnect();
-				ourApplication.newClient();
-				Log.d(TAG, "new Client Created");
-			};
-				try {
+//			AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
+//			
+//			if (ourApplication.connectClient.isConnected()) {
+//				ourApplication.connectClient.disconnect();
+//				ourApplication.newClient();
+//				Log.d(TAG, "new Client Created");
+//			};
+//				try {
 //					ourApplication.connectClient.connect(netTesterDevice.getAddress());
 					
 					//test client
-					IClient client = new AthmosClient();
-					client.connect(netTesterDevice.getAddress());
-					Log.d(TAG, "Connection Attempt");
+//					IClient client = ourApplication.connectClient;
+//					Log.d(TAG, "Connection Attempt");
+//					client.connect(netTesterDevice.getAddress());
 //					String s = (String) ourApplication.connectClient.sendRequest("lollll");
 					
 					//test send
-					String s = (String) client.sendRequest("lollll");
-					Log.d(TAG, "request sent, response: " + s);
+//					String s = (String) client.sendRequest("lollll");
+//					Log.d(TAG, "request sent, response: " + s);
 					
-				} catch (IOException e) {
+//				} catch (IOException e) {
 //					 TODO Auto-generated catch block 
 //					e.printStackTrace();
-					Log.d(TAG, "client Connection Failed!");
-				}
+//					Log.d(TAG, "client Connection Failed!");
+//				}
 		}
 
 		public void onNothingSelected(AdapterView<?> arg0) {
@@ -629,8 +634,46 @@ public class HomeActivity extends Activity {
 //		return 0;
 //		}	
 //    }
-//    
-//    //onCreateOptionsMenu
+    
+    private class connectTask extends AsyncTask<Void, Integer, Integer> {
+    	protected Integer doInBackground(Void... params){
+    		
+    		//adress for net tester
+			InetSocketAddress inetAddress;
+			inetAddress = new InetSocketAddress("172.30.81.242", 1337);
+			ALDevice netTesterDevice = new ALDevice(inetAddress, "NetTester");
+			
+			AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
+			
+			if (ourApplication.connectClient.isConnected()) {
+				ourApplication.connectClient.disconnect();
+				ourApplication.newClient();
+				Log.d(TAG, "new Client Created");
+			};
+				try {
+//					ourApplication.connectClient.connect(netTesterDevice.getAddress());
+					
+					//test client
+					IClient client = ourApplication.connectClient;
+					Log.d(TAG, "Connection Attempt");
+					client.connect(netTesterDevice.getAddress());
+//					String s = (String) ourApplication.connectClient.sendRequest("lollll");
+					
+					//test send
+					String s = (String) client.sendRequest("lollll");
+					Log.d(TAG, "request sent, response: " + s);
+					
+				} catch (IOException e) {
+//					 TODO Auto-generated catch block 
+//					e.printStackTrace();
+					Log.d(TAG, "client Connection Failed!");
+				}
+    		
+			return 0;
+    	}
+    }
+    
+    //onCreateOptionsMenu
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu){
 //    	MenuInflater inflater = getMenuInflater();

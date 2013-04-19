@@ -6,6 +6,7 @@ public class QuorgSettings implements Serializable {
 	private int screen;
 	private int quorgID;
 	private String[] settings;
+	
 	public int getScreen() {
 		return screen;
 	}
