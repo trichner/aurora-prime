@@ -4,6 +4,6 @@ import testing.DeviceDiscoveryTestdummy;
 
 public class DeviceDiscoveryFactory {
 	public static IDeviceDiscovery getInstance(){
-		return new DeviceDiscoveryTestdummy();
+		return new DeviceDiscovery();
 	}
 }

@@ -132,7 +132,7 @@ public class HomeActivity extends Activity {
 			
 			ALDevice selectedDevice = ((ALDevice) parent.getItemAtPosition(pos));
 			
-			new connectTask().execute();
+			new connectTask().execute(selectedDevice);
 			//adress for net tester
 //			InetSocketAddress inetAddress;
 //			inetAddress = new InetSocketAddress("172.30.81.242", 1337);
@@ -635,12 +635,15 @@ public class HomeActivity extends Activity {
 //		}	
 //    }
     
-    private class connectTask extends AsyncTask<Void, Integer, Integer> {
-    	protected Integer doInBackground(Void... params){
+    private class connectTask extends AsyncTask<ALDevice, Integer, Integer> {
+    	protected Integer doInBackground(ALDevice... params){
     		
+    		selectedDevice = params[0];
+    		
+    		if(selectedDevice==null) return 0;
     		//adress for net tester
 			InetSocketAddress inetAddress;
-			inetAddress = new InetSocketAddress("172.30.81.242", 1337);
+			inetAddress = new InetSocketAddress("129.132.149.148", 1337);
 			ALDevice netTesterDevice = new ALDevice(inetAddress, "NetTester");
 			
 			AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
@@ -654,13 +657,13 @@ public class HomeActivity extends Activity {
 //					ourApplication.connectClient.connect(netTesterDevice.getAddress());
 					
 					//test client
-					IClient client = ourApplication.connectClient;
-					Log.d(TAG, "Connection Attempt");
-					client.connect(netTesterDevice.getAddress());
+//					IClient client = ourApplication.connectClient;
+					Log.d(TAG, "Connection Attempt to " + selectedDevice.getAddress());
+					ourApplication.connectClient.connect(selectedDevice.getAddress());
 //					String s = (String) ourApplication.connectClient.sendRequest("lollll");
 					
 					//test send
-					String s = (String) client.sendRequest("lollll");
+					String s = (String) ourApplication.connectClient.sendRequest("lollll");
 					Log.d(TAG, "request sent, response: " + s);
 					
 				} catch (IOException e) {
@@ -671,6 +674,7 @@ public class HomeActivity extends Activity {
     		
 			return 0;
     	}
+
     }
     
     //onCreateOptionsMenu
