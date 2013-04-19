@@ -6,7 +6,7 @@ import java.util.*;
  
 public class DiscoveryThread extends Thread {
 	private static final int MULTICAST_PORT=4455;
-	private static final int DEVICE_PORT=4456;
+	private static final int DEVICE_PORT=1337;
 	private static final int SOCKET_PORT=4445;
 	private static final int RCV_TIMEOUT=100;
 	private static final String MULTICAST_GROUP="225.0.0.42";
