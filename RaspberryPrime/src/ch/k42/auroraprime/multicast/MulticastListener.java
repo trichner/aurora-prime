@@ -7,7 +7,7 @@ import ch.k42.auroraprime.minions.ALSettings;
 import ch.k42.auroraprime.minions.Log;
 
 public class MulticastListener{
-	
+    private static final String TAG = "MulticastListener";
 	private final String MULTICAST_GROUP;
 	private final int MULTICAST_PORT;
 	private final long TIMEOUT_MILLIS = 5000;
@@ -40,7 +40,7 @@ public class MulticastListener{
 			    try {
 					socket.receive(packet);
 				} catch (IOException e) {
-					Log.e(e.getMessage());
+					Log.e(TAG,e.getMessage());
 					e.printStackTrace();
 					try {
 						this.sleep(500); //don't spam errors
@@ -51,33 +51,38 @@ public class MulticastListener{
 			    //---- Handle received Multicast
 			    //TODO: SEND CLIENT A MSG BACK AND OPEN SOCKET
 			    
-			    String received = new String(packet.getData());
+			    String received = new String(packet.getData(),0,packet.getLength());
+
 			    InetAddress sender = packet.getAddress();
 			    int port = packet.getPort();
-			    Log.v("Received Multicast: " + received + " from " + sender +":"+port);
-			    
-			    
+			    Log.v(TAG, String.format("Received Multicast: %10s from %s:%s",received,sender,port));
+
 			    
 			    //---- Answer the call
 			    try {
 			    	
 					//---- build package
-					String str = "testingDevice42";
-					
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("ALDevice;Port;");
+                    sb.append(ALSettings.getProperty("serverPort"));
+				    sb.append(";Version;Mk1");
+
+					String str = sb.toString();
 					buf = str.getBytes();
 					
 					//---- send back package
-					DatagramSocket dsock = new DatagramSocket(port);
+					DatagramSocket dsock = new DatagramSocket();
 					DatagramPacket pkt = new DatagramPacket(buf, buf.length);
+
 					dsock.connect(sender, port);
 					dsock.send(pkt);
 					
 					dsock.close();
 				} catch (SocketException e) {
-					Log.e("Socket Exception: " + e.getMessage());
+					Log.e(TAG,"Socket Exception: " + e.getMessage());
 					e.printStackTrace();
 				} catch (IOException e) {
-					Log.e("IO Exception: " + e.getMessage());
+					Log.e(TAG,"IO Exception: " + e.getMessage());
 					e.printStackTrace();
 				}
 			    
@@ -87,7 +92,7 @@ public class MulticastListener{
 			try {
 				socket.leaveGroup(group);
 			} catch (IOException e) {
-				Log.e(e.getMessage());
+				Log.e(TAG,e.getMessage());
 				e.printStackTrace();
 			}
 			socket.close();
@@ -108,7 +113,7 @@ public class MulticastListener{
 			listener = new MulticastClientThread(); //create new Listener Thread
 			listener.start();						//start the thread
 		} catch (IOException e) {					//threadstart was not successful
-			Log.e(e.getMessage());
+			Log.e(TAG,e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
@@ -120,7 +125,7 @@ public class MulticastListener{
 		try {
 			listener.join(TIMEOUT_MILLIS); // wait for the thread
 		} catch (InterruptedException e) {
-			Log.e(e.getMessage());
+			Log.e(TAG,e.getMessage());
 			e.printStackTrace();
 			listener.stop(); //simple, we eh, kill the thread
 			return false;

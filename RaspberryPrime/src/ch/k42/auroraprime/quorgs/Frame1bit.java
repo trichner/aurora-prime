@@ -67,13 +67,16 @@ public class Frame1bit implements IFrame8x8{
 
     @Override
     public int toBytes1bit(byte[] buf) {
+        long r = red;
+        long g = green;
+        long b = blue;
         for(int i=0;i<SIZE;i++){
-            buf[       i] = (byte) (red   & 0xFF);
-            buf[  SIZE+i] = (byte) (green & 0xFF);
-            buf[2*SIZE+i] = (byte) (blue  & 0xFF);
-            red   >>>= 8;
-            green >>>= 8;
-            blue  >>>= 8;
+            buf[       i] = (byte) (r & 0xFF);
+            buf[  SIZE+i] = (byte) (g & 0xFF);
+            buf[2*SIZE+i] = (byte) (b & 0xFF);
+            r >>>= 8;
+            g >>>= 8;
+            b >>>= 8;
         }
         return 3*SIZE;
     }

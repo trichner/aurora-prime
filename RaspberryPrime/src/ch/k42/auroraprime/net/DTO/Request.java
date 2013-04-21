@@ -1,4 +1,4 @@
-package ch.k42.auroraprime.net;
+package ch.k42.auroraprime.net.DTO;
 
 import java.io.Serializable;
 
@@ -37,7 +37,9 @@ public class Request implements Serializable {
 	public void setCmd(Command cmd) {
 		this.cmd = cmd;
 	}
-	
-	
-	
+
+    public Request setHandled(boolean wasHandled) {
+        this.wasHandled = wasHandled;
+        return this;
+    }
 }

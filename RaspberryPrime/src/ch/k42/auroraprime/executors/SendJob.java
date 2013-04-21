@@ -6,7 +6,7 @@ import ch.k42.auroraprime.quorgs.Frame;
 import ch.k42.auroraprime.quorgs.IFrame8x8;
 
 public class SendJob implements Runnable{
-
+    private static final String TAG="SendJob";
 	private Sender sender;
 
     /**
@@ -17,9 +17,9 @@ public class SendJob implements Runnable{
      */
 	public SendJob(Sender sender){
         if(!sender.isConnected()){
-            Log.e("Sender not connected, trying to connect now.");
+            Log.e(TAG,"Sender not connected, trying to connect now.");
             sender.connect();    //try to connect anyway
-            if(sender.isConnected()) Log.e("No Device Connected, unable to connect.");
+            if(sender.isConnected()) Log.e(TAG,"No Device Connected, unable to connect.");
         }
 		this.sender = sender;
 	}
@@ -28,10 +28,10 @@ public class SendJob implements Runnable{
 	public void run() {
         //---- are we ready to go?
         if(!sender.isConnected()){
-            Log.e("Sender not connected, trying to connect now.");
+            Log.e(TAG,"Sender not connected, trying to connect now.");
             sender.connect();    //try to connect anyway
             if(sender.isConnected()){
-                Log.e("No Device Connected, unable to connect.");
+                Log.e(TAG,"No Device Connected, unable to connect.");
                 return;
             }
         }

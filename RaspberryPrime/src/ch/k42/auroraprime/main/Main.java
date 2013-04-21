@@ -6,6 +6,7 @@ import ch.k42.auroraprime.core.Quorgs;
 import ch.k42.auroraprime.executors.Executor;
 import ch.k42.auroraprime.executors.SendJob;
 import ch.k42.auroraprime.executors.Sender;
+import ch.k42.auroraprime.i2c.I2CSender;
 import ch.k42.auroraprime.minions.Log;
 import ch.k42.auroraprime.minions.Utils;
 import ch.k42.auroraprime.quorgs.RandomQuorg;
@@ -24,8 +25,7 @@ public class Main {
 		//Executor.getInstance().scheduleAtFixedRate(sendJob, 0, 1000/30, TimeUnit.MILLISECONDS);
 		
 		//---- Set Up Connection to Raspberry Pi
-		
-		
+
 		//---- Start Services for Raspi with default effect/load old ones
 		
 		
@@ -58,7 +58,7 @@ public class Main {
         try {
             Thread.sleep(15000);
         } catch (InterruptedException e) {
-            Log.e("stahp! what are you doing??!");
+            Log.e("MAIN","stahp! what are you doing??!");
         }
 
         //==== stopping
@@ -67,5 +67,32 @@ public class Main {
 		sim.disconnect();               // Free Connection
         Quorgs.getInstance().removeAll();
 	}
+
+    private static void i2c(){
+
+        Sender i2c = new I2CSender();   // Choose a sender
+
+        i2c.connect();  // Connect sender
+        SendJob sjob = new SendJob(i2c);// Create SendJob
+        // Schedule SendJob
+        Quorgs.getInstance().putQuorg(1,new RandomQuorg());
+        Quorgs.getInstance().putQuorg(2,new RandomQuorg());
+        Quorgs.getInstance().putQuorg(3,new RandomQuorg());
+        Quorgs.getInstance().putQuorg(4,new RandomQuorg());
+        Executor.getInstance().scheduleAtFixedRate(sjob,0,1000/5,TimeUnit.MILLISECONDS);
+
+        //==== Running
+        try {
+            Thread.sleep(30000);
+        } catch (InterruptedException e) {
+            Log.e("MAIN","stahp! what are you doing??!");
+        }
+
+        //==== stopping
+
+        Executor.getInstance().shutdownNow();
+        i2c.disconnect();               // Free Connection
+        Quorgs.getInstance().removeAll();
+    }
 
 }
