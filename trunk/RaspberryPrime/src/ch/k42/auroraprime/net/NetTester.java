@@ -1,6 +1,8 @@
 package ch.k42.auroraprime.net;
 
 
+import java.net.InetSocketAddress;
+
 public class NetTester {
 
 	private static void panicHelp(){
@@ -27,12 +29,11 @@ public class NetTester {
 			// Start Server
 			 AthmosServer server = new AthmosServer();
 			 server.start(Integer.parseInt(args[1]),new RequestHandlerFactory() {
-				@Override
-				public RequestHandler getInstance() {
-					return new StringHandler();
-				}
-			});
-			 
+                 @Override
+                 public RequestHandler getInstance() {
+                     return new StringHandler();
+                 }
+             });
 			
 		}else if(args[0].equals("client")){
 			if(args.length<3){
@@ -42,7 +43,7 @@ public class NetTester {
 			//open connection, send one request
 			try {
 				IClient client = new AthmosClient();
-				client.connect(args[1], Integer.parseInt(args[2]));
+				client.connect(new InetSocketAddress(args[1], Integer.parseInt(args[2])));
 				System.out.print((String) client.sendRequest("lollll"));
 			} catch (Exception e) {
 				System.out.print("Q: Something failed");

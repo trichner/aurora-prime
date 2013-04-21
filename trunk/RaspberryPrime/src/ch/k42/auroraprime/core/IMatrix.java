@@ -1,4 +1,4 @@
-package ch.k42.auroraprime.i2c;
+package ch.k42.auroraprime.core;
 
 import ch.k42.auroraprime.quorgs.IFrame8x8;
 

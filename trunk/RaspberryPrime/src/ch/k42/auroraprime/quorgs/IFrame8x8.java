@@ -11,6 +11,7 @@ import java.awt.*;
  */
 public interface IFrame8x8{
     public static final int SIZE = 8;
+    public static final int MAGIC = 0x17; //MAGIC_BYTE
 	/**
 	 * Set a specific Dot in the Matrix to a new Color
 	 * @param row from 0 to 8

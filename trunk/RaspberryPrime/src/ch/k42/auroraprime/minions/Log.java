@@ -6,59 +6,69 @@ public final class Log {
     private static final String PFIX_L = "[LOG]";
     private static final String PFIX_D = "[DBG]";
     private static final String PFIX_V = "[VBS]";
-	/**
-	 * Log error messages
-	 * @param msg message to log
-	 */
-	public final static void e(Object msg){
-		System.err.println(msg);
-	}
+
+
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
     /**
      * Log error messages
      * @param tag a Tag specifying the logging class
      * @param msg message to log
      */
-    public final static void e(String tag,Object msg){
-        System.err.println(composeMessage(PFIX_E,tag,msg));
+    public static void e(String tag,Object msg){
+        System.err.println(composeMessage(PFIX_E,tag,msg,ANSI_RED));
     }
-	/**
-	 * Log verbose messages
-	 * @param msg message to log
-	 */
-	public final static void v(Object msg){
-		System.out.println(PFIX_V + " " + msg);
-	}
+    /**
+     * Log verbose messages
+     * @param tag a Tag specifying the logging class
+     * @param msg message to log
+     */
+    public static void v(String tag,Object msg){
+        System.out.println(composeMessage(PFIX_V,tag,msg,ANSI_GREEN));
+    }
     /**
      * Log warning messages
      * @param msg message to log
      */
-    public final static void w(Object msg){
-        System.out.println(PFIX_W + " " +msg);
+    public static void w(String tag,Object msg){
+        System.out.println(composeMessage(PFIX_W,tag,msg,ANSI_YELLOW));
     }
 	/**
 	 * Log debug messages
 	 * @param tag a Tag specifying the logging class
      * @param msg message to log
 	 */
-	public final static void d(String tag,Object msg){
-		System.out.println(composeMessage(PFIX_D,tag,msg));
+	public static void d(String tag,Object msg){
+		System.out.println(composeMessage(PFIX_D,tag,msg,ANSI_BLUE));
 	}
 	/**
 	 * Log to file?
 	 * @param msg message to log
 	 */
-	public final static void l(String tag,Object msg){
+	public static void l(String tag,Object msg){
 		//Log into file?
 		System.out.println(PFIX_L + " " + tag +msg);
 	}
 
-    private static final String composeMessage(String prefix,String tag,Object message){
+    private static String composeMessage(String prefix,String tag,Object message){
+        return composeMessage(prefix, tag, message,ANSI_RESET);
+    }
+    private static String composeMessage(String prefix,String tag,Object message,String color){
         StringBuilder sb = new StringBuilder();
+        sb.append(color);
         sb.append(prefix);
         sb.append(" ");
-        sb.append(String.format("%-8s",tag));
+        sb.append(String.format("%-20s",tag));
         sb.append(" ");
-        sb.append(String.format("%-20s",message));
+        sb.append(String.format("%-50s",message));
+        sb.append(ANSI_RESET);
 
         return sb.toString();
     }

@@ -1,9 +1,10 @@
 package ch.k42.auroraprime.quorgs;
 
-import java.awt.Color;
-import java.nio.ByteBuffer;
-
 import ch.k42.auroraprime.minions.Log;
+
+import java.awt.*;
+import java.util.Arrays;
+
 /**
  * This class represents a Frame containing all information about the color of
  * a Matrix
@@ -12,7 +13,7 @@ import ch.k42.auroraprime.minions.Log;
  *
  */
 public class Frame {
-	
+	private static final String TAG = "Frame";
 		//ready for 8 bit PWM
 	
 	// Size of the Matrix
@@ -27,11 +28,8 @@ public class Frame {
 
 	
 	private void initMatrix(Color color){
-		for(int i=0; i<N_ROW;i++){
-			for(int j=0; j<N_COL;j++){
-				matrix[i][j] = color;
-			}
-		}
+        for (Color[] row : matrix)
+            Arrays.fill(row, color);
 	}
 	/**
 	 * Creates a new Frame all in black
@@ -74,7 +72,7 @@ public class Frame {
 	 */
 	public boolean setColor(int row,int col,Color color){
 		if(((row & (~N_ROW_BMASK))!=0 )||( (col & (~N_COL_BMASK))!=0 || color==null)){
-			Log.e("Frame setColor(...) Could not set color on position " + row + "/" + col + " with color " + color);
+			Log.e(TAG,"Frame setColor(...) Could not set color on position " + row + "/" + col + " with color " + color);
 			return false;
 		}
 			
@@ -85,7 +83,7 @@ public class Frame {
 	public Color getColor(int row, int col){
 		
 		if(((row & (~N_ROW_BMASK))!=0) || ((col & (~N_COL_BMASK))!=0)){ // out of range?
-			Log.e("Frame getColor(row,col) is out of Range! row/col: " + row + "/" + col); 
+			Log.e(TAG,"Frame getColor(row,col) is out of Range! row/col: " + row + "/" + col);
 			return null;
 		}
 			

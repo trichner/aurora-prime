@@ -1,14 +1,10 @@
 package ch.k42.auroraprime.minions;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.Properties;
-import java.util.concurrent.Semaphore;
 
 /**
  * Singleton containing all Information about the device, Settings/Properties
@@ -16,7 +12,7 @@ import java.util.concurrent.Semaphore;
  *
  */
 public class ALSettings {
-
+    private static final String TAG="ALSettings";
 	static private ALSettings _instance = new ALSettings();
 	
 	private Properties properties;
@@ -27,7 +23,7 @@ public class ALSettings {
 		try {
 			properties.load(Files.newInputStream(file));
 		} catch (IOException e) {
-			Log.e("Property File not found. Looked at: " + Constants.PROPERTYFILE);
+			Log.e(TAG,"Property File not found. Looked at: " + Constants.PROPERTYFILE);
 		}
 		
 	}
@@ -59,7 +55,7 @@ public class ALSettings {
 		try {
 			getInstance().properties.store(Files.newOutputStream(file), "ALSettings File");
 		} catch (IOException e) {
-			Log.e("Can't store Property File. Looked at: " + Constants.PROPERTYFILE);
+			Log.e(TAG,"Can't store Property File. Looked at: " + Constants.PROPERTYFILE);
 		}
 	}
 	

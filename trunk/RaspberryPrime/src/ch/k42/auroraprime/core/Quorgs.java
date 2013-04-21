@@ -66,4 +66,9 @@ public class Quorgs {
         return quorgs.keySet();
     }
 
+    public List<Quorg> getAllQuorgs(){
+        List<Quorg> quorgList = new ArrayList<Quorg>(quorgs.values());
+        return quorgList;
+    }
+
 }

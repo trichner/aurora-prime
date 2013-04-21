@@ -1,5 +1,7 @@
 package ch.k42.auroraprime.net;
 
+import ch.k42.auroraprime.minions.Log;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -9,6 +11,7 @@ import java.util.Vector;
 
 //Thomas Richner & co
 public class AthmosServer implements IServer{
+    private static final String TAG = "AthmosServer";
     private int port;
     private boolean active = false;
     private ServerSocket serverSocket;
@@ -31,11 +34,11 @@ public class AthmosServer implements IServer{
             this.port = port;
             this.handlerFactory = factory;
             try {
-                    System.out.print("listening on port "+port+"\n");
-                    serverSocket = new ServerSocket(port);
-                    active = true;
-                    listener = new Listener();
-                    listener.start();
+                Log.v(TAG,"listening on port "+port);
+                serverSocket = new ServerSocket(port);
+                active = true;
+                listener = new Listener();
+                listener.start();
             } catch (Exception e) {}
     }
 
@@ -46,7 +49,7 @@ public class AthmosServer implements IServer{
                 	serverSocket.close();
                 }        
             } catch (IOException e) {
-            	System.err.println("Unable to close socket: "+e.getMessage());
+                Log.e(TAG,"Unable to close socket: "+e.getMessage());
             }
     }
     
@@ -71,6 +74,7 @@ public class AthmosServer implements IServer{
             private ObjectInputStream in;
             
             public ClientHandler(Socket socket) {
+                Log.v(TAG,"New client connected: "+socket.getRemoteSocketAddress());
                     this.socket = socket;
                     this.handler = handlerFactory.getInstance();
                     try {
@@ -92,7 +96,7 @@ public class AthmosServer implements IServer{
                             } catch (IOException e) {
                             	if(socket.isConnected()){
                             		active=false;
-                            		System.out.println("Client "+socket.getRemoteSocketAddress() + " disconnected");
+                                    Log.v(TAG,"Client "+socket.getRemoteSocketAddress() + " disconnected");
                             	}
                             } catch (ClassNotFoundException e) {
 								System.err.println(e.getMessage());
@@ -104,7 +108,7 @@ public class AthmosServer implements IServer{
                     try {
                         this.socket.close();
                     } catch (IOException e) {
-                            System.err.println("Error closing socket.");
+                        Log.e(TAG,"Error closing socket.");
                     }
             }
     }

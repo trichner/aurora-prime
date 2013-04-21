@@ -1,5 +1,6 @@
 package ch.k42.auroraprime.i2c;
 
+import ch.k42.auroraprime.core.IMatrix;
 import ch.k42.auroraprime.executors.Sender;
 import ch.k42.auroraprime.minions.Log;
 import ch.k42.auroraprime.quorgs.IFrame8x8;

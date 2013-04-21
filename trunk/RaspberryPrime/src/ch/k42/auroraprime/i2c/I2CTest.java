@@ -49,7 +49,7 @@ public class I2CTest {
                     Log.d(TAG,String.format("Read message: %4h",ret));
 
                 }catch (Exception e){
-                    Log.e(" Exception ");
+                    Log.e("i2ctest"," Exception ");
                 }
                 try {
                     Thread.sleep(500);

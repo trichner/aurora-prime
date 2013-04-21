@@ -1,8 +1,6 @@
 package ch.k42.auroraprime.sim;
 
-import ch.k42.auroraprime.i2c.IMatrix;
-import ch.k42.auroraprime.quorgs.Frame;
-import ch.k42.auroraprime.quorgs.Frame1bit;
+import ch.k42.auroraprime.core.IMatrix;
 import ch.k42.auroraprime.quorgs.IFrame8x8;
 
 public class FrameSimulation extends Thread implements IMatrix {
