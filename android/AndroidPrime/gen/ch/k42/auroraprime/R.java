@@ -98,5 +98,6 @@ public final class R {
     }
     public static final class xml {
         public static final int prefs=0x7f040000;
+        public static final int styles=0x7f040001;
     }
 }

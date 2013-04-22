@@ -7,6 +7,7 @@ import ch.k42.auroraprime.net.ALDevice;
 //import android.R;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,7 @@ public class ALDeviceAdapter extends ArrayAdapter<ALDevice>{
 			
 			ALDevice currentDevice = data.get(position);
 			txView.text.setText(currentDevice.getName());
+			txView.text.setTextColor(Color.WHITE);
 			return row;
 			
 		}
