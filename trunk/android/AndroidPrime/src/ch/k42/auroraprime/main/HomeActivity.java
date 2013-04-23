@@ -7,6 +7,7 @@ import java.util.List;
 
 import ch.k42.auroraprime.R;
 import ch.k42.auroraprime.net.*;
+import android.R.string;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.Spinner;
@@ -61,6 +63,12 @@ public class HomeActivity extends Activity {
 	
 	List<ALDevice> deviceList = new ArrayList<ALDevice>();
 	ALDevice selectedDevice;
+	
+	ImageView[] fieldButtons = new ImageView[4];
+	ImageView[][] optionButtons = new ImageView[4][4];
+	Spinner deviceListSpinner;
+	
+	private static final String TAG = "HomeActivity";
 	
 	//listener for the four fields
 	private class bigButtonListener implements OnClickListener {
@@ -100,19 +108,19 @@ public class HomeActivity extends Activity {
 			// TODO Auto-generated method stub
 			switch (v.getId())
 			{
-			case R.id.B1_3: 	switchButtonVisibility(1);
+			case R.id.B1_4: 	switchButtonVisibility(1);
 								i = new Intent(HomeActivity.this, ListActivity.class);
 							   	//i.putExtra("sourceButton", "button1"); 
 								break;
-			case R.id.B2_3: 	switchButtonVisibility(2);
+			case R.id.B2_4: 	switchButtonVisibility(2);
 								i = new Intent(HomeActivity.this, ListActivity.class);
 			   				   	//i.putExtra("sourceButton", "button2"); 
 								break;
-			case R.id.B3_3: 	switchButtonVisibility(3);
+			case R.id.B3_4: 	switchButtonVisibility(3);
 								i = new Intent(HomeActivity.this, ListActivity.class);
 							   	//i.putExtra("sourceButton", "button3"); 
 								break;
-			case R.id.B4_3:		switchButtonVisibility(4);
+			case R.id.B4_4:		switchButtonVisibility(4);
 								i = new Intent(HomeActivity.this, ListActivity.class);
 							   	//i.putExtra("sourceButton", "button4"); 
 								break;
@@ -176,34 +184,7 @@ public class HomeActivity extends Activity {
 		}
 		
 	}
-	
-	private static final String TAG = "HomeActivity";
-	
-	Button button1;
-	Button button2;
-	Button button3;
-	Button button4;
-	
-	Button B1_1;
-	Button B1_2;
-	Button B1_3;
-	Button B1_4;
-	Button B2_1;
-	Button B2_2;
-	Button B2_3;
-	Button B2_4;
-	Button B3_1;
-	Button B3_2;
-	Button B3_3;
-	Button B3_4;
-	Button B4_1;
-	Button B4_2;
-	Button B4_3;
-	Button B4_4;
-	
-	Spinner deviceListSpinner;
-
-	
+		
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -246,248 +227,196 @@ public class HomeActivity extends Activity {
             	Log.d(TAG, "smallbuttonSize = " + smallButtonSize);
             	
                 // set custom view dimensions
-                button1.setHeight(buttonSize);
-                button2.setHeight(buttonSize);
-                button3.setHeight(buttonSize);
-                button4.setHeight(buttonSize);
-                button1.setWidth(buttonSize);
-                button2.setWidth(buttonSize);
-                button3.setWidth(buttonSize);
-                button4.setWidth(buttonSize);
+//            	for (int i =0; i<4; i++){
+//            		fieldButtons[i].getLayoutParams().height=buttonSize;
+//            		fieldButtons[i].getLayoutParams().width=buttonSize;
+//            	}
               
                 LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                        buttonSize,      
+                        buttonSize
                 );
                 params1.setMargins(buttonOuterHorizontalPadding, buttonOuterVerticalPadding, 0, 0);
-                button1.setLayoutParams(params1);
+                fieldButtons[0].setLayoutParams(params1);
                 
                 LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                		buttonSize,      
+                        buttonSize
                 );
                 params2.setMargins(buttonInnerHorizontalPadding, buttonOuterVerticalPadding, 0, 0);
-                button2.setLayoutParams(params2);
+                fieldButtons[1].setLayoutParams(params2);
                 
                 LinearLayout.LayoutParams params3 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                		buttonSize,      
+                        buttonSize
                 );
                 params3.setMargins(buttonOuterHorizontalPadding, buttonInnerVerticalPadding, 0, 0);
-                button3.setLayoutParams(params3);
+                fieldButtons[2].setLayoutParams(params3);
                 
                 LinearLayout.LayoutParams params4 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                		buttonSize,      
+                        buttonSize
                 );
                 params4.setMargins(buttonInnerHorizontalPadding, buttonInnerVerticalPadding, 0, 0);
-                button4.setLayoutParams(params4);
+                fieldButtons[3].setLayoutParams(params4);
 
                 //small buttons
-                B1_1.setHeight(smallButtonSize);
-                B1_2.setHeight(smallButtonSize);
-                B1_3.setHeight(smallButtonSize);
-                B1_4.setHeight(smallButtonSize);
-                B2_1.setHeight(smallButtonSize);
-                B2_2.setHeight(smallButtonSize);
-                B2_3.setHeight(smallButtonSize);
-                B2_4.setHeight(smallButtonSize);
-                B1_1.setWidth(smallButtonSize);
-                B1_2.setWidth(smallButtonSize);
-                B1_3.setWidth(smallButtonSize);
-                B1_4.setWidth(smallButtonSize);
-                B2_1.setWidth(smallButtonSize);
-                B2_2.setWidth(smallButtonSize);
-                B2_3.setWidth(smallButtonSize);
-                B2_4.setWidth(smallButtonSize);
-                B3_1.setHeight(smallButtonSize);
-                B3_2.setHeight(smallButtonSize);
-                B3_3.setHeight(smallButtonSize);
-                B3_4.setHeight(smallButtonSize);
-                B4_1.setHeight(smallButtonSize);
-                B4_2.setHeight(smallButtonSize);
-                B4_3.setHeight(smallButtonSize);
-                B4_4.setHeight(smallButtonSize);
-                B3_1.setWidth(smallButtonSize);
-                B3_2.setWidth(smallButtonSize);
-                B3_3.setWidth(smallButtonSize);
-                B3_4.setWidth(smallButtonSize);
-                B4_1.setWidth(smallButtonSize);
-                B4_2.setWidth(smallButtonSize);
-                B4_3.setWidth(smallButtonSize);
-                B4_4.setWidth(smallButtonSize);
                 
                 LinearLayout.LayoutParams params1_1 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                        smallButtonSize,      
+                        smallButtonSize
                 );
                 params1_1.setMargins(smallButtonOuterHorizontalPadding, smallButtonOuterVerticalPadding, 0, 0);
-                B1_1.setLayoutParams(params1_1);
+                optionButtons[0][0].setLayoutParams(params1_1);
                 
                 LinearLayout.LayoutParams params1_2 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                		smallButtonSize,      
+                        smallButtonSize
                 );
                 params1_2.setMargins(smallButtonInnerHorizontalPadding, smallButtonOuterVerticalPadding, 0, 0);
-                B1_2.setLayoutParams(params1_2);
+                optionButtons[0][1].setLayoutParams(params1_2);
                 
                 LinearLayout.LayoutParams params1_3 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                		smallButtonSize,      
+                        smallButtonSize
                 );
                 params1_3.setMargins(smallButtonOuterHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
-                B1_3.setLayoutParams(params1_3);
+                optionButtons[0][2].setLayoutParams(params1_3);
                 
                 LinearLayout.LayoutParams params1_4 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                		smallButtonSize,      
+                        smallButtonSize
                 );
                 params1_4.setMargins(smallButtonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
-                B1_4.setLayoutParams(params1_4);
+                optionButtons[0][3].setLayoutParams(params1_4);
                 
                 LinearLayout.LayoutParams params2_1 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                		smallButtonSize,      
+                        smallButtonSize
                 );
                 params2_1.setMargins(smallButtonOuterHorizontalPadding+buttonSize+buttonInnerHorizontalPadding, smallButtonOuterVerticalPadding, 0, 0);
-                B2_1.setLayoutParams(params2_1);
+                optionButtons[1][0].setLayoutParams(params2_1);
                 
                 LinearLayout.LayoutParams params2_2 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                		smallButtonSize,      
+                        smallButtonSize
                 );
                 params2_2.setMargins(smallButtonInnerHorizontalPadding, smallButtonOuterVerticalPadding, 0, 0);
-                B2_2.setLayoutParams(params2_2);
+                optionButtons[1][1].setLayoutParams(params2_2);
                 
                 LinearLayout.LayoutParams params2_3 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                		smallButtonSize,      
+                        smallButtonSize
                 );
                 params2_3.setMargins(smallButtonOuterHorizontalPadding+buttonSize+buttonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
-                B2_3.setLayoutParams(params2_3);
+                optionButtons[1][2].setLayoutParams(params2_3);
                 
                 LinearLayout.LayoutParams params2_4 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                		smallButtonSize,      
+                        smallButtonSize
                 );
                 params2_4.setMargins(smallButtonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
-                B2_4.setLayoutParams(params2_4);
+                optionButtons[1][3].setLayoutParams(params2_4);
                 
                 LinearLayout.LayoutParams params3_1 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                		smallButtonSize,      
+                        smallButtonSize
                 );
                 params3_1.setMargins(smallButtonOuterHorizontalPadding, smallButtonOuterVerticalPadding+buttonSize+buttonInnerVerticalPadding, 0, 0);
-                B3_1.setLayoutParams(params3_1);
+                optionButtons[2][0].setLayoutParams(params3_1);
                 
                 LinearLayout.LayoutParams params3_2 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                		smallButtonSize,      
+                        smallButtonSize
                 );
                 params3_2.setMargins(smallButtonInnerHorizontalPadding, smallButtonOuterVerticalPadding+buttonSize+buttonInnerVerticalPadding, 0, 0);
-                B3_2.setLayoutParams(params3_2);
+                optionButtons[2][1].setLayoutParams(params3_2);
                 
                 LinearLayout.LayoutParams params3_3 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                		smallButtonSize,      
+                        smallButtonSize
                 );
                 params3_3.setMargins(smallButtonOuterHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
-                B3_3.setLayoutParams(params3_3);
+                optionButtons[2][2].setLayoutParams(params3_3);
                 
                 LinearLayout.LayoutParams params3_4 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                		smallButtonSize,      
+                        smallButtonSize
                 );
                 params3_4.setMargins(smallButtonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
-                B3_4.setLayoutParams(params3_4);
+                optionButtons[2][3].setLayoutParams(params3_4);
                 
                 LinearLayout.LayoutParams params4_1 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                		smallButtonSize,      
+                        smallButtonSize
                 );
                 params4_1.setMargins(smallButtonOuterHorizontalPadding+buttonSize+buttonInnerHorizontalPadding, smallButtonOuterVerticalPadding+buttonSize+buttonInnerVerticalPadding, 0, 0);
-                B4_1.setLayoutParams(params4_1);
+                optionButtons[3][0].setLayoutParams(params4_1);
                 
                 LinearLayout.LayoutParams params4_2 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                		smallButtonSize,      
+                        smallButtonSize
                 );
                 params4_2.setMargins(smallButtonInnerHorizontalPadding, smallButtonOuterVerticalPadding+buttonSize+buttonInnerVerticalPadding, 0, 0);
-                B4_2.setLayoutParams(params4_2);
+                optionButtons[3][1].setLayoutParams(params4_2);
                 
                 LinearLayout.LayoutParams params4_3 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                		smallButtonSize,      
+                        smallButtonSize
                 );
                 params4_3.setMargins(smallButtonOuterHorizontalPadding+buttonSize+buttonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
-                B4_3.setLayoutParams(params4_3);
+                optionButtons[3][2].setLayoutParams(params4_3);
                 
                 LinearLayout.LayoutParams params4_4 = new LinearLayout.LayoutParams(
-                        LayoutParams.WRAP_CONTENT,      
-                        LayoutParams.WRAP_CONTENT
+                		smallButtonSize,      
+                        smallButtonSize
                 );
                 params4_4.setMargins(smallButtonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
-                B4_4.setLayoutParams(params4_4);
+                optionButtons[3][3].setLayoutParams(params4_4);
               
             }
         });
             
         //die Views Suchen
-        button1 = (Button) findViewById(R.id.button1);
-        button2 = (Button) findViewById(R.id.button2);
-        button3 = (Button) findViewById(R.id.button3);
-        button4 = (Button) findViewById(R.id.button4);
+        fieldButtons[0] = (ImageView) findViewById(R.id.button1);
+        fieldButtons[1] = (ImageView) findViewById(R.id.button2);
+        fieldButtons[2] = (ImageView) findViewById(R.id.button3);
+        fieldButtons[3] = (ImageView) findViewById(R.id.button4);
         
-        B1_1 = (Button) findViewById(R.id.B1_1);
-        B1_2 = (Button) findViewById(R.id.B1_2);
-        B1_3 = (Button) findViewById(R.id.B1_3);
-        B1_4 = (Button) findViewById(R.id.B1_4);
-        B2_1 = (Button) findViewById(R.id.B2_1);
-        B2_2 = (Button) findViewById(R.id.B2_2);
-        B2_3 = (Button) findViewById(R.id.B2_3);
-        B2_4 = (Button) findViewById(R.id.B2_4);
-        B3_1 = (Button) findViewById(R.id.B3_1);
-        B3_2 = (Button) findViewById(R.id.B3_2);
-        B3_3 = (Button) findViewById(R.id.B3_3);
-        B3_4 = (Button) findViewById(R.id.B3_4);
-        B4_1 = (Button) findViewById(R.id.B4_1);
-        B4_2 = (Button) findViewById(R.id.B4_2);
-        B4_3 = (Button) findViewById(R.id.B4_3);
-        B4_4 = (Button) findViewById(R.id.B4_4);
+        optionButtons[0][0] = (ImageView) findViewById(R.id.B1_1);
+        optionButtons[0][1] = (ImageView) findViewById(R.id.B1_2);
+        optionButtons[0][2] = (ImageView) findViewById(R.id.B1_3);
+        optionButtons[0][3] = (ImageView) findViewById(R.id.B1_4);
+        optionButtons[1][0] = (ImageView) findViewById(R.id.B2_1);
+        optionButtons[1][1] = (ImageView) findViewById(R.id.B2_2);
+        optionButtons[1][2] = (ImageView) findViewById(R.id.B2_3);
+        optionButtons[1][3] = (ImageView) findViewById(R.id.B2_4);
+        optionButtons[2][0] = (ImageView) findViewById(R.id.B3_1);
+        optionButtons[2][1] = (ImageView) findViewById(R.id.B3_2);
+        optionButtons[2][2] = (ImageView) findViewById(R.id.B3_3);
+        optionButtons[2][3] = (ImageView) findViewById(R.id.B3_4);
+        optionButtons[3][0] = (ImageView) findViewById(R.id.B4_1);
+        optionButtons[3][1] = (ImageView) findViewById(R.id.B4_2);
+        optionButtons[3][2] = (ImageView) findViewById(R.id.B4_3);
+        optionButtons[3][3] = (ImageView) findViewById(R.id.B4_4);
         
         deviceListSpinner = (Spinner) findViewById(R.id.deviceListSpinner);
         
-        B1_1.setVisibility(4);
-		B1_2.setVisibility(4);
-		B1_3.setVisibility(4);
-		B1_4.setVisibility(4);
-        B2_1.setVisibility(4);
-		B2_2.setVisibility(4);
-		B2_3.setVisibility(4);
-		B2_4.setVisibility(4);
-		B3_1.setVisibility(4);
-		B3_2.setVisibility(4);
-		B3_3.setVisibility(4);
-		B3_4.setVisibility(4);
-		B4_1.setVisibility(4);
-		B4_2.setVisibility(4);
-		B4_3.setVisibility(4);
-		B4_4.setVisibility(4);
+        for (int i = 0; i<4;i++){
+        	for (int j = 0; j<4;j++){
+        		optionButtons[i][j].setVisibility(4);
+        	}
+        }
         
         OnClickListener bigListener = new bigButtonListener();
         deviceListListener spinnerListener = new deviceListListener();
         changeModuleListener buttonChangeModuleListener = new changeModuleListener();
         
-        button1.setOnClickListener(bigListener);
-        button2.setOnClickListener(bigListener);
-        button3.setOnClickListener(bigListener);
-        button4.setOnClickListener(bigListener);
-        
-        B1_3.setOnClickListener(buttonChangeModuleListener);
-        B2_3.setOnClickListener(buttonChangeModuleListener);
-        B3_3.setOnClickListener(buttonChangeModuleListener);
-        B4_3.setOnClickListener(buttonChangeModuleListener);
-        
+        for (int i =0; i<4; i++){
+    		fieldButtons[i].setOnClickListener(bigListener);
+    		optionButtons[i][3].setOnClickListener(buttonChangeModuleListener);
+    	}
+                
         deviceListSpinner.setOnItemSelectedListener(spinnerListener);
         
         //Create a new DeviceDiscoverer
@@ -503,6 +432,8 @@ public class HomeActivity extends Activity {
         deviceListUpdater.startUpdates();
 //        RefreshDeviceList();
         Log.d(TAG,"onCreated");
+        
+        RefreshButtonImages();
     }
     
     public void onResume(Bundle savedInstanceState) {
@@ -523,77 +454,68 @@ public class HomeActivity extends Activity {
     // field is clicked
     private void switchButtonVisibility (int Field){
     	switch (Field){
-    		case 1: if(B1_1.getVisibility()==0) B1_1.setVisibility(4); else B1_1.setVisibility(0);
-    				if(B1_2.getVisibility()==0) B1_2.setVisibility(4); else B1_2.setVisibility(0);
-    				if(B1_3.getVisibility()==0) B1_3.setVisibility(4); else B1_3.setVisibility(0);
-    				if(B1_4.getVisibility()==0) B1_4.setVisibility(4); else B1_4.setVisibility(0);
-    				B2_1.setVisibility(4);
-    				B2_2.setVisibility(4);
-    				B2_3.setVisibility(4);
-    				B2_4.setVisibility(4);
-    				B3_1.setVisibility(4);
-    				B3_2.setVisibility(4);
-    				B3_3.setVisibility(4);
-    				B3_4.setVisibility(4);
-    				B4_1.setVisibility(4);
-    				B4_2.setVisibility(4);
-    				B4_3.setVisibility(4);
-    				B4_4.setVisibility(4);
+    		case 1: if(optionButtons[0][0].getVisibility()==0) optionButtons[0][0].setVisibility(4); else optionButtons[0][0].setVisibility(0);
+    				if(optionButtons[0][1].getVisibility()==0) optionButtons[0][1].setVisibility(4); else optionButtons[0][1].setVisibility(0);
+    				if(optionButtons[0][2].getVisibility()==0) optionButtons[0][2].setVisibility(4); else optionButtons[0][2].setVisibility(0);
+    				if(optionButtons[0][3].getVisibility()==0) optionButtons[0][3].setVisibility(4); else optionButtons[0][3].setVisibility(0);
+    				for (int i = 1; i<4;i++){
+			        	for (int j = 0; j<4;j++){
+			        		optionButtons[i][j].setVisibility(4);
+			        	}
+			        }
     				break;
     				
-    		case 2: if(B2_1.getVisibility()==0) B2_1.setVisibility(4); else B2_1.setVisibility(0);
-					if(B2_2.getVisibility()==0) B2_2.setVisibility(4); else B2_2.setVisibility(0);
-					if(B2_3.getVisibility()==0) B2_3.setVisibility(4); else B2_3.setVisibility(0);
-					if(B2_4.getVisibility()==0) B2_4.setVisibility(4); else B2_4.setVisibility(0);
-					B1_1.setVisibility(4);
-					B1_2.setVisibility(4);
-					B1_3.setVisibility(4);
-					B1_4.setVisibility(4);
-					B3_1.setVisibility(4);
-					B3_2.setVisibility(4);
-					B3_3.setVisibility(4);
-					B3_4.setVisibility(4);
-					B4_1.setVisibility(4);
-					B4_2.setVisibility(4);
-					B4_3.setVisibility(4);
-					B4_4.setVisibility(4);
+    		case 2: if(optionButtons[1][0].getVisibility()==0) optionButtons[1][0].setVisibility(4); else optionButtons[1][0].setVisibility(0);
+					if(optionButtons[1][1].getVisibility()==0) optionButtons[1][1].setVisibility(4); else optionButtons[1][1].setVisibility(0);
+					if(optionButtons[1][2].getVisibility()==0) optionButtons[1][2].setVisibility(4); else optionButtons[1][2].setVisibility(0);
+					if(optionButtons[1][3].getVisibility()==0) optionButtons[1][3].setVisibility(4); else optionButtons[1][3].setVisibility(0);
+					for (int i = 0; i<4;i++){
+		        		optionButtons[0][i].setVisibility(4);
+					}
+					for (int i = 2; i<4;i++){
+			        	for (int j = 0; j<4;j++){
+			        		optionButtons[i][j].setVisibility(4);
+			        	}
+			        }
 					break;
 					
-    		case 3: if(B3_1.getVisibility()==0) B3_1.setVisibility(4); else B3_1.setVisibility(0);
-					if(B3_2.getVisibility()==0) B3_2.setVisibility(4); else B3_2.setVisibility(0);
-					if(B3_3.getVisibility()==0) B3_3.setVisibility(4); else B3_3.setVisibility(0);
-					if(B3_4.getVisibility()==0) B3_4.setVisibility(4); else B3_4.setVisibility(0);
-					B1_1.setVisibility(4);
-					B1_2.setVisibility(4);
-					B1_3.setVisibility(4);
-					B1_4.setVisibility(4);
-					B2_1.setVisibility(4);
-					B2_2.setVisibility(4);
-					B2_3.setVisibility(4);
-					B2_4.setVisibility(4);
-					B4_1.setVisibility(4);
-					B4_2.setVisibility(4);
-					B4_3.setVisibility(4);
-					B4_4.setVisibility(4);
+    		case 3: if(optionButtons[2][0].getVisibility()==0) optionButtons[2][0].setVisibility(4); else optionButtons[2][0].setVisibility(0);
+					if(optionButtons[2][1].getVisibility()==0) optionButtons[2][1].setVisibility(4); else optionButtons[2][1].setVisibility(0);
+					if(optionButtons[2][2].getVisibility()==0) optionButtons[2][2].setVisibility(4); else optionButtons[2][2].setVisibility(0);
+					if(optionButtons[2][3].getVisibility()==0) optionButtons[2][3].setVisibility(4); else optionButtons[2][3].setVisibility(0);
+					for (int i = 0; i<2;i++){
+			        	for (int j = 0; j<4;j++){
+			        		optionButtons[i][j].setVisibility(4);
+			        	}
+			        }
+					for (int i = 0; i<4;i++){
+			        		optionButtons[3][i].setVisibility(4);
+			        }
 					break;
 					
-    		case 4: if(B4_1.getVisibility()==0) B4_1.setVisibility(4); else B4_1.setVisibility(0);
-    				if(B4_2.getVisibility()==0) B4_2.setVisibility(4); else B4_2.setVisibility(0);
-    				if(B4_3.getVisibility()==0) B4_3.setVisibility(4); else B4_3.setVisibility(0);
-					if(B4_4.getVisibility()==0) B4_4.setVisibility(4); else B4_4.setVisibility(0);
-					B1_1.setVisibility(4);
-					B1_2.setVisibility(4);
-					B1_3.setVisibility(4);
-					B1_4.setVisibility(4);
-					B2_1.setVisibility(4);
-					B2_2.setVisibility(4);
-					B2_3.setVisibility(4);
-					B2_4.setVisibility(4);
-					B3_1.setVisibility(4);
-					B3_2.setVisibility(4);
-					B3_3.setVisibility(4);
-					B3_4.setVisibility(4);
+    		case 4: if(optionButtons[3][0].getVisibility()==0) optionButtons[3][0].setVisibility(4); else optionButtons[3][0].setVisibility(0);
+    				if(optionButtons[3][1].getVisibility()==0) optionButtons[3][1].setVisibility(4); else optionButtons[3][1].setVisibility(0);
+    				if(optionButtons[3][2].getVisibility()==0) optionButtons[3][2].setVisibility(4); else optionButtons[3][2].setVisibility(0);
+    				if(optionButtons[3][3].getVisibility()==0) optionButtons[3][3].setVisibility(4); else optionButtons[3][3].setVisibility(0);
+					for (int i = 0; i<3;i++){
+			        	for (int j = 0; j<4;j++){
+			        		optionButtons[i][j].setVisibility(4);
+			        	}
+			        }	
 					break;
+    	}
+    }
+    
+    public void RefreshButtonImages() {
+    	
+    	AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
+    	for (int i=0;i<4;i++){
+    		fieldButtons[i].setImageResource(ourApplication.quorgFields[i].getActiveQuorg().getImage());
+    		optionButtons[i][0].setImageResource(R.drawable.ic_switch);
+    		optionButtons[i][1].setImageResource(R.drawable.ic_on);
+    		optionButtons[i][2].setImageResource(R.drawable.ic_config);
+    		optionButtons[i][3].setImageResource(R.drawable.ic_change);
+    		
     	}
     }
     
