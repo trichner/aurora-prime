@@ -20,13 +20,15 @@ public final class R {
         public static final int greenlight=0x7f020002;
         public static final int ic_change=0x7f020003;
         public static final int ic_config=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
-        public static final int ic_off=0x7f020006;
-        public static final int ic_on=0x7f020007;
-        public static final int ic_switch=0x7f020008;
-        public static final int ic_switch_132=0x7f020009;
-        public static final int ic_switch_79=0x7f02000a;
-        public static final int redlight=0x7f02000b;
+        public static final int ic_field_000=0x7f020005;
+        public static final int ic_launcher=0x7f020006;
+        public static final int ic_off=0x7f020007;
+        public static final int ic_on=0x7f020008;
+        public static final int ic_switch=0x7f020009;
+        public static final int ic_switch_132=0x7f02000a;
+        public static final int ic_switch_79=0x7f02000b;
+        public static final int matrix_template=0x7f02000c;
+        public static final int redlight=0x7f02000d;
     }
     public static final class id {
         public static final int B1_1=0x7f080009;

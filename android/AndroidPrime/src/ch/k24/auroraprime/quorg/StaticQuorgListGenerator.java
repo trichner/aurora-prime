@@ -9,7 +9,7 @@ public class StaticQuorgListGenerator implements IQuorgListGenerator {
 
 	private List<Quorg> list;
 
-	public List getQuorgList() {
+	public List<Quorg> getQuorgList() {
 		// TODO Auto-generated method stub
 		list = new ArrayList<Quorg>();
 		
