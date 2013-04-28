@@ -4,6 +4,12 @@ import ch.k24.auroraprime.quorg.Quorg;
 import ch.k42.auroraprime.R;
 import ch.k42.auroraprime.net.QuorgSettings;
 
+/**
+ * A class used to store the information/state
+ * of one of the matrix fields
+ * 
+ * @Author Philipp Bšsch
+ */
 public class QuorgField {
 	
 	private int fieldNumber;

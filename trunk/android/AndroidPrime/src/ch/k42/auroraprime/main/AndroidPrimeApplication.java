@@ -6,14 +6,31 @@ import ch.k42.auroraprime.net.IClient;
 import ch.k42.auroraprime.net.IDeviceDiscovery;
 import android.app.Application;
 
-
-
+/**
+ * application framework that stores values
+ * used in all activities of the application
+ * 
+ * 
+ * @Author Philipp Bšsch
+ */
 public class AndroidPrimeApplication extends Application {
 	
+	
+	/**
+	 * return the Device Discoverer
+	 * 
+	 *
+	 */
 	public IDeviceDiscovery getDeviceDiscoverer() {
 		return deviceDiscoverer;
 	}
-
+	
+	
+	/**
+	 * set the Device Discoverer
+	 * 
+	 * 
+	 */
 	public void setDeviceDiscoverer(IDeviceDiscovery deviceDiscoverer) {
 		this.deviceDiscoverer = deviceDiscoverer;
 	}
@@ -22,6 +39,12 @@ public class AndroidPrimeApplication extends Application {
 	IClient connectClient;
 	QuorgField[] quorgFields;
 	
+	
+	/**
+	 * Create a new Client to connect
+	 * 
+	 * 
+	 */
 	public void newClient() {
 		connectClient = ClientFactory.getInstance();
 	}
