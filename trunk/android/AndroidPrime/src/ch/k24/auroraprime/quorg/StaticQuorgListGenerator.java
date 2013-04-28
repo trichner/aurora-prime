@@ -5,6 +5,13 @@ import java.util.List;
 
 import ch.k42.auroraprime.R;
 
+/**
+ * Implementation of a Quorg List Generator
+ * that returns a static programmed list
+ * of avaliable quorgs
+ * 
+ * @Author Philipp Bšsch
+ */
 public class StaticQuorgListGenerator implements IQuorgListGenerator {
 
 	private List<Quorg> list;

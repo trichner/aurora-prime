@@ -1,14 +1,13 @@
 package ch.k24.auroraprime.quorg;
 
 /**
+ * A Class that holds all information
+ * about a quorg the application needs
  * 
- */
-/**
+ * 
  * @author Bert
  *
  */
-
-
 
 public class Quorg {
 
