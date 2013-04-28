@@ -12,6 +12,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * A custom Array Adapter for the List View
+ * to show the Quorgs
+ * 
+ * @Author Philipp Bšsch
+ */
 public class QuorgAdapter extends ArrayAdapter<Quorg>{
 
     Context context; 
