@@ -14,7 +14,13 @@ import android.view.ViewGroup;
 import android.webkit.WebView.FindListener;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
+/**
+ * A custom Array Adapter for the
+ * Spinner displaying the found 
+ * devices to connect to
+ * 
+ * @Author Philipp Bšsch
+ */
 public class ALDeviceAdapter extends ArrayAdapter<ALDevice>{
 
 		private final Activity activity;

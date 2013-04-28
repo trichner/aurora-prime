@@ -22,15 +22,15 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TableRow;
 import android.widget.Toast;
-
+/**
+ * Class for the list activity that lists all 
+ * the avaliable quorgs
+ * 
+ * @Author Philipp Bšsch
+ */
 
 public class ListActivity extends Activity{
 
-//private TableRow tableRow1;
-//private TableRow tableRow2;
-//private TableRow tableRow3;
-//private TableRow tableRow4;
-//	
 private ListView quorgListView;
 
 public enum Command{
@@ -39,6 +39,12 @@ public enum Command{
 	GETUPDATE
 }
 	
+
+/**
+ * Listener for the Table Elements 
+ * 
+ * 
+ */
 	private class TableElementListener implements OnItemClickListener {
 
 		public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -66,7 +72,11 @@ public enum Command{
 		
 	}
 
-	/** Called when the activity is first created. */
+	
+	/** Called when the activity is first created. 
+	 * 
+	 * 
+	 * */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +92,12 @@ public enum Command{
         quorgListView.setOnItemClickListener(new TableElementListener());
     }
     
+    
+    /**
+     * sends a generic request with the client
+     * 
+     * 
+     */
     public Object SendRequest(Object request){	
     	
     	AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());

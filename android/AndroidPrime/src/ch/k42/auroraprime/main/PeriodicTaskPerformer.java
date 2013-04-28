@@ -8,7 +8,7 @@ import android.util.Log;
  * may be specified (otherwise, the class will perform the 
  * update every 2 seconds).
  * 
- * @original Carlos Sim›es
+ * @Author Carlos Sim›es, changed by Philipp Bšsch
  */
 
 //Names changed to PeriodicTaskPerformer, interval changed to 20 seconds
