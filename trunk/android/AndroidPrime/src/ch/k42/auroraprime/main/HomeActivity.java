@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
-
 import ch.k42.auroraprime.R;
 import ch.k42.auroraprime.net.*;
 import android.R.string;
@@ -30,11 +29,16 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.Spinner;
 import android.widget.Toast;
-//import android.widget.RelativeLayout;
 import android.content.Intent;
 import android.graphics.Rect;
 
 
+/**
+ * Home Activity Screen of the AndroidPrime Application
+ * 
+ * 
+ * @Author Philipp Bšsch
+ */
 public class HomeActivity extends Activity {
 	
 	int titleHeight = 0;
@@ -70,69 +74,69 @@ public class HomeActivity extends Activity {
 	
 	private static final String TAG = "HomeActivity";
 	
-	//listener for the four fields
+	/**
+	 * Listener for the four big screen selector buttons
+	 * handles smaller buttons visibility
+	 * 
+	 * 
+	 */
 	private class bigButtonListener implements OnClickListener {
 
 		public void onClick(View v) {
-			// get id of button pressed, send intent and start ListActivity
-			//Intent i=null;
+
 			switch (v.getId())
 			{
 			case R.id.button1: 	switchButtonVisibility(1);
-							   	//i = new Intent(HomeActivity.this, ListActivity.class);
-							   	//i.putExtra("sourceButton", "button1"); 
 								break;
 			case R.id.button2: 	switchButtonVisibility(2);
-								//i = new Intent(HomeActivity.this, ListActivity.class);
-			   				   	//i.putExtra("sourceButton", "button2"); 
 								break;
 			case R.id.button3: 	switchButtonVisibility(3);
-								//i = new Intent(HomeActivity.this, ListActivity.class);
-							   	//i.putExtra("sourceButton", "button3"); 
 								break;
 			case R.id.button4:	switchButtonVisibility(4);
-								//i = new Intent(HomeActivity.this, ListActivity.class);
-							   	//i.putExtra("sourceButton", "button4"); 
 								break;
 			}
 			Log.d(TAG, "onBigButtonClicked");
-			//startActivity(i);
 		}
 		
 	}
 	
-	//listener for the change module button
+	
+	/**
+	 * Listener for the Module change button, opens the 
+	 * activity with the quorg list
+	 * 
+	 * 
+	 */
 	private class changeModuleListener implements OnClickListener{
 
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
 			switch (v.getId())
 			{
 			case R.id.B1_4: 	switchButtonVisibility(1);
 								i = new Intent(HomeActivity.this, ListActivity.class);
-							   	//i.putExtra("sourceButton", "button1"); 
 								break;
 			case R.id.B2_4: 	switchButtonVisibility(2);
 								i = new Intent(HomeActivity.this, ListActivity.class);
-			   				   	//i.putExtra("sourceButton", "button2"); 
 								break;
 			case R.id.B3_4: 	switchButtonVisibility(3);
-								i = new Intent(HomeActivity.this, ListActivity.class);
-							   	//i.putExtra("sourceButton", "button3"); 
+								i = new Intent(HomeActivity.this, ListActivity.class); 
 								break;
 			case R.id.B4_4:		switchButtonVisibility(4);
 								i = new Intent(HomeActivity.this, ListActivity.class);
-							   	//i.putExtra("sourceButton", "button4"); 
 								break;
 			}
 			Log.d(TAG, "changeModuleClicked");
 			startActivity(i);
-		}
-		
+		}	
 	}
 	
-	//listener for the elements on the deviceList drop-down menu
-	//will try to connect to the selected device in list
+	
+	/**
+	 * listener for the elements on the deviceList drop-down menu 
+	 * will try to connect to the selected device in list
+	 * 
+	 * 
+	 */
 	private class deviceListListener implements OnItemSelectedListener{
 
 		public void onItemSelected(AdapterView<?> parent, View view, int pos,
@@ -141,51 +145,22 @@ public class HomeActivity extends Activity {
 			ALDevice selectedDevice = ((ALDevice) parent.getItemAtPosition(pos));
 			
 			new connectTask().execute(selectedDevice);
-			//adress for net tester
-//			InetSocketAddress inetAddress;
-//			inetAddress = new InetSocketAddress("172.30.81.242", 1337);
-//			ALDevice netTesterDevice = new ALDevice(inetAddress, "NetTester");
-			
-			//toast which gives the selected device for testing
-//			Toast.makeText(parent.getContext(), 
-//					"Selected " + selectedDevice.getName(),
-//					Toast.LENGTH_SHORT).show();
-			
-//			AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
-//			
-//			if (ourApplication.connectClient.isConnected()) {
-//				ourApplication.connectClient.disconnect();
-//				ourApplication.newClient();
-//				Log.d(TAG, "new Client Created");
-//			};
-//				try {
-//					ourApplication.connectClient.connect(netTesterDevice.getAddress());
-					
-					//test client
-//					IClient client = ourApplication.connectClient;
-//					Log.d(TAG, "Connection Attempt");
-//					client.connect(netTesterDevice.getAddress());
-//					String s = (String) ourApplication.connectClient.sendRequest("lollll");
-					
-					//test send
-//					String s = (String) client.sendRequest("lollll");
-//					Log.d(TAG, "request sent, response: " + s);
-					
-//				} catch (IOException e) {
-//					 TODO Auto-generated catch block 
-//					e.printStackTrace();
-//					Log.d(TAG, "client Connection Failed!");
-//				}
+
 		}
 
 		public void onNothingSelected(AdapterView<?> arg0) {
-			// TODO Auto-generated method stub
+		
 			
 		}
 		
 	}
+	
 		
-    /** Called when the activity is first created. */
+    /** Called when the activity is first created. 
+     * 
+     * 
+     * 
+     * */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,13 +199,7 @@ public class HomeActivity extends Activity {
             	smallButtonOuterVerticalPadding = (int) buttonOuterVerticalPadding-(smallButtonSize/2);
             	smallButtonInnerHorizontalPadding = smallButtonInnerVerticalPadding = smallButtonSize;
             	
-            	Log.d(TAG, "smallbuttonSize = " + smallButtonSize);
-            	
-                // set custom view dimensions
-//            	for (int i =0; i<4; i++){
-//            		fieldButtons[i].getLayoutParams().height=buttonSize;
-//            		fieldButtons[i].getLayoutParams().width=buttonSize;
-//            	}
+            	Log.d(TAG, "smallbuttonSize = " + smallButtonSize);          
               
                 LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
                         buttonSize,      
@@ -436,6 +405,13 @@ public class HomeActivity extends Activity {
         RefreshButtonImages();
     }
     
+
+    /**
+	 * Called on Resume
+	 * 
+	 * 
+	 * 
+	 */
     public void onResume(Bundle savedInstanceState) {
     	super.onResume();
     	deviceListUpdater.startUpdates();
@@ -444,14 +420,26 @@ public class HomeActivity extends Activity {
     	Log.d(TAG,"onResumed");
     }
     
+    
+    /**
+	 * Calles on Pause
+	 * 
+	 * 
+	 * 
+	 */
     public void onPause(Bundle savedInstanceState) {
 //    	super.onPause();
     	deviceListUpdater.stopUpdates();
     	Log.d(TAG,"onPaused");
     }
     
-    // make small buttons visible if field button is clicked, make small buttons invisible if clicked again or another
-    // field is clicked
+    
+    /**
+	 * make small buttons visible if field button is
+	 * clicked, make small buttons invisible if clicked again or another
+	 * or another field is clicked
+	 * 
+	 */
     private void switchButtonVisibility (int Field){
     	switch (Field){
     		case 1: if(optionButtons[0][0].getVisibility()==0) optionButtons[0][0].setVisibility(4); else optionButtons[0][0].setVisibility(0);
@@ -506,6 +494,13 @@ public class HomeActivity extends Activity {
     	}
     }
     
+    
+    /**
+	 * Refresh images on Buttons
+	 * 
+	 * 
+	 * 
+	 */
     public void RefreshButtonImages() {
     	
     	AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
@@ -519,54 +514,46 @@ public class HomeActivity extends Activity {
     	}
     }
     
-    //method which uses DeviceDiscovery to refresh the deviceList
+    
+    /**
+	 * method which uses DeviceDiscovery to refresh the deviceList
+	 * 
+	 * 
+	 * 
+	 */
     public void RefreshDeviceList() {
-//    	
-    	
-//		@Override
-//		protected Integer doInBackground(Void... arg0) {
-			// TODO Auto-generated method stub
 			
-			deviceList = deviceDiscoverer.getDiscoveredDevices();
+		deviceList = deviceDiscoverer.getDiscoveredDevices();
 	    	
-//	    	ArrayAdapter<ALDevice> dataAdapter = new ArrayAdapter<ALDevice>(this,
-//					android.R.layout.simple_spinner_dropdown_item,deviceList);
-//	    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//	    	deviceListSpinner.setAdapter(dataAdapter);
-	    	
-			
-			if (deviceListSpinner.getAdapter() == null){
-				ALDeviceAdapter dataAdapter = new ALDeviceAdapter(this,
-				deviceList);
-				dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-				deviceListSpinner.setAdapter(dataAdapter);
-			} else {
-				((ALDeviceAdapter)deviceListSpinner.getAdapter()).refill(deviceList);
-			}
-//			return null;
-			
-//		}
+		if (deviceListSpinner.getAdapter() == null){
+			ALDeviceAdapter dataAdapter = new ALDeviceAdapter(this,
+			deviceList);
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			deviceListSpinner.setAdapter(dataAdapter);
+		} else {
+			((ALDeviceAdapter)deviceListSpinner.getAdapter()).refill(deviceList);
+		}
     }
-    
-//    //Asynk task to discover devices, used in refreshDeviceList
-//    private class DiscoverDevicesTask extends AsyncTask<Void,Integer,Integer> {
-//		@Override
-//		protected Integer doInBackground(Void... params) {
-//		deviceList = deviceDiscoverer.getDiscoveredDevices();
-//		return 0;
-//		}	
-//    }
-    
+
+   
+    /**
+	 * Async Task class that tries to connect
+	 * to a provided ALDevice
+	 * 
+	 * 
+	 */
     private class connectTask extends AsyncTask<ALDevice, Integer, Integer> {
     	protected Integer doInBackground(ALDevice... params){
     		
     		selectedDevice = params[0];
     		
     		if(selectedDevice==null) return 0;
+    		
     		//adress for net tester
 			InetSocketAddress inetAddress;
 			inetAddress = new InetSocketAddress("129.132.149.148", 1337);
 			ALDevice netTesterDevice = new ALDevice(inetAddress, "NetTester");
+			//
 			
 			AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
 			
@@ -582,15 +569,13 @@ public class HomeActivity extends Activity {
 //					IClient client = ourApplication.connectClient;
 					Log.d(TAG, "Connection Attempt to " + selectedDevice.getAddress());
 					ourApplication.connectClient.connect(selectedDevice.getAddress());
-//					String s = (String) ourApplication.connectClient.sendRequest("lollll");
 					
 					//test send
 					String s = (String) ourApplication.connectClient.sendRequest("lollll");
 					Log.d(TAG, "request sent, response: " + s);
 					
 				} catch (IOException e) {
-//					 TODO Auto-generated catch block 
-//					e.printStackTrace();
+
 					Log.d(TAG, "client Connection Failed!");
 				}
     		
@@ -598,6 +583,7 @@ public class HomeActivity extends Activity {
     	}
 
     }
+    
     
     //onCreateOptionsMenu
 //    @Override
@@ -608,14 +594,14 @@ public class HomeActivity extends Activity {
 //    }
     
     //onOptionsItemSelected
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-    	switch (item.getItemId()){
-    		case R.id.itemPrefs:
-    			startActivity(new Intent(this, PrefsActivity.class));
-    			break;
-    	}
-    	return true;
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item){
+//    	switch (item.getItemId()){
+//    		case R.id.itemPrefs:
+//    			startActivity(new Intent(this, PrefsActivity.class));
+//    			break;
+//    	}
+//    	return true;
+//    }
     
 }
