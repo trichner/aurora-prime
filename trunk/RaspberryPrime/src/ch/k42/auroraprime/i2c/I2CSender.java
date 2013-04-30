@@ -40,9 +40,11 @@ public class I2CSender implements Sender {
         matrices = new HashMap<Integer, IMatrix>();
         try {
             bus = I2CUtils.getDefaultBus();
-            devices = I2CUtils.discoverDevices(bus);
+
+            devices = I2CUtils.discoverDevices(bus); //TODO dicover from time to time
+
             for(int i=0;i<devices.size();i++){
-                matrices.put(i,new I2CMatrix(i,devices.get(i))); // TODO make ID less random
+                matrices.put(i,new I2CMatrix(getUniqueID(),devices.get(i))); // TODO make ID less random
             }
         } catch (IOException e) {
             Log.e(TAG,"Unable to discover i2c devices: "+e.getMessage());
@@ -51,6 +53,12 @@ public class I2CSender implements Sender {
         }
         if(matrices.size()>0) isConnected = true;
         return true;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    private int idcounter = 0;
+    private int getUniqueID() {
+        if(idcounter<0) idcounter = 0;
+        return idcounter++;  //To change body of created methods use File | Settings | File Templates.
     }
 
     @Override

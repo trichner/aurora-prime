@@ -11,24 +11,24 @@ import java.util.*;
  * Time: 10:18 AM
  * To change this template use File | Settings | File Templates.
  */
-public class Quorgs {
+public class QuorgManager {
     //==== Singleton stuff
-    private static Quorgs instance = new Quorgs();
+    private static QuorgManager instance = new QuorgManager();
 
-    private Quorgs(){
-        quorgs = new HashMap<Integer, Quorg>();
-    }
-
-    public static Quorgs getInstance(){
+    public static QuorgManager getInstance(){
         return  instance;
     }
 
     //==== Body
-    private Map<Integer,Quorg> quorgs;
-    public boolean isQuorg(int key){
-        if(!quorgs.containsKey(key)) return false;
+    private SortedMap<Integer,Quorg> quorgs;
 
-        return quorgs.get(key)!=null;
+
+    private QuorgManager(){
+        quorgs = new TreeMap<Integer, Quorg>();
+    }
+
+    public boolean isQuorg(int key){
+        return quorgs.containsKey(key);
     }
 
     public Quorg getQuorg(int key) {
@@ -38,23 +38,26 @@ public class Quorgs {
         return null;
     }
 
-    public Quorgs putQuorg(int key,Quorg quorg){
-        removeQuorg(key);
+    public boolean putQuorg(int matrixID,Quorg quorg){
+        if(!quorgs.containsKey(matrixID)) return false; // identifier not unique?
+        removeQuorg(matrixID);
+        quorg.setMatrixID(matrixID); // set a unique identifier
         if(!quorg.isRunning()) quorg.start();
-        quorgs.put(key,quorg);
-        return this;
+        quorgs.put(matrixID, quorg);
+        return true;
     }
 
-    public Quorgs removeQuorg(int key){
-        if (isQuorg(key)){
-          Quorg q = quorgs.get(key);
-          q.terminate();
+    public boolean removeQuorg(int ID){
+        if (!isQuorg(ID)){
+            return false;
         }
-        quorgs.remove(key);
-        return  this;
+        Quorg q = quorgs.get(ID);
+        q.terminate();
+        quorgs.remove(ID);
+        return  true;
     }
 
-    public Quorgs removeAll(){
+    public QuorgManager removeAll(){
         for(Quorg q : quorgs.values()){
            q.terminate();
         }
@@ -70,5 +73,4 @@ public class Quorgs {
         List<Quorg> quorgList = new ArrayList<Quorg>(quorgs.values());
         return quorgList;
     }
-
 }

@@ -1,6 +1,6 @@
 package ch.k42.auroraprime.executors;
 
-import ch.k42.auroraprime.core.Quorgs;
+import ch.k42.auroraprime.core.QuorgManager;
 import ch.k42.auroraprime.minions.Log;
 import ch.k42.auroraprime.quorgs.Frame;
 import ch.k42.auroraprime.quorgs.IFrame8x8;
@@ -37,14 +37,23 @@ public class SendJob implements Runnable{
         }
 
         //---- sending stuff    TODO
+
+        //MatrixManager -> discover Matrices
+
+
+
+
         Frame frame;// = // effect get frame;
         //for() //for all quorgs, get a new frame
         //sender.sendFrame(frame);
-        IFrame8x8 f1 = Quorgs.getInstance().getQuorg(1).getFrame();
-        IFrame8x8 f2 = Quorgs.getInstance().getQuorg(2).getFrame();
-        IFrame8x8 f3 = Quorgs.getInstance().getQuorg(3).getFrame();
-        IFrame8x8 f4 = Quorgs.getInstance().getQuorg(4).getFrame();
+        IFrame8x8 f1 = QuorgManager.getInstance().getQuorg(1).getFrame();
+        IFrame8x8 f2 = QuorgManager.getInstance().getQuorg(2).getFrame();
+        IFrame8x8 f3 = QuorgManager.getInstance().getQuorg(3).getFrame();
+        IFrame8x8 f4 = QuorgManager.getInstance().getQuorg(4).getFrame();
         Log.d("SendJob",f1.getColor(0,0));
+
+
+
         sender.sendFrame(1, f1);
         sender.sendFrame(2, f2);
         sender.sendFrame(3, f3);
