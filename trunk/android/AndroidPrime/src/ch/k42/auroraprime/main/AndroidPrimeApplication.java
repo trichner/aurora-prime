@@ -35,9 +35,10 @@ public class AndroidPrimeApplication extends Application {
 		this.deviceDiscoverer = deviceDiscoverer;
 	}
 
-	IDeviceDiscovery deviceDiscoverer;
-	IClient connectClient;
-	QuorgField[] quorgFields;
+	private IDeviceDiscovery deviceDiscoverer;
+	private IClient connectClient;
+	private QuorgField[] quorgFields;
+	private int selectedField;
 	
 	
 	/**
@@ -54,11 +55,44 @@ public class AndroidPrimeApplication extends Application {
 		super.onCreate();
 		connectClient = ClientFactory.getInstance();
 		quorgFields = new QuorgField[4];
+		selectedField=-1;
 		for (int i=0;i<4;i++){
 			quorgFields[i] = new QuorgField(i+1);
 		}
 	
 	}
+
+	
+	public IClient getConnectClient() {
+		return connectClient;
+	}
+
+
+	public void setConnectClient(IClient connectClient) {
+		this.connectClient = connectClient;
+	}
+
+
+	public QuorgField[] getQuorgFields() {
+		return quorgFields;
+	}
+
+
+	public void setQuorgFields(QuorgField[] quorgFields) {
+		this.quorgFields = quorgFields;
+	}
+
+
+	public int getSelectedField() {
+		return selectedField;
+	}
+
+
+	public void setSelectedField(int selectedField) {
+		this.selectedField = selectedField;
+	}
+	
+	
 
 }
 

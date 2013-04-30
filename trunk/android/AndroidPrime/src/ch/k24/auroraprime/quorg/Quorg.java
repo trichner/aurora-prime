@@ -1,5 +1,7 @@
 package ch.k24.auroraprime.quorg;
 
+import ch.k42.auroraprime.dto.QuorgSettings.QUORG;
+
 /**
  * A Class that holds all information
  * about a quorg the application needs
@@ -12,13 +14,13 @@ package ch.k24.auroraprime.quorg;
 public class Quorg {
 
 		private int image;
-		private int quorgID;
+		private QUORG quorgID;
 		private String name;
 		private boolean hasSettings;
 		
 		// constructors
 		
-		public Quorg(int image,int quorgID, String name, boolean hasSettings) {
+		public Quorg(int image,QUORG quorgID, String name, boolean hasSettings) {
 			
 			super();
 			this.image = image;
@@ -51,10 +53,10 @@ public class Quorg {
 		public void setHasSettings(boolean hasSettings) {
 			this.hasSettings = hasSettings;
 		}
-		public int getQuorgID() {
+		public QUORG getQuorgID() {
 			return quorgID;
 		}
-		public void setQuorgID(int quorgID) {
+		public void setQuorgID(QUORG quorgID) {
 			this.quorgID = quorgID;
 		}
 

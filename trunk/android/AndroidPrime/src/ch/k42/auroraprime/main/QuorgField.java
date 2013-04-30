@@ -2,7 +2,8 @@ package ch.k42.auroraprime.main;
 
 import ch.k24.auroraprime.quorg.Quorg;
 import ch.k42.auroraprime.R;
-import ch.k42.auroraprime.net.QuorgSettings;
+import ch.k42.auroraprime.dto.QuorgSettings;
+import ch.k42.auroraprime.dto.QuorgSettings.QUORG;
 
 /**
  * A class used to store the information/state
@@ -13,6 +14,7 @@ import ch.k42.auroraprime.net.QuorgSettings;
 public class QuorgField {
 	
 	private int fieldNumber;
+	private int fieldID;
 	private Quorg activeQuorg;
 	private boolean isRunning;
 	private QuorgSettings settings;
@@ -20,7 +22,8 @@ public class QuorgField {
 	public QuorgField(int fieldNumber){
 		super();
 		this.fieldNumber = fieldNumber;
-		Quorg noQuorg = new Quorg(R.drawable.ic_field_000,000, "Empty Quorg", false);
+		this.fieldID = -1;
+		Quorg noQuorg = new Quorg(R.drawable.ic_field_000,QUORG.OFF, "Empty Quorg", false);
 		this.activeQuorg = noQuorg;
 		this.isRunning = false;
 		this.settings = null;	
@@ -28,6 +31,7 @@ public class QuorgField {
 	public QuorgField(int fieldNumber, Quorg activeQuorg, boolean isRunning){
 		super();
 		this.fieldNumber = fieldNumber;
+		this.fieldID = -1;
 		this.activeQuorg = activeQuorg;
 		this.isRunning = isRunning;
 		this.settings = null;
@@ -35,6 +39,7 @@ public class QuorgField {
 	public QuorgField(int fieldNumber, Quorg activeQuorg, boolean isRunning, QuorgSettings settings){
 		super();
 		this.fieldNumber = fieldNumber;
+		this.fieldID = -1;
 		this.activeQuorg = activeQuorg;
 		this.isRunning = isRunning;
 		this.settings = settings;
@@ -42,6 +47,13 @@ public class QuorgField {
 	
 	public void emptyField() {
 		//TODO
+	}
+	
+	public int getFieldID() {
+		return fieldID;
+	}
+	public void setFieldID(int fieldID) {
+		this.fieldID = fieldID;
 	}
 	
 	public int getFieldNumber() {

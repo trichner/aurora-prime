@@ -7,8 +7,8 @@ import ch.k24.auroraprime.quorg.Quorg;
 import ch.k24.auroraprime.quorg.QuorgAdapter;
 import ch.k24.auroraprime.quorg.QuorgListFactory;
 import ch.k42.auroraprime.R;
-import ch.k42.auroraprime.net.QuorgSettings;
-import ch.k42.auroraprime.net.Request;
+import ch.k42.auroraprime.dto.QuorgSettings;
+import ch.k42.auroraprime.dto.Request;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -57,11 +57,10 @@ public enum Command{
 				Toast.makeText(getBaseContext(),"settings are not yet implemented bro", Toast.LENGTH_LONG).show();
 			} else {
 				QuorgSettings settings = new QuorgSettings();
-				settings.setQuorgID(quorg.getQuorgID());
+				settings.setQuorg(quorg.getQuorgID());
 				AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
-//				settings.setScreen(ourApplication.activeScreen);
-				
-				Request request = new Request(ch.k42.auroraprime.net.Request.Command.SETQUORG ,settings);
+				settings.setMatrixID(ourApplication.getQuorgFields()[ourApplication.getSelectedField()].getFieldID());
+				Request request = new Request(Request.Command.SETQUORG ,settings);
 				SendRequest(request);
 			}
 			Intent i = new Intent(ListActivity.this, HomeActivity.class);
@@ -74,6 +73,7 @@ public enum Command{
 
 	
 	/** Called when the activity is first created. 
+	 * 
 	 * 
 	 * 
 	 * */
@@ -101,8 +101,8 @@ public enum Command{
     public Object SendRequest(Object request){	
     	
     	AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
-    	if (ourApplication.connectClient.isConnected()){
-    		ourApplication.connectClient.sendRequest(request);
+    	if (ourApplication.getConnectClient().isConnected()){
+    		ourApplication.getConnectClient().sendRequest(request);
     		return null;
     	} else {
     		Toast.makeText(getBaseContext(),"no device connected", Toast.LENGTH_LONG).show();
