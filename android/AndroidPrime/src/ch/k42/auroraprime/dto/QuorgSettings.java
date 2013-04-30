@@ -1,4 +1,4 @@
-package ch.k42.auroraprime.net.DTO;
+package ch.k42.auroraprime.dto;
 
 import java.io.Serializable;
 
