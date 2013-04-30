@@ -1,8 +1,10 @@
 package ch.k42.auroraprime.net;
 
 
-import ch.k42.auroraprime.minions.Log;
+import ch.k42.auroraprime.core.QuorgManager;
 import ch.k42.auroraprime.net.DTO.Request;
+import ch.k42.auroraprime.quorgs.Quorg;
+import ch.k42.auroraprime.quorgs.RandomQuorg;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,6 +28,10 @@ public class QRequestHandler implements RequestHandler{
 
             case SETQUORG:
 
+                int pos=0;
+                Quorg newQuorg = new RandomQuorg();
+
+                QuorgManager.getInstance().putQuorg(pos,newQuorg);
                 break;
             case STARTQUORG:
 
@@ -37,4 +43,6 @@ public class QRequestHandler implements RequestHandler{
 
         return request.wasHandled();
     }
+
+
 }

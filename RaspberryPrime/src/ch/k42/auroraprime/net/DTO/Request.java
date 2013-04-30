@@ -3,9 +3,9 @@ package ch.k42.auroraprime.net.DTO;
 import java.io.Serializable;
 
 public class Request implements Serializable {
-	public enum Command{
+
+    public enum Command{
 		SETQUORG,
-		STARTQUORG,
 		GETUPDATE
 	}
 	
@@ -26,16 +26,18 @@ public class Request implements Serializable {
 		return arg;
 	}
 
-	public void setArg(Object arg) {
+	public Request setArg(Object arg) {
 		this.arg = arg;
+        return this;
 	}
 
 	public Command getCmd() {
 		return cmd;
 	}
 
-	public void setCmd(Command cmd) {
+	public Request setCmd(Command cmd) {
 		this.cmd = cmd;
+        return this;
 	}
 
     public Request setHandled(boolean wasHandled) {
