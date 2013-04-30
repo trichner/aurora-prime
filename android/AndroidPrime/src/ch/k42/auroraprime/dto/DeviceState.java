@@ -1,5 +1,6 @@
 package ch.k42.auroraprime.dto;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.SortedMap;
 
@@ -10,7 +11,7 @@ import java.util.SortedMap;
  * Time: 12:13 PM
  * To change this template use File | Settings | File Templates.
  */
-public class DeviceState {
+public class DeviceState implements Serializable{
     private SortedMap<Integer,QuorgSettings> quorgs;
     private List<Integer> matrices;
 
