@@ -110,19 +110,24 @@ public class HomeActivity extends Activity {
 	private class changeModuleListener implements OnClickListener{
 
 		public void onClick(View v) {
+			AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
 			switch (v.getId())
 			{
 			case R.id.B1_4: 	switchButtonVisibility(1);
 								i = new Intent(HomeActivity.this, ListActivity.class);
+								ourApplication.setSelectedField(0);
 								break;
 			case R.id.B2_4: 	switchButtonVisibility(2);
 								i = new Intent(HomeActivity.this, ListActivity.class);
+								ourApplication.setSelectedField(1);
 								break;
 			case R.id.B3_4: 	switchButtonVisibility(3);
 								i = new Intent(HomeActivity.this, ListActivity.class); 
+								ourApplication.setSelectedField(2);
 								break;
 			case R.id.B4_4:		switchButtonVisibility(4);
 								i = new Intent(HomeActivity.this, ListActivity.class);
+								ourApplication.setSelectedField(3);
 								break;
 			}
 			Log.d(TAG, "changeModuleClicked");
@@ -398,7 +403,7 @@ public class HomeActivity extends Activity {
             }
          });
 //         start the Updater
-        deviceListUpdater.startUpdates();
+//        deviceListUpdater.startUpdates();
 //        RefreshDeviceList();
         Log.d(TAG,"onCreated");
         
@@ -412,7 +417,8 @@ public class HomeActivity extends Activity {
 	 * 
 	 * 
 	 */
-    public void onResume(Bundle savedInstanceState) {
+    @Override
+    public void onResume() {
     	super.onResume();
     	deviceListUpdater.startUpdates();
 //    	new RefreshDeviceList().execute();
@@ -427,8 +433,9 @@ public class HomeActivity extends Activity {
 	 * 
 	 * 
 	 */
-    public void onPause(Bundle savedInstanceState) {
-//    	super.onPause();
+    @Override
+    public void onPause() {
+    	super.onPause();
     	deviceListUpdater.stopUpdates();
     	Log.d(TAG,"onPaused");
     }
@@ -505,7 +512,7 @@ public class HomeActivity extends Activity {
     	
     	AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
     	for (int i=0;i<4;i++){
-    		fieldButtons[i].setImageResource(ourApplication.quorgFields[i].getActiveQuorg().getImage());
+    		fieldButtons[i].setImageResource(ourApplication.getQuorgFields()[i].getActiveQuorg().getImage());
     		optionButtons[i][0].setImageResource(R.drawable.ic_switch);
     		optionButtons[i][1].setImageResource(R.drawable.ic_on);
     		optionButtons[i][2].setImageResource(R.drawable.ic_config);
@@ -557,8 +564,8 @@ public class HomeActivity extends Activity {
 			
 			AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
 			
-			if (ourApplication.connectClient.isConnected()) {
-				ourApplication.connectClient.disconnect();
+			if (ourApplication.getConnectClient().isConnected()) {
+				ourApplication.getConnectClient().disconnect();
 				ourApplication.newClient();
 				Log.d(TAG, "new Client Created");
 			};
@@ -568,10 +575,10 @@ public class HomeActivity extends Activity {
 					//test client
 //					IClient client = ourApplication.connectClient;
 					Log.d(TAG, "Connection Attempt to " + selectedDevice.getAddress());
-					ourApplication.connectClient.connect(selectedDevice.getAddress());
+					ourApplication.getConnectClient().connect(selectedDevice.getAddress());
 					
 					//test send
-					String s = (String) ourApplication.connectClient.sendRequest("lollll");
+					String s = (String) ourApplication.getConnectClient().sendRequest("lollll");
 					Log.d(TAG, "request sent, response: " + s);
 					
 				} catch (IOException e) {
