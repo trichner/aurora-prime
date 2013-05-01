@@ -421,6 +421,7 @@ public class HomeActivity extends Activity {
     public void onResume() {
     	super.onResume();
     	deviceListUpdater.startUpdates();
+    	RefreshButtonImages();
 //    	new RefreshDeviceList().execute();
 //    	RefreshDeviceList();
     	Log.d(TAG,"onResumed");

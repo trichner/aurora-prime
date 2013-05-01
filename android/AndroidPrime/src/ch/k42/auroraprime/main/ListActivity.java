@@ -7,6 +7,7 @@ import ch.k24.auroraprime.quorg.Quorg;
 import ch.k24.auroraprime.quorg.QuorgAdapter;
 import ch.k24.auroraprime.quorg.QuorgListFactory;
 import ch.k42.auroraprime.R;
+import ch.k42.auroraprime.dto.DeviceState;
 import ch.k42.auroraprime.dto.QuorgSettings;
 import ch.k42.auroraprime.dto.Request;
 import android.app.Activity;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 public class ListActivity extends Activity{
 
 private ListView quorgListView;
+private List<Quorg> quorgData;
 
 public enum Command{
 	SETQUORG,
@@ -46,7 +48,8 @@ public enum Command{
  * 
  */
 	private class TableElementListener implements OnItemClickListener {
-
+	
+	
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			// TODO Auto-generated method stub
@@ -82,7 +85,7 @@ public enum Command{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list);
         
-        List<Quorg> quorgData = new QuorgListFactory().getQuorgList();
+        quorgData = new QuorgListFactory().getQuorgList();
         
         QuorgAdapter adapter = new QuorgAdapter(this, 
                 R.layout.quorg_list_view_row, quorgData);
@@ -102,7 +105,20 @@ public enum Command{
     	
     	AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
     	if (ourApplication.getConnectClient().isConnected()){
-    		ourApplication.getConnectClient().sendRequest(request);
+    		Request requestAnswer = (Request) ourApplication.getConnectClient().sendRequest(request);
+    		DeviceState newState = (DeviceState) requestAnswer.getArg();
+    			if (requestAnswer.wasHandled()){
+    				for (int i = 0; i<4; i++){
+    					//set net settings
+    					ourApplication.getQuorgFields()[i].setSettings(newState.getQuorgs().get(newState.getMatrices().get(i)));
+    					//set new quorg
+    					ourApplication.getQuorgFields()[i].setActiveQuorg(quorgData.get(ourApplication.getQuorgFields()[i].getSettings()
+    							.getQuorg().number));
+    				} 
+    			} else {
+    				Toast.makeText(getBaseContext(),"request could not be handled", Toast.LENGTH_LONG).show();
+				}
+    			
     		return null;
     	} else {
     		Toast.makeText(getBaseContext(),"no device connected", Toast.LENGTH_LONG).show();

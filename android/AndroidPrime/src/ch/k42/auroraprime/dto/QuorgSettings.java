@@ -6,8 +6,8 @@ public class QuorgSettings implements Serializable {
     public enum QUORG{
         OFF(0,"Off"),
         REDLIGHT(1,"Redlight"),
-        GREENLIGHT(2,"Bluefield"),
-        BLUELIGHT(3,"Greenfield"),
+        GREENLIGHT(2,"Greenfield"),
+        BLUELIGHT(3,"Bluefield"),
         CLOCK(4,"Clock"),
         RANDOM(5,"Random"),
         MAIL(6,"Mail"),
