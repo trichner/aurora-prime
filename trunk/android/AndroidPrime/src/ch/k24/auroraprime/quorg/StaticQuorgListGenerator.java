@@ -64,7 +64,7 @@ public class StaticQuorgListGenerator implements IQuorgListGenerator {
 				
 		//matrix LED Quorg definition
 				
-		Quorg matrixQuorg = new Quorg(R.drawable.ic_field_008,QUORG.MATRIX, "Matrix Effevt", false);
+		Quorg matrixQuorg = new Quorg(R.drawable.ic_field_008,QUORG.MATRIX, "Matrix Effect", false);
 		list.add(matrixQuorg);
 		
 		//audiovisualizer Quorg definition
