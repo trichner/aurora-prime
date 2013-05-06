@@ -13,8 +13,8 @@ import java.awt.*;
 public class ColorQuorg extends Quorg {
 	private IFrame8x8 frame;
 
-    public ColorQuorg(Color c){
-        frame = Utils.getColorFrame(c);
+    public ColorQuorg(){
+        frame = Utils.getColorFrame(Color.black);
     }
 
 	@Override
@@ -35,4 +35,24 @@ public class ColorQuorg extends Quorg {
 		}
         Log.d("ColorQuorg","stopped");
 	}
+
+    private String[] settings;
+    @Override
+    public void initSettings(String[] settings) {
+        this.settings = settings;
+        if(settings.length>0){
+            if(settings[0].equals("red")){
+                frame = Utils.getColorFrame(Color.red);
+            }else if(settings[0].equals("green")){
+                frame = Utils.getColorFrame(Color.green);
+            }else if(settings[0].equals("red")){
+                frame = Utils.getColorFrame(Color.blue);
+            }
+        }
+    }
+
+    @Override
+    public String[] getSettings() {
+        return settings;
+    }
 }

@@ -32,4 +32,15 @@ public class RandomQuorg extends Quorg {
 		}
         Log.d("RandomQuorg","stopped");
 	}
+
+    private String[] settings; //unused for now TODO
+    @Override
+    public void initSettings(String[] settings) {
+        this.settings = settings;
+    }
+
+    @Override
+    public String[] getSettings() {
+        return settings;
+    }
 }

@@ -39,7 +39,7 @@ public class QuorgManager {
     }
 
     public boolean putQuorg(int matrixID,Quorg quorg){
-        if(!quorgs.containsKey(matrixID)) return false; // identifier not unique?
+        //if(quorgs.containsKey(matrixID)) return false; // identifier not unique?
         removeQuorg(matrixID);
         quorg.setMatrixID(matrixID); // set a unique identifier
         if(!quorg.isRunning()) quorg.start();
@@ -69,8 +69,8 @@ public class QuorgManager {
         return quorgs.keySet();
     }
 
-    public List<Quorg> getAllQuorgs(){
-        List<Quorg> quorgList = new ArrayList<Quorg>(quorgs.values());
-        return quorgList;
+    public SortedMap<Integer, Quorg> getAllQuorgs(){
+        //List<Quorg> quorgList = new ArrayList<Quorg>(quorgs.values());
+        return quorgs;
     }
 }

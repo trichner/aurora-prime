@@ -19,7 +19,7 @@ public class SendJob implements Runnable{
         if(!sender.isConnected()){
             Log.e(TAG,"Sender not connected, trying to connect now.");
             sender.connect();    //try to connect anyway
-            if(sender.isConnected()) Log.e(TAG,"No Device Connected, unable to connect.");
+            if(!sender.isConnected()) Log.e(TAG,"No Device Connected, unable to connect.");
         }
 		this.sender = sender;
 	}
@@ -28,7 +28,7 @@ public class SendJob implements Runnable{
 	public void run() {
         //---- are we ready to go?
         if(!sender.isConnected()){
-            Log.e(TAG,"Sender not connected, trying to connect now.");
+            Log.w(TAG,"Sender not connected, trying to connect now.");
             sender.connect();    //try to connect anyway
             if(sender.isConnected()){
                 Log.e(TAG,"No Device Connected, unable to connect.");

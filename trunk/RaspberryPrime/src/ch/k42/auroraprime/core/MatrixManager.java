@@ -1,6 +1,13 @@
 package ch.k42.auroraprime.core;
 
-import java.util.List;
+import ch.k42.auroraprime.executors.Executor;
+import ch.k42.auroraprime.executors.SendJob;
+import ch.k42.auroraprime.executors.Sender;
+import ch.k42.auroraprime.executors.SenderFactory;
+import ch.k42.auroraprime.minions.ALSettings;
+import ch.k42.auroraprime.minions.Log;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,23 +17,52 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class MatrixManager {
-    private MatrixManager instance = new MatrixManager();
-
-    private class MatrixDiscoveryThread extends Thread{
-        @Override
-        public void run(){
-
-        }
+    private static MatrixManager instance = new MatrixManager();
+    public static MatrixManager getInstance(){
+        return instance;
     }
-
+    private static final String TAG = "MatrixManager";
 
     // Singleton
-    private MatrixManager(){
+    private boolean isRunning=false;
+    private Sender sender;
+    private SendJob sjob;
 
+    private MatrixManager(){
+        sender = SenderFactory.getInstance();
     }
 
-    public List<Integer> discoverMatrices(){
+    public boolean start(){
+        boolean ret = sender.connect();
+        if(!ret) return false;
+        sjob = new SendJob(sender);
+        int fps = 5;
+        try {
+            int tmp = Integer.parseInt(ALSettings.getProperty("FPS"));
+            if(tmp<100 && tmp>0)
+                fps=tmp;
+            else
+                Log.w(TAG,"Framerate in properties out of bounds.");
+        }catch (Exception e){
+            Log.e(TAG,"Can't read Settings File for FPS: " + e.getMessage());
+        }
+        Executor.getInstance().scheduleAtFixedRate(sjob, 0, 1000 / fps, TimeUnit.MILLISECONDS);
+        isRunning=true;
+        return true;
+    }
 
-        return null;
+    public boolean stop(){
+        isRunning=false;
+        sender.disconnect();
+        Executor.getInstance().remove(sjob);
+        return true;
+    }
+
+    public Sender getSender() {
+        return sender;
+    }
+
+    public boolean isRunning(){
+        return isRunning;
     }
 }

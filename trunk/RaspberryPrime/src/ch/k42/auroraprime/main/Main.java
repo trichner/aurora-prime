@@ -1,19 +1,20 @@
 package ch.k42.auroraprime.main;
 
-import java.util.concurrent.TimeUnit;
-
+import ch.k42.auroraprime.core.MatrixManager;
 import ch.k42.auroraprime.core.QuorgManager;
 import ch.k42.auroraprime.executors.Executor;
-import ch.k42.auroraprime.executors.SendJob;
-import ch.k42.auroraprime.executors.Sender;
-import ch.k42.auroraprime.i2c.I2CSender;
 import ch.k42.auroraprime.minions.Log;
 import ch.k42.auroraprime.quorgs.RandomQuorg;
-import ch.k42.auroraprime.sim.SimSender;
 
 public class Main {
 
+
+
 	/**
+     *
+     * Notes:
+     * - the Transmission Layer can be choosen by editing the 'SenderFactory'
+     *
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -41,17 +42,18 @@ public class Main {
      * Starts a new Simulation with SimSender as the Sender
      */
 	private static void simulation(){
+        Runtime.getRuntime().addShutdownHook( new Thread() {
+            @Override
+            public void run() {
+                //this.notifyAll();
+            }
+        } );
 
-        Sender sim = new SimSender();   // Choose a sender
-		
-		sim.connect();                  // Connect sender
-        SendJob sjob = new SendJob(sim);// Create SendJob
-                                        // Schedule SendJob
         QuorgManager.getInstance().putQuorg(1,new RandomQuorg());
         QuorgManager.getInstance().putQuorg(2,new RandomQuorg());
         QuorgManager.getInstance().putQuorg(3,new RandomQuorg());
         QuorgManager.getInstance().putQuorg(4,new RandomQuorg());
-        Executor.getInstance().scheduleAtFixedRate(sjob,0,1000/5,TimeUnit.MILLISECONDS);
+        MatrixManager.getInstance().start();
 
         //==== Running
         try {
@@ -61,37 +63,9 @@ public class Main {
         }
 
         //==== stopping
-
-        Executor.getInstance().shutdownNow();
-		sim.disconnect();               // Free Connection
-        QuorgManager.getInstance().removeAll();
+        MatrixManager.getInstance().stop();     // disconnect matrices
+        Executor.getInstance().shutdownNow();   // just in case
+        QuorgManager.getInstance().removeAll(); // stop all quorgs
 	}
-
-    private static void i2c(){
-
-        Sender i2c = new I2CSender();   // Choose a sender
-
-        i2c.connect();  // Connect sender
-        SendJob sjob = new SendJob(i2c);// Create SendJob
-        // Schedule SendJob
-        QuorgManager.getInstance().putQuorg(1,new RandomQuorg());
-        QuorgManager.getInstance().putQuorg(2,new RandomQuorg());
-        QuorgManager.getInstance().putQuorg(3,new RandomQuorg());
-        QuorgManager.getInstance().putQuorg(4,new RandomQuorg());
-        Executor.getInstance().scheduleAtFixedRate(sjob,0,1000/5,TimeUnit.MILLISECONDS);
-
-        //==== Running
-        try {
-            Thread.sleep(30000);
-        } catch (InterruptedException e) {
-            Log.e("MAIN","stahp! what are you doing??!");
-        }
-
-        //==== stopping
-
-        Executor.getInstance().shutdownNow();
-        i2c.disconnect();               // Free Connection
-        QuorgManager.getInstance().removeAll();
-    }
 
 }
