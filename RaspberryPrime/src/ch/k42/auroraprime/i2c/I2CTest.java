@@ -7,6 +7,7 @@ import sun.util.resources.LocaleNames_be;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,16 +19,23 @@ import java.util.Arrays;
 public class I2CTest {
     private static final String TAG= "I2CTest";
     public static void main(String args[]){
-        boolean bus0 = args[0].equals("0");
-        int adr = Integer.parseInt(args[1]);
-
+        boolean bus0 = false;
+        int adr = 1;
+        if(args.length>=2){
+           bus0 = args[0].equals("0");
+           adr = Integer.parseInt(args[1]);
+        }
         I2CBus bus=null;
         try {
             Log.d(TAG,"Get bus nr. "+(bus0 ? I2CBus.BUS_0 : I2CBus.BUS_1));
             bus = I2CFactory.getInstance(bus0 ? I2CBus.BUS_0 : I2CBus.BUS_1);
             Log.d(TAG,String.format("Get device on address: %xh",adr));
-            I2CDevice dev = bus.getDevice(adr);
+
+            List<I2CDevice> devices = I2CUtils.discoverDevices(bus);
+
+            I2CDevice dev = devices.get(0);
             Log.d(TAG,"Reading some bits...");
+            int n=0;
             while (true){
 
 //                //send some bytes
@@ -44,10 +52,10 @@ public class I2CTest {
                 try {
                     int ret = dev.read();
                     //int ret = dev.read(rbuf,0,20);
-                    System.out.println(Arrays.toString(rbuf));
+                    //System.out.println(Arrays.toString(rbuf));
 
-                    Log.d(TAG,String.format("Read message: %4h",ret));
-
+                    Log.d(TAG,String.format("Read message nr. " + n + " : %4h",ret));
+                    n++;
                 }catch (Exception e){
                     Log.e("i2ctest"," Exception ");
                 }

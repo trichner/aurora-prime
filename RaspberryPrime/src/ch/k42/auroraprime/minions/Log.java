@@ -66,9 +66,9 @@ public final class Log {
         sb.append(prefix);
         sb.append(" ");
         sb.append(String.format("%-20s",tag));
+        sb.append(ANSI_RESET);
         sb.append(" ");
         sb.append(String.format("%-50s",message));
-        sb.append(ANSI_RESET);
 
         return sb.toString();
     }

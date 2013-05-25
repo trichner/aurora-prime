@@ -55,7 +55,7 @@ public class I2CSender implements Sender {
         return true;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    private int idcounter = 0;
+    private int idcounter = 1;
     private int getUniqueID() {
         if(idcounter<0) idcounter = 0;
         return idcounter++;  //To change body of created methods use File | Settings | File Templates.
