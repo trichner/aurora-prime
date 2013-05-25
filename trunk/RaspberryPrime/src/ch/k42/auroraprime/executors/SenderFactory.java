@@ -1,5 +1,6 @@
 package ch.k42.auroraprime.executors;
 
+import ch.k42.auroraprime.i2c.I2CSender;
 import ch.k42.auroraprime.sim.SimSender;
 
 /**
@@ -11,6 +12,6 @@ import ch.k42.auroraprime.sim.SimSender;
  */
 public class SenderFactory {
     public static Sender getInstance(){
-        return new SimSender();
+        return new I2CSender();//SimSender();
     }
 }

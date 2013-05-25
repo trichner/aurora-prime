@@ -31,6 +31,7 @@ public class I2CMatrix implements IMatrix {
         int size = f.toBytes1bit(buf);  // Buffer should be long enough, if not it violates my protocol
         try {
             device.write(buf,0,size);
+            Log.d(TAG,"sent frame over I2C");
         } catch (IOException e) {
             Log.e(TAG,"Unable to send frame over I2C" + e.getMessage());
             return false;
