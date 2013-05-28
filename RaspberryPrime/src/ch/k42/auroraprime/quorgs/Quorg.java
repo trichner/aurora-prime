@@ -6,7 +6,7 @@ public abstract class Quorg extends Thread {
 	public abstract IFrame8x8 getFrame();
 	protected volatile boolean quit = true;
     protected QuorgSettings settings;
-
+    public static final String name="Quorg";
     private int MatrixID = -1;
 
 
@@ -29,6 +29,6 @@ public abstract class Quorg extends Thread {
 	@Override
 	public abstract void run();
 
-    public abstract void initSettings(String[] settings);
-    public abstract String[] getSettings();
+    public abstract void initSettings(String settings);
+    public abstract String getSettings();
 }

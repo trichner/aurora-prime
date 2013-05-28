@@ -1,7 +1,7 @@
 package ch.k42.auroraprime.quorgs;
 
 /**
- * Utils to handle 8x8 Bitfields
+ * QuorgUtils to handle 8x8 Bitfields
  * <font face="Courier New"><pre>
  *    A  B  C  D  E  F  G  H  
  * 1| 56 57 58 59 60 61 62 63 

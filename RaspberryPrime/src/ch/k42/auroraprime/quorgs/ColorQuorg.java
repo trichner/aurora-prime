@@ -1,7 +1,6 @@
 package ch.k42.auroraprime.quorgs;
 
 import ch.k42.auroraprime.minions.Log;
-import ch.k42.auroraprime.minions.Utils;
 
 import java.awt.*;
 
@@ -14,7 +13,7 @@ public class ColorQuorg extends Quorg {
 	private IFrame8x8 frame;
 
     public ColorQuorg(){
-        frame = Utils.getColorFrame(Color.black);
+        frame = QuorgUtils.getColorFrame(Color.black);
     }
 
 	@Override
@@ -42,11 +41,11 @@ public class ColorQuorg extends Quorg {
         this.settings = settings;
         if(settings.length>0){
             if(settings[0].equals("red")){
-                frame = Utils.getColorFrame(Color.red);
+                frame = QuorgUtils.getColorFrame(Color.red);
             }else if(settings[0].equals("green")){
-                frame = Utils.getColorFrame(Color.green);
-            }else if(settings[0].equals("red")){
-                frame = Utils.getColorFrame(Color.blue);
+                frame = QuorgUtils.getColorFrame(Color.green);
+            }else if(settings[0].equals("blue")){
+                frame = QuorgUtils.getColorFrame(Color.blue);
             }
         }
     }

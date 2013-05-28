@@ -1,13 +1,11 @@
-package ch.k42.auroraprime.minions;
-
-import ch.k42.auroraprime.quorgs.Frame1bit;
-import ch.k42.auroraprime.quorgs.IFrame8x8;
+package ch.k42.auroraprime.quorgs;
 
 import java.awt.*;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Utils {
+public class QuorgUtils {
+
     /**
      * Fills a Frame with Random colors, based on 8bit color depth
      * @return a pre-filled IFrame8x8
@@ -30,6 +28,21 @@ public class Utils {
     public static IFrame8x8 getRandomFrame1bit(){
         Random rand = new Random();
         return new Frame1bit(rand.nextLong(),rand.nextLong(),rand.nextLong());
+    }
+
+    /**
+     * Fills a Frame with a given Digit, based on 1bit color depth
+     * @param n a digit to parse
+     * @return a pre-filled IFrame8x8
+     */
+    public static IFrame8x8 getDigitFrame1bit(int n){
+        n %=10;
+        long r=0;
+        for (int i=0;i<n;i++){
+            r = Bitfields.setBit(4,i,r); //TODO out of bounds if >8 !!!!
+        }
+
+        return new Frame1bit(r,0,0);
     }
 
     /**
