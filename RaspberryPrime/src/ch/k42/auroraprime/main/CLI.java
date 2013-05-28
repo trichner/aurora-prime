@@ -121,8 +121,10 @@ public class CLI {
                     q.initSettings("blue");
                     break;
             }
+            l("Choose Matrix:");
 
-            QuorgManager.getInstance().putQuorg(ID,q);
+
+            QuorgManager.getInstance().putQuorg(1234,q); //TODO
 
         } catch (Exception e) {
             Log.e(TAG,"Illegal input");
