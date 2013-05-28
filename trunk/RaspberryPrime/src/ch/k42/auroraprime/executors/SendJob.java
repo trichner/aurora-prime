@@ -50,7 +50,7 @@ public class SendJob implements Runnable{
         IFrame8x8 f2 = QuorgManager.getInstance().getQuorg(2).getFrame();
         IFrame8x8 f3 = QuorgManager.getInstance().getQuorg(3).getFrame();
         IFrame8x8 f4 = QuorgManager.getInstance().getQuorg(4).getFrame();
-        Log.d("SendJob",f1.getColor(0,0));
+        //Log.d("SendJob",f1.getColor(0,0));
 
 
 

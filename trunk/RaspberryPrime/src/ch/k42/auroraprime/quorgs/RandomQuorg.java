@@ -1,7 +1,6 @@
 package ch.k42.auroraprime.quorgs;
 
 import ch.k42.auroraprime.minions.Log;
-import ch.k42.auroraprime.minions.Utils;
 
 /**
  * Just generates RandomFrames
@@ -9,8 +8,8 @@ import ch.k42.auroraprime.minions.Utils;
  *
  */
 public class RandomQuorg extends Quorg {
-	private IFrame8x8 frame = Utils.getRandomFrame1bit();
-
+	private IFrame8x8 frame = QuorgUtils.getRandomFrame1bit();
+    public static final String name="RandomQuorg";
 	@Override
 	public IFrame8x8 getFrame() {
 		IFrame8x8 ret = frame;
@@ -23,8 +22,8 @@ public class RandomQuorg extends Quorg {
         quit=false;
         Log.d("RandomQuorg","started");
 		while(!quit){
-            Log.d("RandomQuorg","generating random quorg...");
-			frame = Utils.getRandomFrame1bit();
+            //Log.d("RandomQuorg","generating random quorg...");
+			frame = QuorgUtils.getRandomFrame1bit();
 			
 			try {
 				this.sleep(10000);

@@ -4,6 +4,7 @@ import ch.k42.auroraprime.core.MatrixManager;
 import ch.k42.auroraprime.core.QuorgManager;
 import ch.k42.auroraprime.executors.Executor;
 import ch.k42.auroraprime.minions.Log;
+import ch.k42.auroraprime.quorgs.MailQuorg;
 import ch.k42.auroraprime.quorgs.RandomQuorg;
 
 public class Main {
@@ -38,9 +39,6 @@ public class Main {
 		
 	}
 
-    /*
-     * Starts a new Simulation with SimSender as the Sender
-     */
 	private static void simulation(){
         Runtime.getRuntime().addShutdownHook( new Thread() {
             @Override
@@ -57,7 +55,7 @@ public class Main {
 
         //==== Running
         try {
-            Thread.sleep(15000);
+            Thread.sleep(1500000000);
         } catch (InterruptedException e) {
             Log.e("MAIN","stahp! what are you doing??!");
         }
