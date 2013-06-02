@@ -33,7 +33,6 @@ import android.widget.Toast;
 public class ListActivity extends Activity{
 
 private ListView quorgListView;
-private List<Quorg> quorgData;
 
 public enum Command{
 	SETQUORG,
@@ -85,10 +84,12 @@ public enum Command{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list);
         
-        quorgData = new QuorgListFactory().getQuorgList();
+        AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
+        
+        ourApplication.setQuorgData(new QuorgListFactory().getQuorgList());
         
         QuorgAdapter adapter = new QuorgAdapter(this, 
-                R.layout.quorg_list_view_row, quorgData);
+                R.layout.quorg_list_view_row, ourApplication.getQuorgData());
         
         quorgListView = (ListView)findViewById(R.id.quorgListView);
         quorgListView.setAdapter(adapter);
@@ -112,7 +113,7 @@ public enum Command{
     					//set net settings
     					ourApplication.getQuorgFields()[i].setSettings(newState.getQuorgs().get(newState.getMatrices().get(i)));
     					//set new quorg
-    					ourApplication.getQuorgFields()[i].setActiveQuorg(quorgData.get(ourApplication.getQuorgFields()[i].getSettings()
+    					ourApplication.getQuorgFields()[i].setActiveQuorg(ourApplication.getQuorgData().get(ourApplication.getQuorgFields()[i].getSettings()
     							.getQuorg().number));
     				} 
     			} else {
