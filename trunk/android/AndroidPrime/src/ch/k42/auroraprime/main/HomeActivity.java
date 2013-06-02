@@ -4,8 +4,14 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
+
+import ch.k24.auroraprime.quorg.Quorg;
 import ch.k42.auroraprime.R;
+import ch.k42.auroraprime.dto.DeviceState;
+import ch.k42.auroraprime.dto.QuorgSettings;
+import ch.k42.auroraprime.dto.Request;
 import ch.k42.auroraprime.net.*;
+import ch.k42.auroraprime.main.ListActivity;
 import android.R.string;
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -60,6 +66,8 @@ public class HomeActivity extends Activity {
 	int smallButtonInnerHorizontalPadding = 0;
 	int smallButtonInnerVerticalPadding = 0;
 	
+	int swapMode = 0;
+	
 	Intent i;
 	
 	IDeviceDiscovery deviceDiscoverer;
@@ -72,6 +80,7 @@ public class HomeActivity extends Activity {
 	ImageView[][] optionButtons = new ImageView[4][4];
 	Spinner deviceListSpinner;
 	
+	
 	private static final String TAG = "HomeActivity";
 	
 	/**
@@ -83,27 +92,73 @@ public class HomeActivity extends Activity {
 	private class bigButtonListener implements OnClickListener {
 
 		public void onClick(View v) {
-
+			AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
+			
 			switch (v.getId())
 			{
-			case R.id.button1: 	switchButtonVisibility(1);
-								break;
-			case R.id.button2: 	switchButtonVisibility(2);
-								break;
-			case R.id.button3: 	switchButtonVisibility(3);
-								break;
-			case R.id.button4:	switchButtonVisibility(4);
-								break;
+			case R.id.button1: ourApplication.setSelectedField(0);
+				break;
+			case R.id.button2: ourApplication.setSelectedField(1);
+				break;
+			case R.id.button3: ourApplication.setSelectedField(2);
+				break;
+			case R.id.button4: ourApplication.setSelectedField(3);
+				break;
+			}	
+			
+			if (swapMode==0){
+				switchButtonVisibility(ourApplication.getSelectedField()+1);
+			} else {
+				QuorgSettings settings1 = new QuorgSettings();
+				settings1.setQuorg(ourApplication.getQuorgFields()[ourApplication.getSelectedField()].getActiveQuorg().getQuorgID());
+				settings1.setMatrixID(ourApplication.getQuorgFields()[swapMode-1].getFieldID());
+				Request request1 = new Request(Request.Command.SETQUORG ,settings1);
+				
+				QuorgSettings settings2 = new QuorgSettings();
+				settings2.setQuorg(ourApplication.getQuorgFields()[swapMode-1].getActiveQuorg().getQuorgID());
+				settings2.setMatrixID(ourApplication.getQuorgFields()[ourApplication.getSelectedField()].getFieldID());
+				Request request2 = new Request(Request.Command.SETQUORG ,settings2);
+				
+				SendRequest(request1);
+				SendRequest(request2);
+				
+				swapMode=0;
+				
 			}
 			Log.d(TAG, "onBigButtonClicked");
-		}
-		
+					}	
 	}
 	
 	
 	/**
 	 * Listener for the Module change button, opens the 
 	 * activity with the quorg list
+	 * 
+	 * 
+	 */
+	private class swapModuleListener implements OnClickListener{
+
+		public void onClick(View v) {
+			switch (v.getId())
+			{
+			case R.id.B1_1: 	swapMode = 1;
+								break;
+			case R.id.B2_1: 	switchButtonVisibility(2);
+								swapMode = 2;
+								break;
+			case R.id.B3_1: 	switchButtonVisibility(3);
+								swapMode = 3;
+								break;
+			case R.id.B4_1:		switchButtonVisibility(4);
+								swapMode = 4;
+								break;
+			}
+			Log.d(TAG, "swapModuleClicked");
+		}	
+	}
+	
+	/**
+	 * Listener for the Module swapping button
 	 * 
 	 * 
 	 */
@@ -130,7 +185,7 @@ public class HomeActivity extends Activity {
 								ourApplication.setSelectedField(3);
 								break;
 			}
-			Log.d(TAG, "changeModuleClicked");
+			Log.d(TAG, "swapModuleClicked");
 			startActivity(i);
 		}	
 	}
@@ -385,10 +440,12 @@ public class HomeActivity extends Activity {
         OnClickListener bigListener = new bigButtonListener();
         deviceListListener spinnerListener = new deviceListListener();
         changeModuleListener buttonChangeModuleListener = new changeModuleListener();
+        swapModuleListener buttonSwapModuleListener = new swapModuleListener();
         
         for (int i =0; i<4; i++){
     		fieldButtons[i].setOnClickListener(bigListener);
     		optionButtons[i][3].setOnClickListener(buttonChangeModuleListener);
+    		optionButtons[i][0].setOnClickListener(buttonSwapModuleListener);
     	}
                 
         deviceListSpinner.setOnItemSelectedListener(spinnerListener);
@@ -590,6 +647,36 @@ public class HomeActivity extends Activity {
 			return 0;
     	}
 
+    }
+    
+    /**
+     * sends a generic request with the client
+     * 
+     * 
+     */
+    public Object SendRequest(Object request){	
+    	
+    	AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
+    	if (ourApplication.getConnectClient().isConnected()){
+    		Request requestAnswer = (Request) ourApplication.getConnectClient().sendRequest(request);
+    		DeviceState newState = (DeviceState) requestAnswer.getArg();
+    			if (requestAnswer.wasHandled()){
+    				for (int i = 0; i<4; i++){
+    					//set net settings
+    					ourApplication.getQuorgFields()[i].setSettings(newState.getQuorgs().get(newState.getMatrices().get(i)));
+    					//set new quorg
+    					ourApplication.getQuorgFields()[i].setActiveQuorg(ourApplication.getQuorgData().get(ourApplication.getQuorgFields()[i].getSettings()
+    							.getQuorg().number));
+    				} 
+    			} else {
+    				Toast.makeText(getBaseContext(),"request could not be handled", Toast.LENGTH_LONG).show();
+				}
+    			
+    		return null;
+    	} else {
+    		Toast.makeText(getBaseContext(),"no device connected", Toast.LENGTH_LONG).show();
+    		return null;	
+    	}		   	
     }
     
     

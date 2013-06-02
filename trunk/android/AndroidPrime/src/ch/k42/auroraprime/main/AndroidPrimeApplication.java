@@ -1,5 +1,7 @@
 package ch.k42.auroraprime.main;
 
+import java.util.List;
+
 import ch.k24.auroraprime.quorg.Quorg;
 import ch.k42.auroraprime.net.ClientFactory;
 import ch.k42.auroraprime.net.IClient;
@@ -39,6 +41,7 @@ public class AndroidPrimeApplication extends Application {
 	private IClient connectClient;
 	private QuorgField[] quorgFields;
 	private int selectedField;
+	private List<Quorg> quorgData;
 	
 	
 	/**
@@ -90,6 +93,16 @@ public class AndroidPrimeApplication extends Application {
 
 	public void setSelectedField(int selectedField) {
 		this.selectedField = selectedField;
+	}
+
+
+	public List<Quorg> getQuorgData() {
+		return quorgData;
+	}
+
+
+	public void setQuorgData(List<Quorg> quorgData) {
+		this.quorgData = quorgData;
 	}
 	
 	
