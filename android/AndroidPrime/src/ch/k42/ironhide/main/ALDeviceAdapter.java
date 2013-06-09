@@ -1,4 +1,4 @@
-package ch.k42.auroraprime.main;
+package ch.k42.ironhide.main;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import ch.k42.ironhide.net.*;
 /**
  * A custom Array Adapter for the
  * Spinner displaying the found 

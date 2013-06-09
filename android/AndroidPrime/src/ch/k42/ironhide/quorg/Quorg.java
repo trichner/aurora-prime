@@ -1,7 +1,5 @@
 package ch.k42.ironhide.quorg;
 
-import ch.k42.auroraprime.dto.QuorgSettings.QUORG;
-
 /**
  * A Class that holds all information
  * about a quorg the application needs
@@ -12,22 +10,18 @@ import ch.k42.auroraprime.dto.QuorgSettings.QUORG;
  */
 
 public class Quorg {
-
 		private int image;
-		private QUORG quorgID;
+		private Class quorg;
 		private String name;
-		private boolean hasSettings;
+        private String[] settings;
 		
 		// constructors
 		
-		public Quorg(int image,QUORG quorgID, String name, boolean hasSettings) {
-			
-			super();
+		public Quorg(int image, String name,Class quorg ,String[] settings) {
+            this.settings = settings;
+            this.quorg = quorg;
 			this.image = image;
-			this.quorgID = quorgID;
 			this.name = name;
-			this.hasSettings = hasSettings;
-			
 		}
 		
 		public Quorg() {
@@ -48,18 +42,20 @@ public class Quorg {
 			this.name = name;
 		}
 		public boolean hasSettings() {
-			return hasSettings;
+			return settings.length!=0;
 		}
-		public void setHasSettings(boolean hasSettings) {
-			this.hasSettings = hasSettings;
+		public Class getQuorg() {
+			return quorg;
 		}
-		public QUORG getQuorgID() {
-			return quorgID;
-		}
-		public void setQuorgID(QUORG quorgID) {
-			this.quorgID = quorgID;
+		public void setQuorg(Class quorg) {
+			this.quorg = quorg;
 		}
 
-		
-		
+    public String[] getSettings() {
+        return settings;
+    }
+
+    public void setSettings(String[] settings) {
+        this.settings = settings;
+    }
 }

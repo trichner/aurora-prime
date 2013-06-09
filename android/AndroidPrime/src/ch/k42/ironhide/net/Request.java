@@ -1,7 +1,29 @@
 package ch.k42.ironhide.net;
 
 import java.io.Serializable;
-
+/**
+ * ==== SETQUORG Sets a new Quorg on a given Matrix
+ * parameter
+ *   arg1 : Integer
+ *    specifies the number of the Matrix to set
+ *   arg2 : String
+ *    delivers the classname of the String, as provided in the 'supported_quorgs' list of 'StaticQuorgList'
+ *   arg3 : String[] settings for the quorg
+ * returns:
+ *   wasHandled : true if successful, else false
+ *
+ *
+ * ==== GETUPDATE Returns all active Quorgs in a List
+ * parameter:
+ *
+ * returns:
+ *   arg1 : Map<Integer,Class> with all running Quorgs (subclass of Quorg.class)
+ *   arg2 : List<Integer> with all available Matrices
+ *   wasHandled : true if successful, else false
+ *
+ *
+ *
+ */
 public class Request implements Serializable {
 
     public enum Command{
@@ -9,29 +31,7 @@ public class Request implements Serializable {
 		GETUPDATE
 	}
 
-    /*
-     * ==== SETQUORG Sets a new Quorg on a given Matrix
-     * parameter
-     *   arg1 : Integer
-     *    specifies the number of the Matrix to set
-     *   arg2 : Class
-     *    delivers a class of a Quorg
-     *   arg3 : String[]
-     * returns:
-     *   wasHandled : true if successful, else false
-     *
-     *
-     * ==== GETUPDATE Returns all active Quorgs in a List
-     * parameter:
-     *
-     * returns:
-     *   arg1 : Map<Integer,Class> with all running Quorgs (subclass of Quorg.class)
-     *   arg2 : List<Integer> with all available Matrices
-     *   wasHandled : true if successful, else false
-     *
-     *
-     *
-     */
+
 	
 	Serializable[] args;
 	Command cmd;

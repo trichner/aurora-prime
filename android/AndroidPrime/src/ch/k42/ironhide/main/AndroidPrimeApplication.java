@@ -1,11 +1,11 @@
-package ch.k42.auroraprime.main;
+package ch.k42.ironhide.main;
 
 import java.util.List;
 
+import ch.k42.ironhide.net.ClientFactory;
+import ch.k42.ironhide.net.IClient;
+import ch.k42.ironhide.net.IDeviceDiscovery;
 import ch.k42.ironhide.quorg.Quorg;
-import ch.k42.auroraprime.net.ClientFactory;
-import ch.k42.auroraprime.net.IClient;
-import ch.k42.auroraprime.net.IDeviceDiscovery;
 import android.app.Application;
 
 /**
@@ -39,7 +39,7 @@ public class AndroidPrimeApplication extends Application {
 
 	private IDeviceDiscovery deviceDiscoverer;
 	private IClient connectClient;
-	private QuorgField[] quorgFields;
+//	private QuorgField[] quorgFields;
 	private int selectedField;
 	private List<Quorg> quorgData;
 	
@@ -57,12 +57,12 @@ public class AndroidPrimeApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		connectClient = ClientFactory.getInstance();
-		quorgFields = new QuorgField[4];
-		selectedField=-1;
-		for (int i=0;i<4;i++){
-			quorgFields[i] = new QuorgField(i+1);
-		}
-	
+//		quorgFields = new QuorgField[4];
+//		selectedField=-1;
+//		for (int i=0;i<4;i++){
+//			quorgFields[i] = new QuorgField(i+1);
+//		}
+//
 	}
 
 	
@@ -76,14 +76,14 @@ public class AndroidPrimeApplication extends Application {
 	}
 
 
-	public QuorgField[] getQuorgFields() {
-		return quorgFields;
-	}
-
-
-	public void setQuorgFields(QuorgField[] quorgFields) {
-		this.quorgFields = quorgFields;
-	}
+//	public QuorgField[] getQuorgFields() {
+//		return quorgFields;
+//	}
+//
+//
+//	public void setQuorgFields(QuorgField[] quorgFields) {
+//		this.quorgFields = quorgFields;
+//	}
 
 
 	public int getSelectedField() {

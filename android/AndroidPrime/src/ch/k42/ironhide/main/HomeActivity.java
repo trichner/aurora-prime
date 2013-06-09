@@ -1,15 +1,13 @@
-package ch.k42.auroraprime.main;
+package ch.k42.ironhide.main;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 
 import ch.k42.auroraprime.R;
-import ch.k42.auroraprime.dto.DeviceState;
-import ch.k42.auroraprime.dto.QuorgSettings;
-import ch.k42.auroraprime.dto.Request;
-import ch.k42.auroraprime.net.*;
+import ch.k42.ironhide.net.ALDevice;
+import ch.k42.ironhide.net.DeviceDiscoveryFactory;
+import ch.k42.ironhide.net.IDeviceDiscovery;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -17,8 +15,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-//import android.view.ViewGroup;
-//import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -26,7 +22,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 import android.content.Intent;
 import android.graphics.Rect;
 
@@ -58,7 +53,9 @@ public class HomeActivity extends Activity {
 	int smallButtonInnerHorizontalPadding = 0;
 	int smallButtonInnerVerticalPadding = 0;
 	
-	int swapMode = 0;
+	boolean swapMode = false;
+
+    private int selection;
 	
 	Intent i;
 	
@@ -71,7 +68,7 @@ public class HomeActivity extends Activity {
 	ImageView[] fieldButtons = new ImageView[4];
 	ImageView[][] optionButtons = new ImageView[4][4];
 	Spinner deviceListSpinner;
-	
+    AndroidPrimeApplication ourApplication;
 	
 	private static final String TAG = "HomeActivity";
 	
@@ -82,10 +79,10 @@ public class HomeActivity extends Activity {
 	 * 
 	 */
 	private class bigButtonListener implements OnClickListener {
-
 		public void onClick(View v) {
-			AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
-			
+            Log.d(TAG, "onBigButtonClicked");
+
+
 			switch (v.getId())
 			{
 			case R.id.button1: ourApplication.setSelectedField(0);
@@ -96,29 +93,14 @@ public class HomeActivity extends Activity {
 				break;
 			case R.id.button4: ourApplication.setSelectedField(3);
 				break;
-			}	
-			
-			if (swapMode==0){
+			}
+
+			if (swapMode){
 				switchButtonVisibility(ourApplication.getSelectedField()+1);
 			} else {
-				QuorgSettings settings1 = new QuorgSettings();
-				settings1.setQuorg(ourApplication.getQuorgFields()[ourApplication.getSelectedField()].getActiveQuorg().getQuorgID());
-				settings1.setMatrixID(ourApplication.getQuorgFields()[swapMode-1].getFieldID());
-				Request request1 = new Request(Request.Command.SETQUORG ,settings1);
-				
-				QuorgSettings settings2 = new QuorgSettings();
-				settings2.setQuorg(ourApplication.getQuorgFields()[swapMode-1].getActiveQuorg().getQuorgID());
-				settings2.setMatrixID(ourApplication.getQuorgFields()[ourApplication.getSelectedField()].getFieldID());
-				Request request2 = new Request(Request.Command.SETQUORG ,settings2);
-				
-				SendRequest(request1);
-				SendRequest(request2);
-				
-				swapMode=0;
-				
+
 			}
-			Log.d(TAG, "onBigButtonClicked");
-					}	
+        }
 	}
 	
 	
@@ -131,20 +113,20 @@ public class HomeActivity extends Activity {
 	private class swapModuleListener implements OnClickListener{
 
 		public void onClick(View v) {
-			switch (v.getId())
-			{
-			case R.id.B1_1: 	swapMode = 1;
-								break;
-			case R.id.B2_1: 	switchButtonVisibility(2);
-								swapMode = 2;
-								break;
-			case R.id.B3_1: 	switchButtonVisibility(3);
-								swapMode = 3;
-								break;
-			case R.id.B4_1:		switchButtonVisibility(4);
-								swapMode = 4;
-								break;
-			}
+//			switch (v.getId())
+//			{
+//			case R.id.B1_1: 	swapMode = 1;
+//								break;
+//			case R.id.B2_1: 	switchButtonVisibility(2);
+//								swapMode = 2;
+//								break;
+//			case R.id.B3_1: 	switchButtonVisibility(3);
+//								swapMode = 3;
+//								break;
+//			case R.id.B4_1:		switchButtonVisibility(4);
+//								swapMode = 4;
+//								break;
+//			}
 			Log.d(TAG, "swapModuleClicked");
 		}	
 	}
@@ -217,11 +199,12 @@ public class HomeActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        ourApplication = ((AndroidPrimeApplication) getApplication());
         
         // Random modded Stack overflow code to get the space available for the active layout in view
         FrameLayout root = (FrameLayout) findViewById(R.id.linlayout);    
         root.post(new Runnable() {
-        	
             public void run() {
                 Rect rect = new Rect();
                 Window win = getWindow();
@@ -236,8 +219,8 @@ public class HomeActivity extends Activity {
                 Log.d(TAG, "layoutHeight = " + layoutHeight + " layoutWidth = " + layoutWidth);
                 
                 // Calculate Button sizes and positions
-                buttonSize = (int)(33*layoutWidth/100);
-                buttonOuterHorizontalPadding = (int)(10*layoutWidth/100);
+                buttonSize = (33*layoutWidth/100);
+                buttonOuterHorizontalPadding = (10*layoutWidth/100);
             	buttonInnerHorizontalPadding = layoutWidth - 2*buttonSize - 2*buttonOuterHorizontalPadding;
             	buttonInnerVerticalPadding = buttonInnerHorizontalPadding;
             	buttonOuterVerticalPadding = (int) ((layoutHeight - 2*buttonSize - buttonInnerVerticalPadding)/1.5);
@@ -246,155 +229,58 @@ public class HomeActivity extends Activity {
             			+ " buttonOuterVerticalPadding = " + buttonOuterVerticalPadding + " buttonInnerVerticalPadding = " + buttonInnerVerticalPadding);
             	
             	// Calculate SmallButton sizes and positions
-            	smallButtonSize = (int) buttonSize/2;
-            	smallButtonOuterHorizontalPadding = (int) buttonOuterHorizontalPadding-(smallButtonSize/2);
-            	smallButtonOuterVerticalPadding = (int) buttonOuterVerticalPadding-(smallButtonSize/2);
+            	smallButtonSize = buttonSize/2;
+            	smallButtonOuterHorizontalPadding = buttonOuterHorizontalPadding-(smallButtonSize/2);
+            	smallButtonOuterVerticalPadding   = buttonOuterVerticalPadding-(smallButtonSize/2);
             	smallButtonInnerHorizontalPadding = smallButtonInnerVerticalPadding = smallButtonSize;
             	
             	Log.d(TAG, "smallbuttonSize = " + smallButtonSize);          
-              
-                LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
-                        buttonSize,      
-                        buttonSize
-                );
-                params1.setMargins(buttonOuterHorizontalPadding, buttonOuterVerticalPadding, 0, 0);
-                fieldButtons[0].setLayoutParams(params1);
-                
-                LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(
-                		buttonSize,      
-                        buttonSize
-                );
-                params2.setMargins(buttonInnerHorizontalPadding, buttonOuterVerticalPadding, 0, 0);
-                fieldButtons[1].setLayoutParams(params2);
-                
-                LinearLayout.LayoutParams params3 = new LinearLayout.LayoutParams(
-                		buttonSize,      
-                        buttonSize
-                );
-                params3.setMargins(buttonOuterHorizontalPadding, buttonInnerVerticalPadding, 0, 0);
-                fieldButtons[2].setLayoutParams(params3);
-                
-                LinearLayout.LayoutParams params4 = new LinearLayout.LayoutParams(
-                		buttonSize,      
-                        buttonSize
-                );
-                params4.setMargins(buttonInnerHorizontalPadding, buttonInnerVerticalPadding, 0, 0);
-                fieldButtons[3].setLayoutParams(params4);
 
-                //small buttons
-                
-                LinearLayout.LayoutParams params1_1 = new LinearLayout.LayoutParams(
-                        smallButtonSize,      
-                        smallButtonSize
-                );
-                params1_1.setMargins(smallButtonOuterHorizontalPadding, smallButtonOuterVerticalPadding, 0, 0);
-                optionButtons[0][0].setLayoutParams(params1_1);
-                
-                LinearLayout.LayoutParams params1_2 = new LinearLayout.LayoutParams(
-                		smallButtonSize,      
-                        smallButtonSize
-                );
-                params1_2.setMargins(smallButtonInnerHorizontalPadding, smallButtonOuterVerticalPadding, 0, 0);
-                optionButtons[0][1].setLayoutParams(params1_2);
-                
-                LinearLayout.LayoutParams params1_3 = new LinearLayout.LayoutParams(
-                		smallButtonSize,      
-                        smallButtonSize
-                );
-                params1_3.setMargins(smallButtonOuterHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
-                optionButtons[0][2].setLayoutParams(params1_3);
-                
-                LinearLayout.LayoutParams params1_4 = new LinearLayout.LayoutParams(
-                		smallButtonSize,      
-                        smallButtonSize
-                );
-                params1_4.setMargins(smallButtonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
-                optionButtons[0][3].setLayoutParams(params1_4);
-                
-                LinearLayout.LayoutParams params2_1 = new LinearLayout.LayoutParams(
-                		smallButtonSize,      
-                        smallButtonSize
-                );
-                params2_1.setMargins(smallButtonOuterHorizontalPadding+buttonSize+buttonInnerHorizontalPadding, smallButtonOuterVerticalPadding, 0, 0);
-                optionButtons[1][0].setLayoutParams(params2_1);
-                
-                LinearLayout.LayoutParams params2_2 = new LinearLayout.LayoutParams(
-                		smallButtonSize,      
-                        smallButtonSize
-                );
-                params2_2.setMargins(smallButtonInnerHorizontalPadding, smallButtonOuterVerticalPadding, 0, 0);
-                optionButtons[1][1].setLayoutParams(params2_2);
-                
-                LinearLayout.LayoutParams params2_3 = new LinearLayout.LayoutParams(
-                		smallButtonSize,      
-                        smallButtonSize
-                );
-                params2_3.setMargins(smallButtonOuterHorizontalPadding+buttonSize+buttonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
-                optionButtons[1][2].setLayoutParams(params2_3);
-                
-                LinearLayout.LayoutParams params2_4 = new LinearLayout.LayoutParams(
-                		smallButtonSize,      
-                        smallButtonSize
-                );
-                params2_4.setMargins(smallButtonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
-                optionButtons[1][3].setLayoutParams(params2_4);
-                
-                LinearLayout.LayoutParams params3_1 = new LinearLayout.LayoutParams(
-                		smallButtonSize,      
-                        smallButtonSize
-                );
-                params3_1.setMargins(smallButtonOuterHorizontalPadding, smallButtonOuterVerticalPadding+buttonSize+buttonInnerVerticalPadding, 0, 0);
-                optionButtons[2][0].setLayoutParams(params3_1);
-                
-                LinearLayout.LayoutParams params3_2 = new LinearLayout.LayoutParams(
-                		smallButtonSize,      
-                        smallButtonSize
-                );
-                params3_2.setMargins(smallButtonInnerHorizontalPadding, smallButtonOuterVerticalPadding+buttonSize+buttonInnerVerticalPadding, 0, 0);
-                optionButtons[2][1].setLayoutParams(params3_2);
-                
-                LinearLayout.LayoutParams params3_3 = new LinearLayout.LayoutParams(
-                		smallButtonSize,      
-                        smallButtonSize
-                );
-                params3_3.setMargins(smallButtonOuterHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
-                optionButtons[2][2].setLayoutParams(params3_3);
-                
-                LinearLayout.LayoutParams params3_4 = new LinearLayout.LayoutParams(
-                		smallButtonSize,      
-                        smallButtonSize
-                );
-                params3_4.setMargins(smallButtonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
-                optionButtons[2][3].setLayoutParams(params3_4);
-                
-                LinearLayout.LayoutParams params4_1 = new LinearLayout.LayoutParams(
-                		smallButtonSize,      
-                        smallButtonSize
-                );
-                params4_1.setMargins(smallButtonOuterHorizontalPadding+buttonSize+buttonInnerHorizontalPadding, smallButtonOuterVerticalPadding+buttonSize+buttonInnerVerticalPadding, 0, 0);
-                optionButtons[3][0].setLayoutParams(params4_1);
-                
-                LinearLayout.LayoutParams params4_2 = new LinearLayout.LayoutParams(
-                		smallButtonSize,      
-                        smallButtonSize
-                );
-                params4_2.setMargins(smallButtonInnerHorizontalPadding, smallButtonOuterVerticalPadding+buttonSize+buttonInnerVerticalPadding, 0, 0);
-                optionButtons[3][1].setLayoutParams(params4_2);
-                
-                LinearLayout.LayoutParams params4_3 = new LinearLayout.LayoutParams(
-                		smallButtonSize,      
-                        smallButtonSize
-                );
-                params4_3.setMargins(smallButtonOuterHorizontalPadding+buttonSize+buttonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
-                optionButtons[3][2].setLayoutParams(params4_3);
-                
-                LinearLayout.LayoutParams params4_4 = new LinearLayout.LayoutParams(
-                		smallButtonSize,      
-                        smallButtonSize
-                );
-                params4_4.setMargins(smallButtonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
-                optionButtons[3][3].setLayoutParams(params4_4);
-              
+                //==== Set Layout for buttons
+                LinearLayout.LayoutParams btnLayout = new LinearLayout.LayoutParams(buttonSize,buttonSize);
+                btnLayout.setMargins(buttonOuterHorizontalPadding, buttonOuterVerticalPadding, 0, 0);
+                fieldButtons[0].setLayoutParams(btnLayout);
+                btnLayout.setMargins(buttonInnerHorizontalPadding, buttonOuterVerticalPadding, 0, 0);
+                fieldButtons[1].setLayoutParams(btnLayout);
+                btnLayout.setMargins(buttonOuterHorizontalPadding, buttonInnerVerticalPadding, 0, 0);
+                fieldButtons[2].setLayoutParams(btnLayout);
+                btnLayout.setMargins(buttonInnerHorizontalPadding, buttonInnerVerticalPadding, 0, 0);
+                fieldButtons[3].setLayoutParams(btnLayout);
+
+                //==== small buttons (magic tricks by phil)
+                LinearLayout.LayoutParams sBtnLayout = new LinearLayout.LayoutParams(smallButtonSize,smallButtonSize);
+                sBtnLayout.setMargins(smallButtonOuterHorizontalPadding, smallButtonOuterVerticalPadding, 0, 0);
+                optionButtons[0][0].setLayoutParams(sBtnLayout);
+                sBtnLayout.setMargins(smallButtonInnerHorizontalPadding, smallButtonOuterVerticalPadding, 0, 0);
+                optionButtons[0][1].setLayoutParams(sBtnLayout);
+                sBtnLayout.setMargins(smallButtonOuterHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
+                optionButtons[0][2].setLayoutParams(sBtnLayout);
+                sBtnLayout.setMargins(smallButtonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
+                optionButtons[0][3].setLayoutParams(sBtnLayout);
+                sBtnLayout.setMargins(smallButtonOuterHorizontalPadding+buttonSize+buttonInnerHorizontalPadding, smallButtonOuterVerticalPadding, 0, 0);
+                optionButtons[1][0].setLayoutParams(sBtnLayout);
+                sBtnLayout.setMargins(smallButtonInnerHorizontalPadding, smallButtonOuterVerticalPadding, 0, 0);
+                optionButtons[1][1].setLayoutParams(sBtnLayout);
+                sBtnLayout.setMargins(smallButtonOuterHorizontalPadding+buttonSize+buttonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
+                optionButtons[1][2].setLayoutParams(sBtnLayout);
+                sBtnLayout.setMargins(smallButtonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
+                optionButtons[1][3].setLayoutParams(sBtnLayout);
+                sBtnLayout.setMargins(smallButtonOuterHorizontalPadding, smallButtonOuterVerticalPadding+buttonSize+buttonInnerVerticalPadding, 0, 0);
+                optionButtons[2][0].setLayoutParams(sBtnLayout);
+                sBtnLayout.setMargins(smallButtonInnerHorizontalPadding, smallButtonOuterVerticalPadding+buttonSize+buttonInnerVerticalPadding, 0, 0);
+                optionButtons[2][1].setLayoutParams(sBtnLayout);
+                sBtnLayout.setMargins(smallButtonOuterHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
+                optionButtons[2][2].setLayoutParams(sBtnLayout);
+                sBtnLayout.setMargins(smallButtonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
+                optionButtons[2][3].setLayoutParams(sBtnLayout);
+                sBtnLayout.setMargins(smallButtonOuterHorizontalPadding+buttonSize+buttonInnerHorizontalPadding, smallButtonOuterVerticalPadding+buttonSize+buttonInnerVerticalPadding, 0, 0);
+                optionButtons[3][0].setLayoutParams(sBtnLayout);
+                sBtnLayout.setMargins(smallButtonInnerHorizontalPadding, smallButtonOuterVerticalPadding+buttonSize+buttonInnerVerticalPadding, 0, 0);
+                optionButtons[3][1].setLayoutParams(sBtnLayout);
+                sBtnLayout.setMargins(smallButtonOuterHorizontalPadding+buttonSize+buttonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
+                optionButtons[3][2].setLayoutParams(sBtnLayout);
+                sBtnLayout.setMargins(smallButtonInnerHorizontalPadding, smallButtonInnerVerticalPadding, 0, 0);
+                optionButtons[3][3].setLayoutParams(sBtnLayout);
             }
         });
             
@@ -425,7 +311,7 @@ public class HomeActivity extends Activity {
         
         for (int i = 0; i<4;i++){
         	for (int j = 0; j<4;j++){
-        		optionButtons[i][j].setVisibility(4);
+        		optionButtons[i][j].setVisibility(View.INVISIBLE);
         	}
         }
         
@@ -456,7 +342,7 @@ public class HomeActivity extends Activity {
 //        RefreshDeviceList();
         Log.d(TAG,"onCreated");
         
-        RefreshButtonImages();
+        refreshButtonImages();
     }
     
 
@@ -470,7 +356,7 @@ public class HomeActivity extends Activity {
     public void onResume() {
     	super.onResume();
     	deviceListUpdater.startUpdates();
-    	RefreshButtonImages();
+    	refreshButtonImages();
 //    	new RefreshDeviceList().execute();
 //    	RefreshDeviceList();
     	Log.d(TAG,"onResumed");
@@ -505,7 +391,7 @@ public class HomeActivity extends Activity {
     				if(optionButtons[0][3].getVisibility()==0) optionButtons[0][3].setVisibility(4); else optionButtons[0][3].setVisibility(0);
     				for (int i = 1; i<4;i++){
 			        	for (int j = 0; j<4;j++){
-			        		optionButtons[i][j].setVisibility(4);
+			        		optionButtons[i][j].setVisibility(View.INVISIBLE);
 			        	}
 			        }
     				break;
@@ -558,11 +444,11 @@ public class HomeActivity extends Activity {
 	 * 
 	 * 
 	 */
-    public void RefreshButtonImages() {
+    public void refreshButtonImages() {
     	
     	AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
     	for (int i=0;i<4;i++){
-    		fieldButtons[i].setImageResource(ourApplication.getQuorgFields()[i].getActiveQuorg().getImage());
+//    		fieldButtons[i].setImageResource(ourApplication.getQuorgFields()[i].getActiveQuorg().getImage());
     		optionButtons[i][0].setImageResource(R.drawable.ic_switch);
     		optionButtons[i][1].setImageResource(R.drawable.ic_on);
     		optionButtons[i][2].setImageResource(R.drawable.ic_config);
@@ -606,11 +492,11 @@ public class HomeActivity extends Activity {
     		
     		if(selectedDevice==null) return 0;
     		
-    		//adress for net tester
-			InetSocketAddress inetAddress;
-			inetAddress = new InetSocketAddress("129.132.149.148", 1337);
-			ALDevice netTesterDevice = new ALDevice(inetAddress, "NetTester");
-			//
+//    		//adress for net tester
+//			InetSocketAddress inetAddress;
+//			inetAddress = new InetSocketAddress("129.132.149.148", 1337);
+//			ALDevice netTesterDevice = new ALDevice(inetAddress, "NetTester");
+//			//
 			
 			AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
 			
@@ -646,30 +532,28 @@ public class HomeActivity extends Activity {
      * 
      * 
      */
-    public Object SendRequest(Object request){	
-    	
-    	AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
-    	if (ourApplication.getConnectClient().isConnected()){
-    		Request requestAnswer = (Request) ourApplication.getConnectClient().sendRequest(request);
-    		DeviceState newState = (DeviceState) requestAnswer.getArg();
-    			if (requestAnswer.wasHandled()){
-    				for (int i = 0; i<4; i++){
-    					//set net settings
-    					ourApplication.getQuorgFields()[i].setSettings(newState.getQuorgs().get(newState.getMatrices().get(i)));
-    					//set new quorg
-    					ourApplication.getQuorgFields()[i].setActiveQuorg(ourApplication.getQuorgData().get(ourApplication.getQuorgFields()[i].getSettings()
-    							.getQuorg().number));
-    				} 
-    			} else {
-    				Toast.makeText(getBaseContext(),"request could not be handled", Toast.LENGTH_LONG).show();
-				}
-    			
-    		return null;
-    	} else {
-    		Toast.makeText(getBaseContext(),"no device connected", Toast.LENGTH_LONG).show();
-    		return null;	
-    	}		   	
-    }
+//    public Object SendRequest(Object request){
+//
+//    	AndroidPrimeApplication ourApplication = ((AndroidPrimeApplication) getApplication());
+//    	if (ourApplication.getConnectClient().isConnected()){
+//    		Request requestAnswer = (Request) ourApplication.getConnectClient().sendRequest(request);
+//    			if (requestAnswer.wasHandled()){
+//    				for (int i = 0; i<4; i++){
+//    					//set net settings
+//    					ourApplication.getQuorgFields()[i].setSettings(newState.getQuorgs().get(newState.getMatrices().get(i)));
+//    					//set new quorg
+//    					ourApplication.getQuorgFields()[i].setActiveQuorg(ourApplication.getQuorgData().get(ourApplication.getQuorgFields()[i].getSettings()
+//    							.getQuorg().number));
+//    				}
+//    			} else {
+//    				Toast.makeText(getBaseContext(),"request could not be handled", Toast.LENGTH_LONG).show();
+//				}
+//    		return null;
+//    	} else {
+//    		Toast.makeText(getBaseContext(),"no device connected", Toast.LENGTH_LONG).show();
+//    		return null;
+//    	}
+//    }
     
     
     //onCreateOptionsMenu

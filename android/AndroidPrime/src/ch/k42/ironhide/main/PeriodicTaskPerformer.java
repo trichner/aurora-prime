@@ -1,5 +1,4 @@
-package ch.k42.auroraprime.main;
-
+package ch.k42.ironhide.main;
 import android.os.Handler;
 import android.util.Log;
 /**
@@ -8,7 +7,7 @@ import android.util.Log;
  * may be specified (otherwise, the class will perform the 
  * update every 2 seconds).
  * 
- * @Author Carlos Sim›es, changed by Philipp Bšsch
+ * @Author Carlos Simï¿½es, changed by Philipp Bï¿½sch
  */
 
 //Names changed to PeriodicTaskPerformer, interval changed to 20 seconds

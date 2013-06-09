@@ -1,4 +1,4 @@
-package ch.k42.auroraprime.main;
+package ch.k42.ironhide.main;
 
 import android.R;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package ch.k42.auroraprime.net;
+package ch.k42.ironhide.net;
 
 
 import java.util.List;
