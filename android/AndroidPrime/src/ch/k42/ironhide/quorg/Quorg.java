@@ -1,4 +1,4 @@
-package ch.k24.auroraprime.quorg;
+package ch.k42.ironhide.quorg;
 
 import ch.k42.auroraprime.dto.QuorgSettings.QUORG;
 

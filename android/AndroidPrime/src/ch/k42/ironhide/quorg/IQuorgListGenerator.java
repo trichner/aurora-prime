@@ -1,10 +1,10 @@
-package ch.k24.auroraprime.quorg;
+package ch.k42.ironhide.quorg;
 
 import java.util.List;
 /**
  * interface for the Quorg List Generator
  * 
- * @Author Philipp Bšsch
+ * @Author Philipp Bï¿½sch
  */
 public interface IQuorgListGenerator {
 	

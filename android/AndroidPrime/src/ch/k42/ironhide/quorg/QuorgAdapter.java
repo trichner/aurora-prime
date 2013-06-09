@@ -1,4 +1,4 @@
-package ch.k24.auroraprime.quorg;
+package ch.k42.ironhide.quorg;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import android.widget.TextView;
  * A custom Array Adapter for the List View
  * to show the Quorgs
  * 
- * @Author Philipp Bšsch
+ * @Author Philipp Bï¿½sch
  */
 public class QuorgAdapter extends ArrayAdapter<Quorg>{
 
