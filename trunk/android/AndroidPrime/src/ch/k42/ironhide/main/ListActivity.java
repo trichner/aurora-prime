@@ -1,33 +1,25 @@
 package ch.k42.auroraprime.main;
 
-import java.io.IOException;
-import java.util.List;
-
-import ch.k24.auroraprime.quorg.Quorg;
-import ch.k24.auroraprime.quorg.QuorgAdapter;
-import ch.k24.auroraprime.quorg.QuorgListFactory;
+import ch.k42.ironhide.quorg.Quorg;
+import ch.k42.ironhide.quorg.QuorgAdapter;
+import ch.k42.ironhide.quorg.QuorgListFactory;
 import ch.k42.auroraprime.R;
 import ch.k42.auroraprime.dto.DeviceState;
 import ch.k42.auroraprime.dto.QuorgSettings;
 import ch.k42.auroraprime.dto.Request;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TableRow;
 import android.widget.Toast;
 /**
  * Class for the list activity that lists all 
  * the avaliable quorgs
  * 
- * @Author Philipp Bšsch
+ * @Author Philipp Bï¿½sch
  */
 
 public class ListActivity extends Activity{

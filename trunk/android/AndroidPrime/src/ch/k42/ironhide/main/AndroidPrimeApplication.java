@@ -2,7 +2,7 @@ package ch.k42.auroraprime.main;
 
 import java.util.List;
 
-import ch.k24.auroraprime.quorg.Quorg;
+import ch.k42.ironhide.quorg.Quorg;
 import ch.k42.auroraprime.net.ClientFactory;
 import ch.k42.auroraprime.net.IClient;
 import ch.k42.auroraprime.net.IDeviceDiscovery;
@@ -13,7 +13,7 @@ import android.app.Application;
  * used in all activities of the application
  * 
  * 
- * @Author Philipp Bšsch
+ * @Author Philipp Bï¿½sch
  */
 public class AndroidPrimeApplication extends Application {
 	

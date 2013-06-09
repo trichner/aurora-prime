@@ -1,6 +1,6 @@
 package ch.k42.auroraprime.main;
 
-import ch.k24.auroraprime.quorg.Quorg;
+import ch.k42.ironhide.quorg.Quorg;
 import ch.k42.auroraprime.R;
 import ch.k42.auroraprime.dto.QuorgSettings;
 import ch.k42.auroraprime.dto.QuorgSettings.QUORG;
@@ -9,7 +9,7 @@ import ch.k42.auroraprime.dto.QuorgSettings.QUORG;
  * A class used to store the information/state
  * of one of the matrix fields
  * 
- * @Author Philipp Bšsch
+ * @Author Philipp Bï¿½sch
  */
 public class QuorgField {
 	

@@ -1,4 +1,4 @@
-package ch.k24.auroraprime.quorg;
+package ch.k42.ironhide.quorg;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import ch.k42.auroraprime.dto.QuorgSettings.QUORG;
  * that returns a static programmed list
  * of avaliable quorgs
  * 
- * @Author Philipp Bšsch
+ * @Author Philipp Bï¿½sch
  */
 public class StaticQuorgListGenerator implements IQuorgListGenerator {
 
