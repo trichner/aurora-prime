@@ -1,9 +1,8 @@
-package ch.k42.auroraprime.net;
+package ch.k42.ironhide.net;
 
-import testing.DeviceDiscoveryTestdummy;
 
 public class DeviceDiscoveryFactory {
 	public static IDeviceDiscovery getInstance(){
-		return new DeviceDiscoveryTestdummy();
+		return new DeviceDiscovery();
 	}
 }

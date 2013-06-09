@@ -1,4 +1,4 @@
-package ch.k42.auroraprime.net;
+package ch.k42.ironhide.net;
 
 import java.net.InetSocketAddress;
 
@@ -7,18 +7,21 @@ public class ALDevice {
 	private String name;
 	private String deviceID;
 	private String version;
+    private String[] quorgs;
 	
-	public ALDevice(InetSocketAddress address, String name, String deviceID, String version){
+	public ALDevice(InetSocketAddress address, String name, String deviceID, String version,String[] quorgs){
 		this.address = address;
 		this.name = name;
 		this.deviceID = deviceID;
 		this.version = version;
+        this.quorgs = quorgs;
 	}
 	
-	public ALDevice(InetSocketAddress address, String deviceID){
-		this(address,"Ambient-Light " + deviceID,deviceID,"0000");
+	public ALDevice(InetSocketAddress address, String deviceID,String[] quorgs){
+		this(address,"Ambient-Light " + deviceID,deviceID,"0000",quorgs);
 	}
-	
+
+    @Override
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		sb.append(this.address.getHostName());
@@ -26,6 +29,8 @@ public class ALDevice {
 		sb.append(this.name);
 		sb.append(" vers.: ");
 		sb.append(this.version);
+        sb.append("  no. quorgs: ");
+        sb.append(quorgs.length);
 		return sb.toString();
 	}
 
@@ -48,5 +53,8 @@ public class ALDevice {
 	public String getVersion() {
 		return version;
 	}
-	
+
+    public String[] getQuorgs() {
+        return quorgs;
+    }
 }
