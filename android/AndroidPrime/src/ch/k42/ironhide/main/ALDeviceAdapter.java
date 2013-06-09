@@ -3,15 +3,11 @@ package ch.k42.auroraprime.main;
 import java.util.List;
 
 import ch.k42.auroraprime.R;
-import ch.k42.auroraprime.net.ALDevice;
-//import android.R;
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 /**
@@ -19,7 +15,7 @@ import android.widget.TextView;
  * Spinner displaying the found 
  * devices to connect to
  * 
- * @Author Philipp Bšsch
+ * @Author Philipp Bï¿½sch
  */
 public class ALDeviceAdapter extends ArrayAdapter<ALDevice>{
 
