@@ -58,4 +58,67 @@ public class QuorgUtils {
         }
         return frame8x8;
     }
+
+    //==== NEO Compatibility
+    public static final int NEO_OFF 		= 0;
+    public static final int NEO_RED 		= 1;
+    public static final int NEO_GREEN 	= 2;
+    public static final int NEO_BLUE 		= 3;
+    public static final int NEO_YELLOW 	= 4;
+    public static final int NEO_TURK 		= 5; //Alias
+    public static final int NEO_CYAN 		= 5;
+    public static final int NEO_PINK 		= 6; //Alias
+    public static final int NEO_MAGENTA		= 6;
+    public static final int NEO_WHITE 	= 7;
+
+    /**
+     * Converts a NEO Array to a Quorg Frame
+     */
+    public static IFrame8x8 getFrameFromNEO(int[][] array){
+
+        long redb=0, greb=0, blub=0;
+        for(int j=0;j<8;j++){
+            for(int i=0;i<8;i++){
+                switch(array[i][j]){
+                    case NEO_RED:
+                        redb |= Bitfields.xyToBit(i, j);
+                        break;
+                    case NEO_GREEN:
+                        greb |= Bitfields.xyToBit(i, j);
+                        break;
+                    case NEO_BLUE:
+                        blub |= Bitfields.xyToBit(i, j);
+                        break;
+                    case NEO_YELLOW:
+                        redb |= Bitfields.xyToBit(i, j);
+                        greb |= Bitfields.xyToBit(i, j);
+                        break;
+                    case NEO_TURK:
+                        blub |= Bitfields.xyToBit(i, j);
+                        greb |= Bitfields.xyToBit(i, j);
+                        break;
+                    case NEO_PINK:
+                        redb |= Bitfields.xyToBit(i, j);
+                        blub |= Bitfields.xyToBit(i, j);
+                        break;
+                    case NEO_WHITE:
+                        redb |= Bitfields.xyToBit(i, j);
+                        greb |= Bitfields.xyToBit(i, j);
+                        blub |= Bitfields.xyToBit(i, j);
+                        break;
+                }
+            }
+        }
+        return new Frame1bit(redb,greb,blub);
+    }
+
+
+    /**
+     * Parses a String to a Color.
+     * Format:
+     * @param color a Color coded as a String
+     */
+    public Color toColor(String color){
+        return Color.decode(color);
+    }
 }

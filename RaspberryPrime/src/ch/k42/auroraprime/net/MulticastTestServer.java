@@ -14,7 +14,7 @@ import ch.k42.auroraprime.multicast.MulticastListener;
 public class MulticastTestServer {
     public static void main(String args[]){
 
-        MulticastListener listener = new ch.k42.auroraprime.multicast.MulticastListener();
+        MulticastListener listener = new MulticastListener();
         // Start Server
         IServer server = new AthmosServer();
         int port = Integer.parseInt(ALSettings.getProperty("serverPort"));

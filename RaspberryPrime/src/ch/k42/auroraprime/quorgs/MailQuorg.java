@@ -27,21 +27,43 @@ public class MailQuorg extends Quorg{
     private String user,password;
     private int newmails=0;
     private IFrame8x8 frame=new Frame1bit();
-    public MailQuorg(String user,String password){
-        Log.d(TAG,"New MailQuorg");
-        this.user = user;
-        this.password = password;
 
-        try {
-            feed = new URL(url);
-        } catch (MalformedURLException e) {
-            Log.e(TAG,"URL invalid: " + url + " Errormessage: " + e.getMessage());
+    /**
+     *
+     * @param settings username | password
+     */
+    public MailQuorg(String[] settings){
+        super(settings);
+        Log.d(TAG,"New MailQuorg");
+        if(settings.length>1){
+            this.user = settings[0];
+            this.password = settings[1];
+            try {
+                feed = new URL(url);
+            } catch (MalformedURLException e) {
+                Log.e(TAG,"URL invalid: " + url + " Errormessage: " + e.getMessage());
+            }
+        }else{
+            throw new IllegalArgumentException();
         }
+    }
+
+    @Override
+    public String[] getSettings(){
+        String[] s = new String[2];
+        s[0] = settings[0];
+        s[1] = "*******";   // Security reason
+        return s;
     }
 
     @Override
     public IFrame8x8 getFrame() {
         return frame;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public String getQuorgName() {
+        return "MailQuorg";
     }
 
     @Override
@@ -52,7 +74,7 @@ public class MailQuorg extends Quorg{
 
             //check mails
             try {
-                Log.d(TAG,"Checking mails...");
+                Log.vv(TAG,"Checking mails...");
                 HttpURLConnection connection = (HttpURLConnection) feed.openConnection();
                 connection.setRequestProperty("Authorization","Basic " + Base64.encode((user + ":" + password).getBytes()));
                 connection.connect();
@@ -67,7 +89,7 @@ public class MailQuorg extends Quorg{
                 Matcher m = pattern.matcher(contents);
                 if(m.find()){
                     newmails = Integer.parseInt(m.group(1));
-                    Log.d(TAG,"I have found "+newmails+ " new messages in your inbox!");
+                    Log.vv(TAG,"I have found "+newmails+ " new messages in your inbox!");
                 }else{
                     Log.e(TAG,"Can't find entry in XML.");
                 }
@@ -84,13 +106,4 @@ public class MailQuorg extends Quorg{
         }
     }
 
-    @Override
-    public void initSettings(String[] settings) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public String[] getSettings() {
-        return new String[0];  //To change body of implemented methods use File | Settings | File Templates.
-    }
 }

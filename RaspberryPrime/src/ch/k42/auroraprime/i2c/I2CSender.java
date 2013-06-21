@@ -9,8 +9,8 @@ import com.pi4j.io.i2c.I2CDevice;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,30 +21,30 @@ import java.util.Map;
  */
 public class I2CSender implements Sender {
     private static final String TAG = "I2CSender";
-    private Map<Integer,IMatrix> matrices;
+    private ConcurrentHashMap<Integer,IMatrix> matrices;
     private boolean isConnected;
     private I2CBus bus;
 
     @Override
-    public boolean sendFrame(int id, IFrame8x8 f) {
-        if(!matrices.containsKey(id)) return  false;
-        IMatrix matrix = matrices.get(id);
+    public boolean sendFrame(int address, IFrame8x8 f) {
+        if(!matrices.containsKey(address)) return  false;
+        IMatrix matrix = matrices.get(address);
         matrix.sendFrame(f);
         return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
     public boolean connect() {
-        List<I2CDevice> devices;
+        Map<Integer,I2CDevice> devices;
 
-        matrices = new HashMap<Integer, IMatrix>();
+        matrices = new ConcurrentHashMap<>();
         try {
             bus = I2CUtils.getDefaultBus();
 
             devices = I2CUtils.discoverDevices(bus); //TODO dicover from time to time
 
-            for(int i=0;i<devices.size();i++){
-                matrices.put(i,new I2CMatrix(getUniqueID(),devices.get(i))); // TODO make ID less random
+            for(Integer i : devices.keySet()){
+                matrices.put(i,new I2CMatrix(i,devices.get(i)));
             }
         } catch (IOException e) {
             Log.e(TAG,"Unable to discover i2c devices: "+e.getMessage());
@@ -53,12 +53,6 @@ public class I2CSender implements Sender {
         }
         if(matrices.size()>0) isConnected = true;
         return true;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    private int idcounter = 1;
-    private int getUniqueID() {
-        if(idcounter<0) idcounter = 0;
-        return idcounter++;  //To change body of created methods use File | Settings | File Templates.
     }
 
     @Override

@@ -1,10 +1,12 @@
 package ch.k42.auroraprime.multicast;
 
-import java.io.IOException;
-import java.net.*;
-
 import ch.k42.auroraprime.minions.ALSettings;
 import ch.k42.auroraprime.minions.Log;
+import ch.k42.auroraprime.quorgs.StaticQuorgList;
+
+import java.io.IOException;
+import java.net.*;
+import java.util.Arrays;
 
 public class MulticastListener{
     private static final String TAG = "MulticastListener";
@@ -63,9 +65,13 @@ public class MulticastListener{
 			    	
 					//---- build package
                     StringBuilder sb = new StringBuilder();
-                    sb.append("ALDevice;Port;");
-                    sb.append(ALSettings.getProperty("serverPort"));
-				    sb.append(";Version;Mk1");
+                    sb.append("ALDevice;Port;"); // 0, 1
+                    sb.append(ALSettings.getProperty("serverPort")); // 2
+				    sb.append(";Version;"); // 3
+                    sb.append(ALSettings.getProperty("version")); // 4
+                    sb.append(";SupportedQuorgs;"); // 5
+                    sb.append(Arrays.toString(StaticQuorgList.supported_quorgs)); //6
+
 
 					String str = sb.toString();
 					buf = str.getBytes();

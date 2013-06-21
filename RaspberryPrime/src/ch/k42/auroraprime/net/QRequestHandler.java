@@ -1,17 +1,17 @@
 package ch.k42.auroraprime.net;
 
 
-import ch.k42.auroraprime.core.IMatrix;
 import ch.k42.auroraprime.core.MatrixManager;
 import ch.k42.auroraprime.core.QuorgManager;
-import ch.k42.auroraprime.net.DTO.DeviceState;
-import ch.k42.auroraprime.net.DTO.QuorgSettings;
+import ch.k42.auroraprime.minions.Log;
 import ch.k42.auroraprime.net.DTO.Request;
-import ch.k42.auroraprime.quorgs.ColorQuorg;
 import ch.k42.auroraprime.quorgs.Quorg;
-import ch.k42.auroraprime.quorgs.RandomQuorg;
+import ch.k42.auroraprime.quorgs.StaticQuorgList;
 
+import java.io.Serializable;
+import java.lang.reflect.Constructor;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -34,73 +34,52 @@ public class QRequestHandler implements RequestHandler{
         switch (request.getCmd()) {
 
             case SETQUORG:
-
-                int pos=0;
-                Object arg = request.getArg();
-
-                if(!(arg instanceof QuorgSettings)) //wrong argument?
-                    break;
-
-                QuorgSettings nqset = (QuorgSettings) arg;
-                Quorg newQuorg=null;
-
-                switch (nqset.getQuorg()) {
-                    case OFF:
-                        break;
-                    case REDLIGHT:
-                        newQuorg = new ColorQuorg();
-                        break;
-                    case GREENLIGHT:
-                        newQuorg = new ColorQuorg();
-                        break;
-                    case BLUELIGHT:
-                        newQuorg = new ColorQuorg();
-                        break;
-                    case CLOCK:
-                        break;
-                    case RANDOM:
-                        newQuorg = new RandomQuorg();
-                        break;
-                    case MAIL:
-                        break;
-                    case WEATHER:
-                        break;
-                    case MATRIX:
-                        break;
-                    case AUDIOVISUALIZER:
-                        break;
-                    case REDDIT:
-                        break;
+                try{
+                    Log.d(TAG,"SETQUORG");
+                    Object args[] = request.getArgs();
+                    if(args.length<3) break;
+                    Log.d(TAG,"Request: args[0]="+args[0]+" args[1]="+args[1]+" args[2]="+args[2]);
+                    Integer position = (Integer) args[0];
+                    Log.d(TAG,"parsing position: "+position);
+                    String classname = (String) args[1];
+                    Log.d(TAG,"Class: "+classname);
+                    Class c = Class.forName(StaticQuorgList.quorg_package + classname);
+                    Log.d(TAG,"Found: " + c.getName());
+                    Object[] osettings = (Object[]) args[2];
+                    String[] settings = (String[]) osettings;
+                    Log.d(TAG,"Settings: " + Arrays.toString(settings));
+                    Constructor cons = c.getConstructor(String[].class);
+                    Log.d(TAG,"Found Constructor");
+                    Quorg q = (Quorg) cons.newInstance((Object) settings);
+                    Log.d(TAG,"Created new Instance");
+                    QuorgManager.getInstance().putQuorg(position, q);
+                    Log.d(TAG,"successfully set new Quorg");
+                    request.setHandled(true);
+                    Log.vv(TAG, "SETQUORG handled");
+                }catch(Exception e){
+                    Log.w(TAG, "Invalid SETQUORG command. Cause: " + e.getCause()+ " Message:" + e.getMessage());
                 }
-
-                if(newQuorg==null) break; // no matching quorg found?
-
-                newQuorg.initSettings(nqset.getSettings());
-                QuorgManager.getInstance().putQuorg(nqset.getScreen(),newQuorg);
-                request.wasHandled();
                 break;
             case GETUPDATE:
+                try{
+                    Serializable args[] = new Serializable[2];
+                    Map qmap= new ConcurrentHashMap<Integer,Class>();
+                    List mlist = new ArrayList<Integer>();
+                    for(Map.Entry entry : QuorgManager.getInstance().getAllQuorgs().entrySet()){
+                        qmap.put(entry.getKey(), entry.getValue().getClass());
+                    }
+                    for(Integer m : MatrixManager.getInstance().getMatrices().keySet()){
+                        mlist.add(m);
+                    }
+                    args[0] = (Serializable) qmap; //legal, ArrayList implements Serializable
+                    args[1] = (Serializable) mlist;
 
-                SortedMap<Integer,Quorg> quorgs =QuorgManager.getInstance().getAllQuorgs();
-                List<Integer> matrices = new ArrayList<Integer>();
-                Collection<IMatrix> tlist = MatrixManager.getInstance().getSender().getMatrices().values();
-                for(IMatrix m : tlist){
-                    matrices.add(m.getID());
+                    request.setArgs(args);
+                    request.setHandled(true);
+                    Log.vv(TAG, "GETUPDATE handled");
+                }catch(Exception e){
+                    Log.w(TAG, "Invalid SETQUORG command. Message: "+e.getMessage());
                 }
-                SortedMap<Integer,QuorgSettings> smap = new TreeMap<Integer, QuorgSettings>();
-                for(Quorg q : quorgs.values()){
-                    QuorgSettings qset = new QuorgSettings();
-                    qset.setSettings(q.getSettings());
-                    qset.setMatrixID(q.getMatrixID());
-                    qset.setQuorg(QuorgSettings.QUORG.RANDOM); //FIXME
-                    smap.put(q.getMatrixID(),qset);
-                }
-
-                DeviceState state = new DeviceState(smap,matrices);
-
-                //request.setArg(state);
-
-                request.wasHandled();
                 break;
         }
 

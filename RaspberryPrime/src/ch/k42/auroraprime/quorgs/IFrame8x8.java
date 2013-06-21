@@ -19,7 +19,7 @@ public interface IFrame8x8{
 	 * @param color the Color for the new dot
 	 * @return true if successful, else false
 	 */
-	public boolean setColor(int row,int col,Color color);
+	public boolean setColor(int row, int col, Color color);
     /**
      * Set a specific Dot in the Matrix to a new Color
      * @param colors an 8x8 array of Colors

@@ -7,7 +7,9 @@ import com.pi4j.io.i2c.I2CFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,10 +23,10 @@ public class I2CUtils{
     private static final String TAG = "I2CUtils";
     private static final byte maxAdress = 0x0F;
 
-    public static List<I2CDevice> discoverDevices(I2CBus bus){
-        Log.d(TAG,"start i2c discovery");
+    public static Map<Integer,I2CDevice> discoverDevices(I2CBus bus){
+        Log.vv(TAG,"start i2c discovery");
         byte address = 0x00;
-        List<I2CDevice> devices = new ArrayList<I2CDevice>();
+        Map<Integer,I2CDevice> devices = new HashMap<>();
         I2CDevice tdev;
         while (address<maxAdress){
             try {
@@ -33,7 +35,7 @@ public class I2CUtils{
                 int dummy = tdev.read();
                 // success?
                 Log.d(TAG,"discovered on adress "+ address);
-                devices.add(tdev);
+                devices.put((int)address,tdev);
 
             } catch (IOException e) {
                 Log.d(TAG,"failed to read from "+ address);
@@ -41,7 +43,7 @@ public class I2CUtils{
             }
             address++;   // next adress
         }
-        Log.d(TAG,"discovered "+ devices.size() + " devices");
+        Log.vv(TAG,"discovered "+ devices.size() + " devices");
         return devices;
     }
 
