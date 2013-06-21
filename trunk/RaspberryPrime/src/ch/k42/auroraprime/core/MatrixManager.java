@@ -7,6 +7,7 @@ import ch.k42.auroraprime.executors.SenderFactory;
 import ch.k42.auroraprime.minions.ALSettings;
 import ch.k42.auroraprime.minions.Log;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -30,6 +31,13 @@ public class MatrixManager {
 
     private MatrixManager(){
         sender = SenderFactory.getInstance();
+    }
+
+    public void setSender(Sender sender){
+        if(isRunning()){
+            stop();
+        }
+        this.sender = sender;
     }
 
     public boolean start(){
@@ -56,6 +64,10 @@ public class MatrixManager {
         sender.disconnect();
         Executor.getInstance().remove(sjob);
         return true;
+    }
+
+    public Map<Integer,IMatrix> getMatrices(){
+        return sender.getMatrices();
     }
 
     public Sender getSender() {

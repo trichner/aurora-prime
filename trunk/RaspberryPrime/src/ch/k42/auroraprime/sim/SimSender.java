@@ -13,10 +13,10 @@ public class SimSender implements Sender {
 
 	public SimSender(){
         matrices = new HashMap<Integer, FrameSimulation>();
-        matrices.put(1,new FrameSimulation());
-        matrices.put(2,new FrameSimulation());
-        matrices.put(3,new FrameSimulation());
-        matrices.put(4,new FrameSimulation());
+        matrices.put(1,new FrameSimulation(1));
+        matrices.put(2,new FrameSimulation(2));
+        matrices.put(3,new FrameSimulation(3));
+        matrices.put(4,new FrameSimulation(4));
 		//simulator = new FrameSimulation();
 	}
 

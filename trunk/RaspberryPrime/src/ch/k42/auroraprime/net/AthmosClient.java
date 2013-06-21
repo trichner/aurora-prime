@@ -1,7 +1,12 @@
 package ch.k42.auroraprime.net;
 
-import java.io.*;
-import java.net.*;
+import ch.k42.auroraprime.minions.Log;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 
 
 public class AthmosClient implements IClient {
@@ -40,6 +45,7 @@ public class AthmosClient implements IClient {
 			Object o = in.readObject(); // await a response from the server
 			return o;
 		} catch (Exception e) {
+            Log.e(TAG,"Unable to send Request. Cause: " + e.getCause() +" // "+ e.getMessage());
 		}
 		return null;
 	}

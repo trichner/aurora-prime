@@ -9,7 +9,12 @@ import ch.k42.auroraprime.minions.Log;
  */
 public class RandomQuorg extends Quorg {
 	private IFrame8x8 frame = QuorgUtils.getRandomFrame1bit();
-    public static final String name="RandomQuorg";
+
+    public RandomQuorg(String[] settings){
+        super(settings);
+    }
+
+
 	@Override
 	public IFrame8x8 getFrame() {
 		IFrame8x8 ret = frame;
@@ -17,7 +22,12 @@ public class RandomQuorg extends Quorg {
 		return ret;
 	}
 
-	@Override
+    @Override
+    public String getQuorgName() {
+        return "RandomQuorg";
+    }
+
+    @Override
 	public void run() {
         quit=false;
         Log.d("RandomQuorg","started");
@@ -31,15 +41,4 @@ public class RandomQuorg extends Quorg {
 		}
         Log.d("RandomQuorg","stopped");
 	}
-
-    private String[] settings; //unused for now TODO
-    @Override
-    public void initSettings(String[] settings) {
-        this.settings = settings;
-    }
-
-    @Override
-    public String[] getSettings() {
-        return settings;
-    }
 }

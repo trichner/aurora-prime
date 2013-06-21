@@ -3,6 +3,7 @@ package ch.k42.auroraprime.core;
 import ch.k42.auroraprime.quorgs.Quorg;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,11 +21,11 @@ public class QuorgManager {
     }
 
     //==== Body
-    private SortedMap<Integer,Quorg> quorgs;
+    private ConcurrentHashMap<Integer,Quorg> quorgs;
 
 
     private QuorgManager(){
-        quorgs = new TreeMap<Integer, Quorg>();
+        quorgs = new ConcurrentHashMap<>();
     }
 
     public boolean isQuorg(int key){
@@ -38,22 +39,22 @@ public class QuorgManager {
         return null;
     }
 
-    public boolean putQuorg(int matrixID,Quorg quorg){
+    public boolean putQuorg(int address,Quorg quorg){
         //if(quorgs.containsKey(matrixID)) return false; // identifier not unique?
-        removeQuorg(matrixID);
-        quorg.setMatrixID(matrixID); // set a unique identifier
+        removeQuorg(address);
+        quorg.setMatrixAddress(address); // set a unique identifier
         if(!quorg.isRunning()) quorg.start();
-        quorgs.put(matrixID, quorg);
+        quorgs.put(address, quorg);
         return true;
     }
 
-    public boolean removeQuorg(int ID){
-        if (!isQuorg(ID)){
+    public boolean removeQuorg(int address){
+        if (!isQuorg(address)){
             return false;
         }
-        Quorg q = quorgs.get(ID);
+        Quorg q = quorgs.get(address);
         q.terminate();
-        quorgs.remove(ID);
+        quorgs.remove(address);
         return  true;
     }
 
@@ -69,7 +70,7 @@ public class QuorgManager {
         return quorgs.keySet();
     }
 
-    public SortedMap<Integer, Quorg> getAllQuorgs(){
+    public Map<Integer, Quorg> getAllQuorgs(){
         //List<Quorg> quorgList = new ArrayList<Quorg>(quorgs.values());
         return quorgs;
     }

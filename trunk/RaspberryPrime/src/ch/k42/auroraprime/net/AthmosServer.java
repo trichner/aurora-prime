@@ -39,7 +39,9 @@ public class AthmosServer implements IServer{
                 active = true;
                 listener = new Listener();
                 listener.start();
-            } catch (Exception e) {}
+            } catch (IOException e) {
+                Log.e(TAG,"Unable to open socket, port already used? " + e.getMessage());
+            }
     }
 
     public void stop() {
@@ -68,6 +70,7 @@ public class AthmosServer implements IServer{
     }
     
     private class ClientHandler extends Thread {
+            private static final String TAG = "ClientHandler";
             private Socket socket;
             private RequestHandler handler;
             private ObjectOutputStream out;
@@ -88,6 +91,7 @@ public class AthmosServer implements IServer{
                     while (active) {
                             try {
                                 Object o = in.readObject();			// get Request
+                                Log.vv(TAG,"Got Request from " + socket.getRemoteSocketAddress());
                                 Object r = handler.getResponse(o); 	// Handle Request
                                 
                                 out.reset();
@@ -99,14 +103,15 @@ public class AthmosServer implements IServer{
                                     Log.v(TAG,"Client "+socket.getRemoteSocketAddress() + " disconnected");
                             	}
                             } catch (ClassNotFoundException e) {
-								System.err.println(e.getMessage());
+								Log.e(TAG,e.getMessage());
 							} catch (Exception e){ // cast exception or similar (Runtime)
-								System.err.println(e.getMessage());
+								Log.e(TAG,e.getMessage());
 							}
                     }
                     socketList.remove(socket);
                     try {
                         this.socket.close();
+                        Log.vv(TAG,"Client left.");
                     } catch (IOException e) {
                         Log.e(TAG,"Error closing socket.");
                     }

@@ -1,7 +1,5 @@
 package ch.k42.auroraprime.quorgs;
 
-import ch.k42.auroraprime.minions.Log;
-
 import java.awt.*;
 
 /**
@@ -73,7 +71,7 @@ public class Frame1bit implements IFrame8x8{
         for(int i=0;i<SIZE;i++){
             buf[       i] = (byte) (r & 0xFF);
             buf[  SIZE+i] = (byte) (g & 0xFF);
-            buf[2*SIZE+i] = (byte) (b & 0xFF);
+            buf[(SIZE<< 1)+i] = (byte) (b & 0xFF);
             r >>>= 8;
             g >>>= 8;
             b >>>= 8;

@@ -7,9 +7,10 @@ public class FrameSimulation extends Thread implements IMatrix {
 
 	FrameDrawer drawer;
 	private volatile boolean quit = false;
-	
-	public FrameSimulation(){
+	private int address;
+	public FrameSimulation(int address){
 		drawer = new FrameDrawer();
+        this.address = address;
 	}
 	
 	@Override
@@ -37,7 +38,7 @@ public class FrameSimulation extends Thread implements IMatrix {
     }
 
     @Override
-    public int getID() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+    public int getAddress() {
+        return address;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

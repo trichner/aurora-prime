@@ -15,7 +15,7 @@ public interface IMatrix {
      * The ID of the Matrix
      * @return ID
      */
-    public int getID();
+    public int getAddress();
     /**
      *
      */

@@ -1,19 +1,20 @@
 package ch.k42.auroraprime.multicast;
+import ch.k42.auroraprime.minions.ALSettings;
+import ch.k42.auroraprime.minions.Log;
+
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.k42.auroraprime.minions.ALSettings;
-import ch.k42.auroraprime.minions.Log;
-
 public class DeviceDiscovery implements IDeviceDiscovery {
-    private static final int MULTICAST_PORT=4455;
-    private static final int SOCKET_PORT=4445;
+
     private static final int RCV_TIMEOUT=300;
-    private static final String MULTICAST_GROUP="225.0.0.42";
     private static final String TAG = "DEVICE DISCOVERY";
     private final static int TIMEOUT = 5000;
+
+    private static String MULTICAST_GROUP="225.0.0.42";
+    private static int MULTICAST_PORT=4455;
 
     private class DiscoveryThread extends Thread {
 
@@ -56,11 +57,14 @@ public class DeviceDiscovery implements IDeviceDiscovery {
                         Log.v(TAG,"Message from server: "+str);
                         String strs[] = str.split(";");
                         InetSocketAddress address = new InetSocketAddress(packet.getAddress(),Integer.parseInt(strs[2]));
-                        ALDevice device = new ALDevice(address, str);
+                        String version = strs[4];
+                        String[] quorgs = strs[6].replace("[", "").replace("]", "").split(", "); //parse supported quorgs
 
+                        ALDevice device = new ALDevice(address, strs[0],"noID",version,quorgs);
                         list.add(device);
+                        Log.d(TAG,"added device: " +device);
                     }catch(SocketTimeoutException e){
-                        Log.d(TAG,"Socket Timeout: waiting for next package");
+                        //Log.d(TAG,"Socket Timeout: waiting for next package");
                     }catch (Exception e){
                         Log.w(TAG,"Exception: " + e.getMessage());
                     }
@@ -76,19 +80,35 @@ public class DeviceDiscovery implements IDeviceDiscovery {
 
 
     //==== Actual class
+
+    public DeviceDiscovery(){
+        String ip = ALSettings.getProperty("multicastIP");
+        Integer port = null;
+        try {
+            port = Integer.parseInt(ALSettings.getProperty("multicastPort"));
+        } catch (NumberFormatException e) {}
+        if(ip!=null)
+            MULTICAST_GROUP = ip;
+        if(port!=null)
+            MULTICAST_PORT = port;
+
+    }
+
 	@Override
 	public List<ALDevice> getDiscoveredDevices() {
 		DiscoveryThread test;
 		List<ALDevice> list = new ArrayList<ALDevice>();
 		try {
-			test = new DiscoveryThread(ALSettings.getProperty("deviceString"), list);
+            String devString = ALSettings.getProperty("deviceString");
+            if(devString==null) devString = "Anonymous Client";
+			test = new DiscoveryThread(devString, list);
 			test.start();
 			
 			test.join(TIMEOUT);
 			
 			
 			//---- print discovered devices
-			Log.v(TAG,"Found "+list.size()+" devices:");
+			Log.vv(TAG,"Found "+list.size()+" devices:");
 			for(ALDevice dev : list){
 				Log.d(TAG,dev);
 			}

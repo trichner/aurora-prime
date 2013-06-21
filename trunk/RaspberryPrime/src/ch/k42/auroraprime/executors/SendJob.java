@@ -1,12 +1,19 @@
 package ch.k42.auroraprime.executors;
 
+import ch.k42.auroraprime.core.IMatrix;
+import ch.k42.auroraprime.core.MatrixManager;
 import ch.k42.auroraprime.core.QuorgManager;
+import ch.k42.auroraprime.minions.Constants;
 import ch.k42.auroraprime.minions.Log;
-import ch.k42.auroraprime.quorgs.Frame;
-import ch.k42.auroraprime.quorgs.IFrame8x8;
+import ch.k42.auroraprime.quorgs.ColorQuorg;
+import ch.k42.auroraprime.quorgs.Quorg;
+
+import java.util.concurrent.Semaphore;
 
 public class SendJob implements Runnable{
     private static final String TAG="SendJob";
+    private static final int MAX_QUEUE = 10;
+    private static Semaphore execute = new Semaphore(1) ;
 	private Sender sender;
 
     /**
@@ -26,38 +33,49 @@ public class SendJob implements Runnable{
 
 	@Override
 	public void run() {
-        //---- are we ready to go?
-        if(!sender.isConnected()){
-            Log.w(TAG,"Sender not connected, trying to connect now.");
-            sender.connect();    //try to connect anyway
-            if(sender.isConnected()){
-                Log.e(TAG,"No Device Connected, unable to connect.");
-                return;
+        //---- already blocked by previous call?
+        Log.dd(TAG,execute.availablePermits());
+        if(execute.getQueueLength()>MAX_QUEUE){
+            Log.e(TAG,"SendJob seems blocked, more than "+MAX_QUEUE + " threads waiting.");
+            Log.w(TAG,"purging all Quorgs");
+            QuorgManager.getInstance().removeAll();
+            if(Constants.DEBUG){
+                Log.w(TAG,"setting a ColorQuorg ");
+                IMatrix matrix = MatrixManager.getInstance().getMatrices().values().iterator().next();
+                int address = matrix.getAddress();
+                String[] settings = {"0xFF0000"};
+                QuorgManager.getInstance().putQuorg(address,new ColorQuorg(settings));
             }
         }
+        //---- aquire resources
+        try {
+            execute.acquire();
 
-        //---- sending stuff    TODO
+            if(!sender.isConnected()){
+                Log.w(TAG,"Sender not connected, trying to connect now.");
+                sender.connect();    //try to connect anyway
+                if(sender.isConnected()){
+                    Log.e(TAG,"No Device Connected, unable to connect.");
+                    return;
+                }
+            }
 
-        //MatrixManager -> discover Matrices
+            //---- sending stuff    TODO
 
+            //MatrixManager -> discover Matrices
 
+            //---- Send the Frame from every Quorg to the mapped Matrix
+            for(Quorg q : QuorgManager.getInstance().getAllQuorgs().values()){
+                sender.sendFrame(q.getMatrixAddress(),q.getFrame());
+            }
 
+            execute.release();  // we no longer need the lock, next SendJob may proceed
 
-        Frame frame;// = // effect get frame;
-        //for() //for all quorgs, get a new frame
-        //sender.sendFrame(frame);
-        IFrame8x8 f1 = QuorgManager.getInstance().getQuorg(1).getFrame();
-        IFrame8x8 f2 = QuorgManager.getInstance().getQuorg(2).getFrame();
-        IFrame8x8 f3 = QuorgManager.getInstance().getQuorg(3).getFrame();
-        IFrame8x8 f4 = QuorgManager.getInstance().getQuorg(4).getFrame();
-        //Log.d("SendJob",f1.getColor(0,0));
+        } catch (InterruptedException e) {
+            Log.e(TAG,"Can't aquire lock. Got interrupted. Message: " + e.getMessage());
+        }
+        //---- are we ready to go?
 
-
-
-        sender.sendFrame(0, f1);
-        sender.sendFrame(2, f2);
-        sender.sendFrame(3, f3);
-        sender.sendFrame(4, f4);
 	}
 
 }

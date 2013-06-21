@@ -8,6 +8,7 @@ import sun.util.resources.LocaleNames_be;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,13 +28,13 @@ public class I2CTest {
         }
         I2CBus bus=null;
         try {
-            Log.d(TAG,"Get bus nr. "+(bus0 ? I2CBus.BUS_0 : I2CBus.BUS_1));
+            Log.vv(TAG,"Get bus nr. "+(bus0 ? I2CBus.BUS_0 : I2CBus.BUS_1));
             bus = I2CFactory.getInstance(bus0 ? I2CBus.BUS_0 : I2CBus.BUS_1);
-            Log.d(TAG,String.format("Get device on address: %xh",adr));
+            Log.vv(TAG,String.format("Get device on address: %xh",adr));
 
-            List<I2CDevice> devices = I2CUtils.discoverDevices(bus);
+            Map<Integer,I2CDevice> devices = I2CUtils.discoverDevices(bus);
 
-            I2CDevice dev = devices.get(0);
+            I2CDevice dev = devices.get(1);
             Log.d(TAG,"Reading some bits...");
             int n=0;
             while (true){
